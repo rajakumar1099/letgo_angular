@@ -12,6 +12,7 @@
     "src/polyfills.ts"
   ],
   "include": [
+    "node_modules",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ]
