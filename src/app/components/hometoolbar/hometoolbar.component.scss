@@ -1,0 +1,42 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.txt-color{
+  color: white;
+  font-size: 15px;
+}
+
+.mat-icon {
+  vertical-align: middle;
+  padding: 5px;
+  color: white;
+}
+
+.search-container {
+  height: 55%;
+  background-color: white;
+  border-radius: 6px;
+  display: flex;
+}
+
+.sell-button {
+  color: white;
+  font-size: 15px;
+  border-color: white;
+}
+
+.search-button {
+  background-color: lightgray;
+}
+
+.input {
+  width: 350px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.bg-color {
+  background-color: #e40046;
+}
