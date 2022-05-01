@@ -1,0 +1,24 @@
+.header-text {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.close-icon {
+  float: right;
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 3px;
+}
+
+.sign-up-button {
+  text-align: right;
+}
+
+.sign-up-button-style {
+  background-color: #e40046;
+  color: white;
+  width: 100%;
+}

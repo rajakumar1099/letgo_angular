@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col mb-2">
+    <span class="header-text">{{
+      "login.loginDialogHeaderLabel" | translate
+    }}</span>
+    <mat-icon class="close-icon" (click)="closeDialog()">close</mat-icon>
+  </div>
+  <p [translate]="'login.loginDialogBodyLabel'"></p>
+  <hr />
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input
+      matInput
+      placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+    />
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input matInput placeholder="{{ 'login.enterYourPassword' | translate }}" />
+  </mat-form-field>
+  <div class="col mb-2">
+    <mat-checkbox class="remember-me">{{
+      "login.rememberMe" | translate
+    }}</mat-checkbox>
+    <span class="forgot-password">{{
+      "login.forgetPassword" | translate
+    }}</span>
+  </div>
+</div>
+<div class="login-button">
+  <button
+    class="login-button-style"
+    mat-button
+    (click)="handleDialogLogin()"
+    mat-raised-button
+  >
+    {{ "common.login" | translate }}
+  </button>
+</div>

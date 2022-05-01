@@ -1,15 +1,14 @@
-.example-spacer {
+.spacer {
   flex: 1 1 auto;
 }
 
-.txt-color{
+.txt-color {
   color: white;
   font-size: 15px;
 }
 
 .mat-icon {
   vertical-align: middle;
-  padding: 5px;
   color: white;
 }
 
@@ -39,4 +38,15 @@
 
 .bg-color {
   background-color: #e40046;
+}
+
+.search-icon {
+  align-self: center;
+  margin: 5px;
+  color: gray;
+}
+
+.camera-icon {
+  color: white;
+  margin-right: 5px;
 }

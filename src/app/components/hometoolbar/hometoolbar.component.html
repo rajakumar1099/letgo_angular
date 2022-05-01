@@ -1,21 +1,26 @@
-<p>
-  <mat-toolbar class="bg-color">
-    <span class="example-spacer"></span>
-    <div class="search-container">
-      <mat-icon style="color: gray;">search</mat-icon>
-      <!-- <mat-form-field appearance="fill"> -->
-        <input matInput class="input" type="text" placeholder="Search" />
-      <!-- </mat-form-field> -->
-      <!-- <input mat id="typeahead-basic" type="text" placeholder="Search" > -->
-      <button mat-flat-button class="search-button">Go</button>
-    </div>
-    <span class="example-spacer"></span>
-    <button mat-button class="txt-color">Log in</button>
-    <button mat-button class="txt-color">Sign up</button>
-    <button mat-stroked-button class="sell-button">
-      <mat-icon style="color: white;">photo_camera</mat-icon>
-      <span class="txt-color">SELL</span>
+<mat-toolbar class="bg-color">
+  <span class="spacer"></span>
+  <div class="search-container">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      matInput
+      class="input"
+      type="text"
+      placeholder="{{ 'common.search' | translate }}"
+    />
+    <button mat-flat-button class="search-button">
+      {{ 'common.go' | translate }}
     </button>
-
-  </mat-toolbar>
-</p>
+  </div>
+  <span class="spacer"></span>
+  <button mat-button class="txt-color" (click)="openLoginDialog()">
+    {{ 'common.login' | translate }}
+  </button>
+  <button mat-button class="txt-color" (click)="openSignUpDialog()">
+    {{ 'common.signin' | translate }}
+  </button>
+  <button mat-stroked-button class="sell-button">
+    <mat-icon class="camera-icon">photo_camera</mat-icon>
+    <span class="txt-color">{{ 'common.sell' | translate }}</span>
+  </button>
+</mat-toolbar>

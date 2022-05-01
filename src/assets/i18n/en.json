@@ -1,0 +1,19 @@
+{
+  "common": {
+    "search": "Search",
+    "sell": "SELL",
+    "go": "Go",
+    "login": "Log in",
+    "signin": "Sign up"
+  },
+  "login": {
+    "loginDialogHeaderLabel": "Login to Joysale",
+    "loginDialogBodyLabel": "Find sellers and buyers from your neighborhood.",
+    "enterYourEmailAddress": "Enter your email address",
+    "enterYourPassword": "Enter your password",
+    "enterYourConfirmPassword": "Enter confirm password",
+    "enterYourUsername": "Enter your username",
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot Password?"
+  }
+}

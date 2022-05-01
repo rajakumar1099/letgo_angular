@@ -1,0 +1,39 @@
+.login-button {
+  text-align: right;
+}
+
+.login-button-style {
+  background-color: #e40046;
+  color: white;
+  width: 100%;
+}
+
+.header-text {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.input-field {
+  color: #8e8e8e;
+}
+
+.close-icon {
+  float: right;
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 3px;
+}
+
+.forgot-password {
+  font-size: 15px;
+  padding-left: 5px;
+  float: right;
+  cursor: pointer;
+}
+
+.remember-me {
+  font-size: 15px;
+}

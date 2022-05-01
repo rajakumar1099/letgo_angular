@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col mb-2">
+    <span class="header-text">{{ "common.signin" | translate }}</span>
+    <mat-icon class="close-icon" (click)="closeDialog()">close</mat-icon>
+  </div>
+
+  <hr />
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input
+      matInput
+      placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+    />
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input matInput placeholder="{{ 'login.enterYourUsername' | translate }}" />
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input
+      matInput
+      placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+    />
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input matInput placeholder="{{ 'login.enterYourPassword' | translate }}" />
+  </mat-form-field>
+  <mat-form-field
+    appearance="outline"
+    class="input-field mat-form-field-wrapper"
+  >
+    <input
+      matInput
+      placeholder="{{ 'login.enterYourConfirmPassword' | translate }}"
+    />
+  </mat-form-field>
+</div>
+<div class="sign-up-button">
+  <button
+    class="sign-up-button-style"
+    mat-button
+    (click)="handleDialogSignUp()"
+    mat-raised-button
+  >
+    {{ "common.signin" | translate }}
+  </button>
+</div>
