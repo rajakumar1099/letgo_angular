@@ -1,4 +1,9 @@
 <mat-toolbar class="bg-color">
+  <img
+    class="toolbar_app_logo"
+    src="\assets\drawables\toolbar_app_logo.png"
+    alt="image"
+  />
   <span class="spacer"></span>
   <div class="search-container">
     <mat-icon class="search-icon">search</mat-icon>
@@ -8,19 +13,66 @@
       type="text"
       placeholder="{{ 'common.search' | translate }}"
     />
+  </div>
+  <div class="location-container">
+    <mat-icon class="search-icon">location_on</mat-icon>
+    <input
+      matInput
+      class="input"
+      type="text"
+      placeholder="{{ 'common.globalStuff' | translate }}"
+    />
     <button mat-flat-button class="search-button">
-      {{ 'common.go' | translate }}
+      {{ "common.go" | translate }}
     </button>
   </div>
   <span class="spacer"></span>
-  <button mat-button class="txt-color" (click)="openLoginDialog()">
-    {{ 'common.login' | translate }}
-  </button>
-  <button mat-button class="txt-color" (click)="openSignUpDialog()">
-    {{ 'common.signin' | translate }}
-  </button>
+  <div class="isLoggedInIcons" *ngIf="isLoggedIn()">
+    <mat-icon class="icon-margin">message</mat-icon>
+    <span class="toolbar_icon_line"></span>
+    <mat-icon class="icon-margin">notifications_none</mat-icon>
+    <span class="toolbar_icon_line"></span>
+    <mat-icon class="profile_img" [matMenuTriggerFor]="menu"
+      >account_circle</mat-icon
+    >
+    <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu"
+      >arrow_drop_down</mat-icon
+    >
+  </div>
+  <div *ngIf="!isLoggedIn()">
+    <button mat-button class="txt-color" (click)="openLoginDialog()">
+      {{ "common.login" | translate }}
+    </button>
+    <button mat-button class="txt-color" (click)="openSignUpDialog()">
+      {{ "common.signin" | translate }}
+    </button>
+  </div>
   <button mat-stroked-button class="sell-button">
     <mat-icon class="camera-icon">photo_camera</mat-icon>
-    <span class="txt-color">{{ 'common.sell' | translate }}</span>
+    <span class="txt-color">{{ "common.sell" | translate }}</span>
   </button>
 </mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="menu_test" translate="common.profile"></button>
+  <button
+    mat-menu-item
+    class="menu_test"
+    translate="common.myPromotions"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_test"
+    translate="common.myExchanges"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_test"
+    translate="common.myOrdersAndMySales"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_test"
+    (click)="logOut()"
+    translate="common.logOut"
+  ></button>
+</mat-menu>

@@ -9,8 +9,8 @@
   cursor: pointer;
 }
 
-::ng-deep .mat-form-field-wrapper {
-  padding-bottom: 3px;
+.mat-form-field-wrapper {
+  padding-bottom: 0px;
 }
 
 .sign-up-button {
@@ -21,4 +21,13 @@
   background-color: #e40046;
   color: white;
   width: 100%;
+}
+
+.spinner {
+  margin: 5px auto
+}
+
+.center {
+  margin-top: 10px;
+  text-align: center;
 }

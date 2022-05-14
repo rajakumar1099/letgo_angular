@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +12,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FirebaseModule } from './modules/firebase/firebase.module';
 import { SignUpDialogComponent } from './components/authentication/sign-up-dialog/sign-up-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './components/authentication/auth.service';
+import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +25,8 @@ import { SignUpDialogComponent } from './components/authentication/sign-up-dialo
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -36,7 +40,7 @@ import { SignUpDialogComponent } from './components/authentication/sign-up-dialo
     MaterialModule,
     FirebaseModule,
   ],
-  providers: [],
+  providers: [AuthService, AesEncryptDecryptService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

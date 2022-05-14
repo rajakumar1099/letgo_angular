@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatMenuModule} from '@angular/material/menu';
 
 const mat = [
   MatIconModule,
@@ -16,6 +18,8 @@ const mat = [
   MatDialogModule,
   MatFormFieldModule,
   MatCheckboxModule,
+  MatProgressSpinnerModule,
+  MatMenuModule
 ];
 
 @NgModule({

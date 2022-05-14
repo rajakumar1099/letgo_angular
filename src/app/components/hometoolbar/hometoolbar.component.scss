@@ -13,9 +13,21 @@
 }
 
 .search-container {
-  height: 55%;
+  height: 40px;
   background-color: white;
   border-radius: 6px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  display: flex;
+}
+
+.location-container {
+  height: 40px;
+  background-color: white;
+  border-radius: 6px;
+  margin-left: 1px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   display: flex;
 }
 
@@ -26,14 +38,15 @@
 }
 
 .search-button {
-  background-color: lightgray;
+  background-color: #efeeef;
 }
 
 .input {
-  width: 350px;
+  width: 310px;
   border: none;
   outline: none;
   font-size: 14px;
+  background-color: transparent;
 }
 
 .bg-color {
@@ -42,11 +55,45 @@
 
 .search-icon {
   align-self: center;
-  margin: 5px;
+  margin: 10px;
   color: gray;
 }
 
 .camera-icon {
   color: white;
   margin-right: 5px;
+}
+
+.isLoggedInIcons {
+  padding: 1rem;
+  align-items: baseline;
+  display: flex;
+}
+
+.icon-margin {
+  margin: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.profile_img {
+  font-size: 32px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.menu_test {
+  font-weight: 500;
+}
+
+.toolbar_icon_line {
+  width: 1px;
+  background-color: rgba(255, 255, 255, .5);
+  height: 40px;
+  margin-left: 8px;
+}
+
+.toolbar_app_logo {
+  width: auto;
+  height: 29px;
 }

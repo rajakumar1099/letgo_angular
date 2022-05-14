@@ -1,19 +1,43 @@
 {
   "common": {
-    "search": "Search",
+    "search": "Search products",
+    "globalStuff": "Global stuff",
     "sell": "SELL",
     "go": "Go",
     "login": "Log in",
-    "signin": "Sign up"
+    "signin": "Sign up",
+    "profile": "Profile",
+    "myPromotions": "My promotions",
+    "myExchanges": "My exchanges",
+    "myOrdersAndMySales": "My orders & My sales",
+    "logOut": "Log out"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",
     "loginDialogBodyLabel": "Find sellers and buyers from your neighborhood.",
+    "enterYourName": "Enter your name",
     "enterYourEmailAddress": "Enter your email address",
     "enterYourPassword": "Enter your password",
-    "enterYourConfirmPassword": "Enter confirm password",
+    "enterYourConfirmPassword": "Enter the same password",
     "enterYourUsername": "Enter your username",
     "rememberMe": "Remember me",
     "forgetPassword": "Forgot Password?"
+  },
+  "validators": {
+    "thisFieldIsRequired": "This field is required",
+    "confirmPasswordError": "Password not matched",
+    "invalidEmailError": "Invalid email format",
+    "minLengthError": "Entered characters should be more than 4 character",
+    "maxLengthError": "Entered characters should not be more than 20 character",
+    "minPasswordError": "Entered password should be more than 6 character",
+    "maxPasswordError": "Entered password should not be more than 30 character",
+    "passwordMatchError": "Password does not match"
+  },
+  "errors": {
+    "userNotFound": "There is no user record corresponding to this email. The user may have been deleted.",
+    "emailAlreadyInUse": "The email address is already in use by another account.",
+    "passwordInvalid": "The password is invalid or the user does not have a password.",
+    "tooManyRequest": "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
+    "somethingWentWrong": "Something went wrong."
   }
 }
