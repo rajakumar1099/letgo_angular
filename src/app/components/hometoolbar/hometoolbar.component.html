@@ -5,7 +5,7 @@
     alt="image"
   />
   <span class="spacer"></span>
-  <div class="search-container">
+  <div class="search-container show_hide_search_bar">
     <mat-icon class="search-icon">search</mat-icon>
     <input
       matInput
@@ -14,7 +14,7 @@
       placeholder="{{ 'common.search' | translate }}"
     />
   </div>
-  <div class="location-container">
+  <div class="location-container show_hide_search_bar">
     <mat-icon class="search-icon">location_on</mat-icon>
     <input
       matInput
@@ -22,56 +22,58 @@
       type="text"
       placeholder="{{ 'common.globalStuff' | translate }}"
     />
-    <button mat-flat-button class="search-button">
+    <button mat-flat-button class="go-button">
       {{ "common.go" | translate }}
     </button>
   </div>
   <span class="spacer"></span>
   <div class="isLoggedInIcons" *ngIf="isLoggedIn()">
-    <mat-icon class="icon-margin">message</mat-icon>
-    <span class="toolbar_icon_line"></span>
-    <mat-icon class="icon-margin">notifications_none</mat-icon>
-    <span class="toolbar_icon_line"></span>
-    <mat-icon class="profile_img" [matMenuTriggerFor]="menu"
+    <mat-icon class="toolbar_icon-style">notifications_none</mat-icon>
+    <mat-icon class="toolbar_icon-style" [matMenuTriggerFor]="menu"
       >account_circle</mat-icon
-    >
-    <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu"
-      >arrow_drop_down</mat-icon
     >
   </div>
   <div *ngIf="!isLoggedIn()">
-    <button mat-button class="txt-color" (click)="openLoginDialog()">
-      {{ "common.login" | translate }}
-    </button>
-    <button mat-button class="txt-color" (click)="openSignUpDialog()">
-      {{ "common.signin" | translate }}
-    </button>
+    <p
+      class="txt-color"
+      translate="common.login"
+      (click)="openLoginDialog()"
+    ></p>
+    <p
+      class="txt-color"
+      translate="common.signin"
+      (click)="openSignUpDialog()"
+    ></p>
   </div>
-  <button mat-stroked-button class="sell-button">
+  <button mat-stroked-button (click)="openAddProductPage()" class="sell-button">
     <mat-icon class="camera-icon">photo_camera</mat-icon>
-    <span class="txt-color">{{ "common.sell" | translate }}</span>
+    <p class="txt-color">{{ "common.sell" | translate }}</p>
   </button>
 </mat-toolbar>
+<div class="bottom_search_bar">
+  <mat-icon class="search-icon">search</mat-icon>
+  <p class="bottom_search_bar" translate="common.search"></p>
+</div>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item class="menu_test" translate="common.profile"></button>
+  <button mat-menu-item class="menu_item" translate="common.profile"></button>
   <button
     mat-menu-item
-    class="menu_test"
+    class="menu_item"
     translate="common.myPromotions"
   ></button>
   <button
     mat-menu-item
-    class="menu_test"
+    class="menu_item"
     translate="common.myExchanges"
   ></button>
   <button
     mat-menu-item
-    class="menu_test"
+    class="menu_item"
     translate="common.myOrdersAndMySales"
   ></button>
   <button
     mat-menu-item
-    class="menu_test"
+    class="menu_item"
     (click)="logOut()"
     translate="common.logOut"
   ></button>

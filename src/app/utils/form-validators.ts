@@ -53,5 +53,5 @@ export const loginFormValidator = {
       Validators.maxLength(PASSWORD_MAX_COUNT),
     ])
   ),
-  [LOGINFORM.REMEMBERME]: new FormControl([false, Validators.requiredTrue]),
+  [LOGINFORM.REMEMBERME]: new FormControl(false),
 };

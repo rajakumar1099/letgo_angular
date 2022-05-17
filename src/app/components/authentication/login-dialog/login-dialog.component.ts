@@ -51,8 +51,7 @@ export class LoginDialogComponent implements OnInit {
     this.form.disable();
     this.authService
       .signIn(this.form)
-      .then((res) => {
-        this.authService.updateData(res!.user!.uid,Constants.TAG_LAST_LOGIN_TIME_STAMP, this.authService.convertTimestamp());
+      .then(() => {
         this.loading = false;
         this.closeDialog();
       })

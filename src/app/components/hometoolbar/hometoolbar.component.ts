@@ -31,6 +31,15 @@ export class HometoolbarComponent implements OnInit {
     });
   }
 
+  public openAddProductPage(): void {
+    this.isLoggedIn()
+    if(this.isLoggedIn()){
+
+    } else{
+      this.openLoginDialog()
+    }
+  }
+
   public isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }

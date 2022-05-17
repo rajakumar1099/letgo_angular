@@ -22,12 +22,14 @@ export class AuthService {
   ) {
     this.angularFireAuth.authState.subscribe((user) => {
       if (user) {
-        localStorage.setItem(Constants.TAG_USERS_UID, JSON.stringify(user.uid));
-        JSON.parse(localStorage.getItem(Constants.TAG_USERS_UID)!);
-        this.updateData(user.uid,Constants.TAG_LAST_LOGIN_TIME_STAMP, this.aesEncryptDecryptService.encryptText(this.convertTimestamp()))
+        this.setAuthDataInLocal(user.uid);
+        this.updateData(
+          user.uid,
+          Constants.TAG_LAST_LOGIN_TIME_STAMP,
+          this.aesEncryptDecryptService.encryptText(this.convertTimestamp())
+        );
       } else {
-        localStorage.setItem(Constants.TAG_USERS_UID, 'null');
-        JSON.parse(localStorage.getItem(Constants.TAG_USERS_UID)!);
+        this.setAuthDataInLocal();
       }
     });
   }
@@ -53,6 +55,13 @@ export class AuthService {
   public isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem(Constants.TAG_USERS_UID)!);
     return user !== null ? true : false;
+  }
+
+  private setAuthDataInLocal(uid?: string) {
+    localStorage.setItem(
+      Constants.TAG_USERS_UID,
+      uid ? JSON.stringify(uid) : 'null'
+    );
   }
 
   private async setSignUpData(user: any, formValue: FormGroup): Promise<void> {
@@ -88,7 +97,11 @@ export class AuthService {
     );
   }
 
-  public async updateData(uid: string, key: string, value: string): Promise<void> {
+  public async updateData(
+    uid: string,
+    key: string,
+    value: string
+  ): Promise<void> {
     if (uid) {
       const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
         `${Constants.TAG_USERS}/${uid}`

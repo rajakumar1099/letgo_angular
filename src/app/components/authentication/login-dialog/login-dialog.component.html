@@ -43,6 +43,7 @@
     </mat-form-field>
     <div class="col mb-2">
       <mat-checkbox
+        [hidden]="true"
         class="remember-me"
         [formControlName]="loginForm.REMEMBERME"
         >{{ "login.rememberMe" | translate }}</mat-checkbox
