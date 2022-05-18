@@ -1,0 +1,109 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col mb-2">
+      <span class="header-text">{{ "common.signin" | translate }}</span>
+      <mat-icon class="close-icon" (click)="closeDialog()">close</mat-icon>
+    </div>
+
+    <hr />
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        [formControlName]="signUpForm.NAME"
+        placeholder="{{ 'login.enterYourName' | translate }}"
+      />
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.NAME)">{{
+        "validators.thisFieldIsRequired" | translate
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        [formControlName]="signUpForm.USERNAME"
+        placeholder="{{ 'login.enterYourUsername' | translate }}"
+      />
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.USERNAME)">{{
+        getErrorMessage(signUpForm.USERNAME)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        type="email"
+        [formControlName]="signUpForm.EMAIL"
+        placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+      />
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.EMAIL)">{{
+        getErrorMessage(signUpForm.EMAIL)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        [formControlName]="signUpForm.PASSWORD"
+        placeholder="{{ 'login.enterYourPassword' | translate }}"
+      />
+      <button
+        *ngIf="form.controls[signUpForm.PASSWORD].value"
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{
+          hidePassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.PASSWORD)">{{
+        getErrorMessage(signUpForm.PASSWORD)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field
+      appearance="outline"
+      class="mat-form-field-wrapper"
+      *ngIf="form.controls[signUpForm.PASSWORD].value?.length >= 6"
+    >
+      <input
+        matInput
+        [type]="hideConfirmPassword ? 'password' : 'text'"
+        [formControlName]="signUpForm.CONFIRMPASSWORD"
+        placeholder="{{ 'login.enterYourConfirmPassword' | translate }}"
+      />
+      <button
+        *ngIf="form.controls[signUpForm.CONFIRMPASSWORD].value"
+        mat-icon-button
+        matSuffix
+        (click)="hideConfirmPassword = !hideConfirmPassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hideConfirmPassword"
+      >
+        <mat-icon>{{
+          hideConfirmPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.CONFIRMPASSWORD)">{{
+        getErrorMessage(signUpForm.CONFIRMPASSWORD)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="sign-up-button">
+    <button
+      class="sign-up-button-style"
+      mat-button
+      [disabled]="!form.valid"
+      (click)="handleDialogSignUp()"
+      mat-raised-button
+    >
+      <div *ngIf="!loading" translate="common.signin"></div>
+      <mat-spinner
+        class="spinner"
+        *ngIf="loading"
+        mode="indeterminate"
+        [diameter]="30"
+      ></mat-spinner>
+    </button>
+    <mat-error class="center">{{ firebaseAuthError }}</mat-error>
+  </div>
+</form>

@@ -1,0 +1,74 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col mb-2">
+      <span class="header-text">{{
+        "login.loginDialogHeaderLabel" | translate
+      }}</span>
+      <mat-icon class="close-icon" (click)="closeDialog()">close</mat-icon>
+    </div>
+    <p [translate]="'login.loginDialogBodyLabel'"></p>
+    <hr />
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        [formControlName]="loginForm.EMAIL"
+        placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+      />
+      <mat-error *ngIf="!checkFormIsValid(loginForm.EMAIL)">{{
+        getErrorMessage(loginForm.EMAIL)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        [formControlName]="loginForm.PASSWORD"
+        placeholder="{{ 'login.enterYourPassword' | translate }}"
+      />
+      <button
+        *ngIf="form.controls[loginForm.PASSWORD].value"
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{
+          hidePassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <mat-error *ngIf="!checkFormIsValid(loginForm.PASSWORD)">{{
+        getErrorMessage(loginForm.PASSWORD)
+      }}</mat-error>
+    </mat-form-field>
+    <div class="col mb-2">
+      <mat-checkbox
+        [hidden]="true"
+        class="remember-me"
+        [formControlName]="loginForm.REMEMBERME"
+        >{{ "login.rememberMe" | translate }}</mat-checkbox
+      >
+      <span class="forgot-password">{{
+        "login.forgetPassword" | translate
+      }}</span>
+    </div>
+  </div>
+  <div class="login-button">
+    <button
+      [disabled]="!form.valid"
+      class="login-button-style"
+      mat-button
+      (click)="handleDialogLogin()"
+      mat-raised-button
+    >
+      <div *ngIf="!loading" translate="common.login"></div>
+      <mat-spinner
+        class="spinner"
+        *ngIf="loading"
+        mode="indeterminate"
+        [diameter]="30"
+      ></mat-spinner>
+    </button>
+    <mat-error class="center">{{ firebaseAuthError }}</mat-error>
+  </div>
+</form>
