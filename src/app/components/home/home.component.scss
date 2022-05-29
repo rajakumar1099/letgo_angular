@@ -17,3 +17,36 @@
   .mat-sidenav-container {
     height: 100%;
   }
+
+  .sell_text {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .sell_icon_style {
+    font-size: 25px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .sell-btn {
+      padding: 10px 20px 10px 20px;
+      background-color: #e40046 !important;
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      color: #fff;
+      z-index: 10;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .sell-btn {
+      display: none;
+    }
+  }

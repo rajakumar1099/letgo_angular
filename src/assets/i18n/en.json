@@ -10,7 +10,8 @@
     "myPromotions": "My promotions",
     "myExchanges": "My exchanges",
     "myOrdersAndMySales": "My orders & My sales",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "category": "Category"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",

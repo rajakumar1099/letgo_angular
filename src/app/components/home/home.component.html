@@ -1,14 +1,19 @@
 <mat-sidenav-container class="mat-sidenav-container">
   <mat-sidenav class="mat-sidenav" #sidenav>
     <div class="sid-nav-toolbar">
-      Category
-      <mat-icon class="menu_icon_style" (click)="sidenav.close()">close</mat-icon>
+      {{ "common.category" | translate }}
+      <mat-icon class="menu_icon_style" (click)="sidenav.close()"
+        >close</mat-icon
+      >
     </div>
-    <mat-nav-list>
-    </mat-nav-list>
+    <mat-nav-list> </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-      <app-hometoolbar (openMenu)="sidenav.toggle()"></app-hometoolbar>
-      <router-outlet></router-outlet>
+    <app-hometoolbar (openMenu)="sidenav.toggle()"></app-hometoolbar>
+    <router-outlet></router-outlet>
+    <div class="sell-btn">
+      <mat-icon class="sell_icon_style">photo_camera</mat-icon>
+      <div class="sell_text">{{ "common.sell" | translate }}</div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
