@@ -1,1 +1,14 @@
-<app-hometoolbar></app-hometoolbar>
+<mat-sidenav-container class="mat-sidenav-container">
+  <mat-sidenav class="mat-sidenav" #sidenav>
+    <div class="sid-nav-toolbar">
+      Category
+      <mat-icon class="menu_icon_style" (click)="sidenav.close()">close</mat-icon>
+    </div>
+    <mat-nav-list>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <app-hometoolbar (openMenu)="sidenav.toggle()"></app-hometoolbar>
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

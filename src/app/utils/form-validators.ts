@@ -6,7 +6,7 @@ import {
   SIGNUPFORM,
   USERNAME_MAX_COUNT,
   USERNAME_MIN_COUNT,
-} from '../components/authentication/types/auth.types';
+} from '../components/authentication/core/types/auth.types';
 
 export const signUpFormValidator = {
   [SIGNUPFORM.NAME]: new FormControl('', Validators.required),

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from './components/authentication/auth.service';
+import { Observable } from 'rxjs';
+import { AuthState } from './components/authentication/core/types/auth.types';
+import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +10,10 @@ import { AuthService } from './components/authentication/auth.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  user$: Observable<AuthState> | undefined;
   constructor(
     private translate: TranslateService,
-    private authService: AuthService
+    public aesEncryptDecryptService: AesEncryptDecryptService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');

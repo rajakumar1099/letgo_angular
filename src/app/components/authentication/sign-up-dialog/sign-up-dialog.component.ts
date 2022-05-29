@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, tap } from 'rxjs';
+import { Features } from 'src/app/core/features';
+import { AppState } from 'src/app/core/state';
+import { AesEncryptDecryptService } from 'src/app/utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import { signUpFormValidator } from 'src/app/utils/form-validators';
-import { AuthService } from '../auth.service';
-import { SIGNUPFORM } from '../types/auth.types';
+import { AuthService } from '../core/services/auth.service';
+import * as AuthActions from '../core/store/auth.actions';
+import { SIGNUPFORM, AuthState } from '../core/types/auth.types';
 
 @Component({
   selector: 'app-sign-up-dialog',
@@ -16,21 +22,33 @@ export class SignUpDialogComponent implements OnInit {
   public hidePassword = true;
   public hideConfirmPassword = true;
   public showConfirmPassword = false;
-  public loading = false;
-  public firebaseAuthError: string | undefined;
+  public firebaseAuthError!: string;
+  public signUp$!: Observable<AuthState>;
+
   constructor(
     private dialog: MatDialogRef<SignUpDialogComponent>,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>,
+    private aesEncryptDecryptService: AesEncryptDecryptService
   ) {}
 
   ngOnInit(): void {
     this.createFormGroup();
+    this.signUp$ = this.store.select(Features.User).pipe(
+      tap((res) => {
+        if (res.user) this.closeDialog();
+        if (res.error) this.form.enable();
+        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
+          res.error
+        );
+      })
+    );
   }
 
   private createFormGroup() {
     this.form = this.formBuilder.group(signUpFormValidator, {
-      validators: (control) => {
+      validators: (control: any) => {
         if (
           control.value[SIGNUPFORM.PASSWORD] &&
           control.value[SIGNUPFORM.PASSWORD] !==
@@ -55,27 +73,22 @@ export class SignUpDialogComponent implements OnInit {
 
   public closeDialog(): void {
     this.dialog.close();
-    this.form.enable();
     this.form.reset();
   }
 
   public handleDialogSignUp(): void {
-    this.loading = true;
     this.form.disable();
-    this.authService
-      .signUp(this.form)
-      .then(() => {
-        this.loading = false;
-        this.authService.signIn(this.form).then(() => {
-          this.closeDialog();
-        });
+    this.store.dispatch(
+      AuthActions.SignUp({
+        payload: {
+          email: this.form.controls[SIGNUPFORM.EMAIL].value,
+          fullname: this.form.controls[SIGNUPFORM.NAME].value,
+          username: this.form.controls[SIGNUPFORM.USERNAME].value,
+          password: this.aesEncryptDecryptService.encryptText(this.form.controls[SIGNUPFORM.PASSWORD].value),
+          registerTimestamp: this.authService.convertTimestamp(),
+          lastLoginTimestamp: this.authService.convertTimestamp(),
+        },
       })
-      .catch((err) => {
-        this.loading = false;
-        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
-          err.message
-        );
-        this.form.enable();
-      });
+    );
   }
 }

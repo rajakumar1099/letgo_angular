@@ -13,8 +13,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FirebaseModule } from './modules/firebase/firebase.module';
 import { SignUpDialogComponent } from './components/authentication/sign-up-dialog/sign-up-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from './components/authentication/auth.service';
+import { AuthService } from './components/authentication/core/services/auth.service';
 import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AppState, AppReducers } from './core/state';
+import { environment } from 'src/environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthEffects } from './components/authentication/core/store/auth.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,9 +42,14 @@ import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/ae
         deps: [HttpClient],
       },
     }),
+    EffectsModule.forRoot([AuthEffects]),
     BrowserAnimationsModule,
     MaterialModule,
     FirebaseModule,
+    StoreModule.forRoot<AppState>(AppReducers),
+    StoreDevtoolsModule.instrument({
+      logOnly: environment.production,
+    }),
   ],
   providers: [AuthService, AesEncryptDecryptService],
   bootstrap: [AppComponent],

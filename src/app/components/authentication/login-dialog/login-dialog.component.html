@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" *ngIf="login$ | async as login">
   <div class="row">
     <div class="col mb-2">
       <span class="header-text">{{
@@ -61,14 +61,16 @@
       (click)="handleDialogLogin()"
       mat-raised-button
     >
-      <div *ngIf="!loading" translate="common.login"></div>
+      <div *ngIf="!login.loading" translate="common.login"></div>
       <mat-spinner
         class="spinner"
-        *ngIf="loading"
+        *ngIf="login.loading"
         mode="indeterminate"
         [diameter]="30"
       ></mat-spinner>
     </button>
-    <mat-error class="center">{{ firebaseAuthError }}</mat-error>
+    <mat-error *ngIf="login.error" class="center">{{
+      firebaseAuthError
+    }}</mat-error>
   </div>
 </form>

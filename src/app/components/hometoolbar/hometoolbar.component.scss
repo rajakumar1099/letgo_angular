@@ -69,20 +69,27 @@
   font-size: 15px;
 }
 
-.toolbar_app_logo {
-  width: auto;
-  height: 30px;
-}
-
 @media only screen and (max-width: 768px) {
+  .toolbar_app_logo {
+    width: auto;
+    height: 25px;
+  }
+
   .sell-button {
     display: none;
+  }
+
+  .bottom_search_icon {
+    margin: 10px;
+    color: gray;
+    font-size: 23px;
+    align-self: center;
   }
 
   .bottom_search_bar {
     display: flex;
     width: 100%;
-    height: 8%;
+    height: 5%;
     background-color: #efeeef;
     align-self: center;
     color: gray;
@@ -92,9 +99,17 @@
     display: none;
   }
 
-  .toolbar_icon-style {
-    margin-right: 15px;
+  .menu_icon_style {
+    margin-right: 20px;
     font-size: 25px;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+  }
+
+  .toolbar_icon-style {
+    margin: 10px;
+    font-size: 30px;
     align-self: center;
     cursor: pointer;
     color: white;
@@ -102,6 +117,11 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .toolbar_app_logo {
+    width: auto;
+    height: 30px;
+  }
+
   .sell-button {
     color: white;
     font-size: 15px;
@@ -114,6 +134,10 @@
   }
 
   .bottom_search_bar {
+    display: none;
+  }
+
+  .menu_icon_style {
     display: none;
   }
 

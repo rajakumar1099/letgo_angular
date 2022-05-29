@@ -1,4 +1,5 @@
-<mat-toolbar class="bg-color">
+<mat-toolbar class="bg-color" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <mat-icon class="menu_icon_style" (click)="openMenuSidNav()">menu</mat-icon>
   <img
     class="toolbar_app_logo"
     src="\assets\drawables\toolbar_app_logo.png"
@@ -27,13 +28,13 @@
     </button>
   </div>
   <span class="spacer"></span>
-  <div class="isLoggedInIcons" *ngIf="isLoggedIn()">
+  <div class="isLoggedInIcons" *ngIf="isLoggedIn.user">
     <mat-icon class="toolbar_icon-style">notifications_none</mat-icon>
     <mat-icon class="toolbar_icon-style" [matMenuTriggerFor]="menu"
       >account_circle</mat-icon
     >
   </div>
-  <div *ngIf="!isLoggedIn()">
+  <div *ngIf="!isLoggedIn.user">
     <p
       class="txt-color"
       translate="common.login"
@@ -51,7 +52,7 @@
   </button>
 </mat-toolbar>
 <div class="bottom_search_bar">
-  <mat-icon class="search-icon">search</mat-icon>
+  <mat-icon class="bottom_search_icon">search</mat-icon>
   <p class="bottom_search_bar" translate="common.search"></p>
 </div>
 <mat-menu #menu="matMenu">
@@ -78,3 +79,5 @@
     translate="common.logOut"
   ></button>
 </mat-menu>
+
+

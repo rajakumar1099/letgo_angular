@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Constants } from 'src/app/utils/constants';
+import { Store } from '@ngrx/store';
 import { loginFormValidator } from 'src/app/utils/form-validators';
-import { AuthService } from '../auth.service';
-import { LOGINFORM } from '../types/auth.types';
+import { LOGINFORM, AuthState } from '../core/types/auth.types';
+import * as AuthActions from '../core/store/auth.actions';
+import { AuthService } from '../core/services/auth.service';
+import { AppState } from 'src/app/core/state';
+import { Features } from 'src/app/core/features';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login-dialog',
@@ -16,20 +21,27 @@ export class LoginDialogComponent implements OnInit {
   public readonly loginForm = LOGINFORM;
   public loading = false;
   public hidePassword = true;
-  public firebaseAuthError: string | undefined;
+  public firebaseAuthError!: string;
+  public login$!: Observable<AuthState>;
 
   constructor(
     private dialog: MatDialogRef<LoginDialogComponent>,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.createFormGroup();
-  }
-
-  private createFormGroup() {
     this.form = this.formBuilder.group(loginFormValidator);
+    this.login$ = this.store.select(Features.User).pipe(
+      tap((res) => {
+        if (res.user) this.closeDialog();
+        if (res.error) this.form.enable();
+        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
+          res.error
+        );
+      })
+    );
   }
 
   public checkFormIsValid(control: string): boolean {
@@ -40,27 +52,21 @@ export class LoginDialogComponent implements OnInit {
     return this.authService.getTranslationErrorMessage(this.form, control);
   }
 
-  public closeDialog(): void {
-    this.dialog.close();
-    this.form.enable();
-    this.form.reset();
+  public handleDialogLogin(): void {
+    this.form.disable();
+    this.store.dispatch(
+      AuthActions.Login({
+        payload: {
+          email: this.form.controls[LOGINFORM.EMAIL].value,
+          password: this.form.controls[LOGINFORM.PASSWORD].value,
+          remember: this.form.controls[LOGINFORM.REMEMBERME].value,
+        },
+      })
+    );
   }
 
-  public handleDialogLogin(): void {
-    this.loading = true;
-    this.form.disable();
-    this.authService
-      .signIn(this.form)
-      .then(() => {
-        this.loading = false;
-        this.closeDialog();
-      })
-      .catch((err) => {
-        this.loading = false;
-        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
-          err.message
-        );
-        this.form.enable();
-      });
+  public closeDialog(): void {
+    this.dialog.close();
+    this.form.reset();
   }
 }
