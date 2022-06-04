@@ -1,5 +1,10 @@
 <mat-toolbar class="bg-color" *ngIf="isLoggedIn$ | async as isLoggedIn">
-  <mat-icon class="menu_icon_style" (click)="openMenuSidNav()">menu</mat-icon>
+  <img
+    class="menu_icon_style"
+    (click)="openMenuSidNav()"
+    src="\assets\drawables\menu_toolbar.png"
+    alt="image"
+  />
   <img
     class="toolbar_app_logo"
     src="\assets\drawables\toolbar_app_logo.png"
@@ -34,7 +39,7 @@
       >account_circle</mat-icon
     >
   </div>
-  <div *ngIf="!isLoggedIn.user">
+  <div *ngIf="!isLoggedIn.user" class="show_login_signup_desktop">
     <p
       class="txt-color"
       translate="common.login"
@@ -42,7 +47,7 @@
     ></p>
     <p
       class="txt-color"
-      translate="common.signin"
+      translate="common.signup"
       (click)="openSignUpDialog()"
     ></p>
   </div>
@@ -79,5 +84,3 @@
     translate="common.logOut"
   ></button>
 </mat-menu>
-
-

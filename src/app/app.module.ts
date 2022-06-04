@@ -21,6 +21,9 @@ import { AppState, AppReducers } from './core/state';
 import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthEffects } from './components/authentication/core/store/auth.effects';
+import { CategoryHeaderComponent } from './components/categories/category-header/category-header.component';
+import { CategoriesEffects } from './components/categories/core/store/categories.effects';
+import { CategoryHeaderMenuComponent } from './components/categories/category-header-menu/category-header-menu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +31,8 @@ import { AuthEffects } from './components/authentication/core/store/auth.effects
     HomeComponent,
     LoginDialogComponent,
     SignUpDialogComponent,
+    CategoryHeaderComponent,
+    CategoryHeaderMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,7 @@ import { AuthEffects } from './components/authentication/core/store/auth.effects
         deps: [HttpClient],
       },
     }),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CategoriesEffects]),
     BrowserAnimationsModule,
     MaterialModule,
     FirebaseModule,

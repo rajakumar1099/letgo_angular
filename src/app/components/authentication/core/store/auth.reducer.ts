@@ -19,14 +19,12 @@ export const authReducer = createReducer<AuthState>(
     user: action.userDetails,
     loading: false,
   })),
-  on(AuthActions.Login, (state, action) => ({
+  on(AuthActions.Login, (state) => ({
     ...state,
-    payload: action.payload,
     loading: true,
   })),
-  on(AuthActions.SignUp, (state, action) => ({
+  on(AuthActions.SignUp, (state) => ({
     ...state,
-    payload: action.payload,
     loading: true,
   })),
   on(AuthActions.Logout, (state) => ({

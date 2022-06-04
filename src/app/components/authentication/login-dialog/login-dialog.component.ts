@@ -6,10 +6,10 @@ import { loginFormValidator } from 'src/app/utils/form-validators';
 import { LOGINFORM, AuthState } from '../core/types/auth.types';
 import * as AuthActions from '../core/store/auth.actions';
 import { AuthService } from '../core/services/auth.service';
-import { AppState } from 'src/app/core/state';
 import { Features } from 'src/app/core/features';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { getAuth } from '../core/store/auth.selector';
 
 @Component({
   selector: 'app-login-dialog',
@@ -28,15 +28,15 @@ export class LoginDialogComponent implements OnInit {
     private dialog: MatDialogRef<LoginDialogComponent>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private store: Store<AppState>
+    private store: Store<{ [Features.Auth]: AuthState }>
   ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(loginFormValidator);
-    this.login$ = this.store.select(Features.User).pipe(
+    this.login$ = this.store.select(getAuth).pipe(
       tap((res) => {
-        if (res.user) this.closeDialog();
-        if (res.error) this.form.enable();
+        if (res?.user) this.closeDialog();
+        if (res?.error) this.form.enable();
         this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
           res.error
         );

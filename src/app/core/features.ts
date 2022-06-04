@@ -1,3 +1,4 @@
 export enum Features {
-  User = 'user'
+  Auth = 'auth',
+  Categories = 'categories',
 }

@@ -1,0 +1,42 @@
+<div
+  class="category_header_container"
+  *ngIf="categories$ | async as categories"
+>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let category of categories.categories">
+      <mat-expansion-panel-header class="mat-expansion-panel-header">
+        <mat-panel-title>
+          <img
+            class="profile_img"
+            src="{{ category.image }}"
+            alt="{{ category.name }}"
+          />
+          <div class="category_text">{{ category.name }}</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-expansion-panel
+        [hideToggle]="!sub_category.child_categories.length"
+        class="mat-expansion-panel-body"
+        *ngFor="let sub_category of category.sub_categories"
+      >
+        <mat-expansion-panel-header class="mat-expansion-panel-header">
+          <mat-panel-title>
+            <div class="sub_category_text">{{ sub_category.name }}</div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="sub_category?.child_categories">
+          <mat-expansion-panel
+            [hideToggle]="true"
+            *ngFor="let child_category of sub_category?.child_categories"
+          >
+            <mat-expansion-panel-header class="mat-expansion-panel-header">
+              <mat-panel-title>
+                <div class="sub_category_text">{{ child_category?.name }}</div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

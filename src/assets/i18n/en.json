@@ -5,13 +5,14 @@
     "sell": "SELL",
     "go": "Go",
     "login": "Log in",
-    "signin": "Sign up",
+    "signup": "Sign up",
     "profile": "Profile",
     "myPromotions": "My promotions",
     "myExchanges": "My exchanges",
     "myOrdersAndMySales": "My orders & My sales",
     "logOut": "Log out",
-    "category": "Category"
+    "category": "Category",
+    "allCategories": "All Categories"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",

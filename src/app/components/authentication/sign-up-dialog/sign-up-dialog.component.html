@@ -1,7 +1,7 @@
 <form [formGroup]="form" *ngIf="signUp$ | async as signUp">
   <div class="row">
     <div class="col mb-2">
-      <span class="header-text">{{ "common.signin" | translate }}</span>
+      <span class="header-text">{{ "common.signup" | translate }}</span>
       <mat-icon class="close-icon" (click)="closeDialog()">close</mat-icon>
     </div>
 
@@ -96,7 +96,7 @@
       (click)="handleDialogSignUp()"
       mat-raised-button
     >
-      <div *ngIf="!signUp.loading" translate="common.signin"></div>
+      <div *ngIf="!signUp.loading" translate="common.signup"></div>
       <mat-spinner
         class="spinner"
         *ngIf="signUp.loading"
@@ -104,6 +104,8 @@
         [diameter]="30"
       ></mat-spinner>
     </button>
-    <mat-error *ngIf="signUp.error" class="center">{{ firebaseAuthError }}</mat-error>
+    <mat-error *ngIf="signUp.error" class="center">{{
+      firebaseAuthError
+    }}</mat-error>
   </div>
 </form>

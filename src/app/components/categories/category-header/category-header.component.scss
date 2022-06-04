@@ -1,0 +1,72 @@
+.profile_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 60%;
+  object-fit: cover;
+}
+
+.category_item {
+  display: flex;
+  padding: 5px;
+  align-items: center;
+}
+
+.category_item :hover {
+  color: #e40046;
+}
+
+.category_text {
+  margin-left: 5px;
+  font-weight: 580;
+  font-size: 17px;
+  white-space: nowrap;
+  color: #222;
+}
+
+.div_line {
+  margin: 0px 12px 0px 12px;
+  font-weight: 580;
+  height: 60px;
+  border-right: 1px solid #00090014;
+}
+
+.left_arrow_style {
+  cursor: pointer;
+  align-self: center;
+  margin: 0px 0px 0px 10px;
+  display: flex;
+}
+
+.right_arrow_style {
+  cursor: pointer;
+  align-self: center;
+  margin: 0px 0px 0px 10px;
+  display: flex;
+  position: fixed;
+  right: 0;
+  padding: 5px;
+  background-color: #ffffff61;
+}
+
+.category_item_container {
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+@media only screen and (max-width: 768px) {
+  .category_container {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .category_container {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    background-color: #ffffff;
+    overflow: auto;
+    cursor: pointer;
+  }
+}

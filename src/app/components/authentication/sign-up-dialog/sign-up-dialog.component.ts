@@ -4,11 +4,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { Features } from 'src/app/core/features';
-import { AppState } from 'src/app/core/state';
 import { AesEncryptDecryptService } from 'src/app/utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import { signUpFormValidator } from 'src/app/utils/form-validators';
 import { AuthService } from '../core/services/auth.service';
 import * as AuthActions from '../core/store/auth.actions';
+import { getAuth } from '../core/store/auth.selector';
 import { SIGNUPFORM, AuthState } from '../core/types/auth.types';
 
 @Component({
@@ -29,13 +29,13 @@ export class SignUpDialogComponent implements OnInit {
     private dialog: MatDialogRef<SignUpDialogComponent>,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private store: Store<AppState>,
+    private store: Store<{ [Features.Auth]: AuthState }>,
     private aesEncryptDecryptService: AesEncryptDecryptService
   ) {}
 
   ngOnInit(): void {
     this.createFormGroup();
-    this.signUp$ = this.store.select(Features.User).pipe(
+    this.signUp$ = this.store.select(getAuth).pipe(
       tap((res) => {
         if (res.user) this.closeDialog();
         if (res.error) this.form.enable();
@@ -84,7 +84,9 @@ export class SignUpDialogComponent implements OnInit {
           email: this.form.controls[SIGNUPFORM.EMAIL].value,
           fullname: this.form.controls[SIGNUPFORM.NAME].value,
           username: this.form.controls[SIGNUPFORM.USERNAME].value,
-          password: this.aesEncryptDecryptService.encryptText(this.form.controls[SIGNUPFORM.PASSWORD].value),
+          password: this.aesEncryptDecryptService.encryptText(
+            this.form.controls[SIGNUPFORM.PASSWORD].value
+          ),
           registerTimestamp: this.authService.convertTimestamp(),
           lastLoginTimestamp: this.authService.convertTimestamp(),
         },
