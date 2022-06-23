@@ -5,7 +5,7 @@ import { LoginDialogComponent } from '../authentication/login-dialog/login-dialo
 import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-dialog.component';
 import * as AuthActions from '../../components/authentication/core/store/auth.actions';
 import { Features } from 'src/app/core/features';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getAuth } from '../authentication/core/store/auth.selector';
 
@@ -16,19 +16,16 @@ import { getAuth } from '../authentication/core/store/auth.selector';
 })
 export class HometoolbarComponent implements OnInit {
   public isLoggedIn$!: Observable<AuthState>;
-  private isLoggedIn = false;
+  @Output() addProductPage: EventEmitter<any> = new EventEmitter();
   @Output() openMenu: EventEmitter<any> = new EventEmitter();
+
   constructor(
     private dialog: MatDialog,
-    private store: Store<{ [Features.Auth]: AuthState }>
+    private store: Store<{ [Features.Auth]: AuthState }>,
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn$ = this.store.select(getAuth).pipe(
-      tap((res) => {
-        this.isLoggedIn = !!res.user;
-      })
-    );
+    this.isLoggedIn$ = this.store.select(getAuth);
   }
 
   public openLoginDialog(): void {
@@ -50,10 +47,7 @@ export class HometoolbarComponent implements OnInit {
   }
 
   public openAddProductPage(): void {
-    if (this.isLoggedIn) {
-    } else {
-      this.openLoginDialog();
-    }
+    this.addProductPage.emit();
   }
 
   public logOut(): void {

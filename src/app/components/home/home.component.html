@@ -1,4 +1,4 @@
-<mat-sidenav-container
+<!-- <mat-sidenav-container
   class="mat-sidenav-container"
   *ngIf="categories$ | async as categories"
 >
@@ -9,7 +9,7 @@
         >close</mat-icon
       >
     </div>
-    <div class="custom-spinner" *ngIf="categories.loading">
+    <div class="custom-spinner" *ngIf="!categories.length">
       <mat-spinner [diameter]="30"></mat-spinner>
     </div>
     <mat-nav-list>
@@ -27,13 +27,17 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <app-hometoolbar (openMenu)="sidenav.toggle()"></app-hometoolbar>
+  <mat-sidenav-content class="mat-sidenav-content">
+    <app-hometoolbar (addProductPage)="openAddproductPage()" (openMenu)="sidenav.toggle()"></app-hometoolbar>
     <app-category-header></app-category-header>
     <router-outlet></router-outlet>
-    <div class="sell-btn" (click)="openAddproductPage()">
-      <mat-icon class="sell_icon_style">photo_camera</mat-icon>
-      <div class="sell_text">{{ "common.sell" | translate }}</div>
-    </div>
+    <app-home-products></app-home-products>
   </mat-sidenav-content>
 </mat-sidenav-container>
+ -->
+
+ <div class="sell-btn" *ngIf="isLoggedIn$ | async" (click)="openAddproductPage()">
+  <mat-icon class="sell_icon_style">photo_camera</mat-icon>
+  <div class="sell_text">{{ "common.sell" | translate }}</div>
+</div>
+

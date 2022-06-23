@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { getCategories } from '../categories/core/store/categories.selector';
-import { CategoriesState } from '../categories/core/types/categories.types';
+import { Categories, CategoriesState } from '../categories/core/types/categories.types';
 import * as AuthActions from '../authentication/core/store/auth.actions';
 import * as CategoriesActions from '../categories/core/store/categories.actions';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,13 +11,14 @@ import { LoginDialogComponent } from '../authentication/login-dialog/login-dialo
 import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-dialog.component';
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getAuth } from '../authentication/core/store/auth.selector';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public categories$!: Observable<CategoriesState>;
+  public categories$!: Observable<Categories[] | null>;
   public isLoggedIn$!: Observable<AuthState>;
   public isLoggedIn: boolean = false;
   constructor(
@@ -25,7 +26,9 @@ export class HomeComponent implements OnInit {
     private store: Store<{
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
-    }>
+    }>,
+    private router: Router,
+    private activateRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +57,10 @@ export class HomeComponent implements OnInit {
   }
 
   public openAddproductPage(): void {
-    if (!this.isLoggedIn) {
+    if (this.isLoggedIn) {
+      // this.router.navigate(['add-product'], {relativeTo: this.activateRoute})
+      this.router.navigate(['add-product']/* , {relativeTo: this.activateRoute} */)
+    } else{
       this.openLoginDialog();
     }
   }

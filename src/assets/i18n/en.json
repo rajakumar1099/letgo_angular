@@ -12,7 +12,16 @@
     "myOrdersAndMySales": "My orders & My sales",
     "logOut": "Log out",
     "category": "Category",
-    "allCategories": "All Categories"
+    "allCategories": "All Categories",
+    "name": "Name",
+    "description": "Description",
+    "productDescription": "Product Description",
+    "givingAway": "Giving Away",
+    "price": "Price",
+    "productPrice": "Product Price",
+    "productLocation": "Product Location",
+    "listingLocation": "Listing’s location",
+    "save": "Save"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",
@@ -41,5 +50,24 @@
     "passwordInvalid": "The password is invalid or the user does not have a password.",
     "tooManyRequest": "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.",
     "somethingWentWrong": "Something went wrong."
+  },
+  "footer": {
+    "happyShoppingWithLabel": "Happy shopping with Joysale",
+    "downloadAppsUsingThisLink": "Download Apps using this link",
+    "promoteYourBrandLabel": "Promoting your brands under a banner section to reach more traffic among users",
+    "bannerAdvertise": "Banner Advertise"
+  },
+  "addProducts": {
+    "advertiseFree": "Advertise free",
+    "saleTipLabel": "Sale Tip: Tell us more about your photos & upload only quality photos!",
+    "addProductsLabel": "Add photos of your product",
+    "whatIsYourListing": "What is your listing based on?",
+    "selectCategory": "Select Category",
+    "productTitle": "Product title",
+    "noteChooseALocationLabel": "Note: Choose a location from the dropdown list. Avoid entering manually",
+    "tellWhereYouSellThisItem": "Tell where you sell this item",
+    "youtubeVideoEmbedUrl": "Youtube Video Embed URL",
+    "productVideo": "Product Video",
+    "youtubeDummyPlaceHolder": "https://www.youtube.com/watch?v=embed%2FSMcFn"
   }
 }

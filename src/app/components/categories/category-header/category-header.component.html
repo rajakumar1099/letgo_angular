@@ -1,5 +1,5 @@
 <ng-container *ngIf="categories$ | async as categories">
-  <div class="category_container" *ngIf="!categories.loading">
+  <div class="category_container" *ngIf="categories.length">
     <div class="left_arrow_style">
       <mat-icon (click)="scrollLeft()">arrow_back_ios</mat-icon>
     </div>
@@ -9,7 +9,7 @@
           {{ "common.allCategories" | translate }}
         </div>
       </div>
-      <div *ngFor="let category of categories.categories">
+      <div *ngFor="let category of categories">
         <span class="category_item" [matMenuTriggerFor]="menu">
           <div class="div_line"></div>
           <img

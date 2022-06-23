@@ -1,0 +1,92 @@
+.root-container {
+  margin: 0 auto;
+  max-width: 750px;
+  padding: 15px;
+}
+
+.header-text {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.header-description {
+  font-size: larger;
+  margin: 10px 0;
+}
+
+.add-photos-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.add-photos-text-container {
+  display: flex;
+  margin-right: 5px;
+}
+
+.add-photos-text {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0 0 15px;
+}
+
+.add-image-button-container {
+  width: 100px;
+  height: 100px;
+  box-shadow: 0px 0px 15px #ddd;
+  margin: 3px;
+  // cursor: pointer;
+}
+
+.product-img {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+}
+
+.remove-icon {
+  position: fixed;
+  // width: 95px;
+  text-align: right;
+  margin-top: 5px;
+  cursor: pointer;
+  margin: 5px 70px 0;
+}
+
+.add-icon {
+  margin-left: 40px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.mat-form-field-container {
+  width: 100%;
+  padding: 10px 0 0 0;
+}
+
+.mat-form-field-price-container {
+  width: 50%;
+}
+
+.save-button-style {
+  background-color: #e40046;
+  color: white;
+  float: right;
+  margin-bottom: 20px;
+  width: 100px;
+}
+
+.currency-style {
+  width: 30%;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}

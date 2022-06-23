@@ -12,6 +12,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const mat = [
   MatIconModule,
@@ -26,6 +28,8 @@ const mat = [
   MatSidenavModule,
   MatListModule,
   MatExpansionModule,
+  MatSelectModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

@@ -24,6 +24,8 @@ import { AuthEffects } from './components/authentication/core/store/auth.effects
 import { CategoryHeaderComponent } from './components/categories/category-header/category-header.component';
 import { CategoriesEffects } from './components/categories/core/store/categories.effects';
 import { CategoryHeaderMenuComponent } from './components/categories/category-header-menu/category-header-menu.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { HomeFooterComponent } from './components/home/home-footer/home-footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,8 @@ import { CategoryHeaderMenuComponent } from './components/categories/category-he
     SignUpDialogComponent,
     CategoryHeaderComponent,
     CategoryHeaderMenuComponent,
+    AddProductComponent,
+    HomeFooterComponent,
   ],
   imports: [
     BrowserModule,

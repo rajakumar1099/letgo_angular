@@ -1,4 +1,5 @@
 import { FormControl, Validators } from '@angular/forms';
+import { ADDPRODUCT } from '../components/add-product/core/types/add-products.types';
 import {
   LOGINFORM,
   PASSWORD_MAX_COUNT,
@@ -55,3 +56,31 @@ export const loginFormValidator = {
   ),
   [LOGINFORM.REMEMBERME]: new FormControl(false),
 };
+
+export const addProductFormValidator = {
+  [ADDPRODUCT.CATEGORY]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.PRODUCT_TITLE]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.PRODUCT_DESCRIPTION]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.PRODUCT_LOCATION]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.PRODUCT_PRICE]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.CURRENCY]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.IS_GIVING_AWAY]: new FormControl(false),
+}

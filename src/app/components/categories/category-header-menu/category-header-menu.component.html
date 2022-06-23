@@ -3,7 +3,7 @@
   *ngIf="categories$ | async as categories"
 >
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let category of categories.categories">
+    <mat-expansion-panel *ngFor="let category of categories">
       <mat-expansion-panel-header class="mat-expansion-panel-header">
         <mat-panel-title>
           <img

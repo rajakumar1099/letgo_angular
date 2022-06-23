@@ -6,5 +6,5 @@ const getCategoriesState = createFeatureSelector<CategoriesState>(
   Features.Categories
 );
 export const getCategories = createSelector(getCategoriesState, (state) => {
-  return state;
+  return state.categories;
 });

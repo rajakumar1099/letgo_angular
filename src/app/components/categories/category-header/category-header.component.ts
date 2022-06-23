@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { getCategories } from '../core/store/categories.selector';
-import { CategoriesState } from '../core/types/categories.types';
+import { Categories, CategoriesState } from '../core/types/categories.types';
 
 @Component({
   selector: 'app-category-header',
@@ -12,7 +12,7 @@ import { CategoriesState } from '../core/types/categories.types';
   styleUrls: ['./category-header.component.scss'],
 })
 export class CategoryHeaderComponent implements OnInit {
-  public categories$!: Observable<CategoriesState>;
+  public categories$!: Observable<Categories[] | null>;
   @ViewChild('widgetsContent') widgetsContent!: ElementRef;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger | undefined;
   isMatMenuOpen = false;

@@ -5,6 +5,7 @@ import { Constants } from 'src/app/utils/constants';
 import { SIGNUPFORM } from '../types/auth.types';
 import 'firebase/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-products.types';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +64,9 @@ export class AuthService {
             return this.translate.instant('validators.passwordMatchError');
           }
         }
+        /* case ADDPRODUCT.PRODUCT_TITLE: {
+          if(form.controls[ADDPRODUCT.PRODUCT_TITLE]).hasError
+        } */
         default: {
           return this.translate.instant('errors.somethingWentWrong');
         }
