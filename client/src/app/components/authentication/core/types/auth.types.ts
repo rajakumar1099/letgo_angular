@@ -41,4 +41,5 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
   user: AuthDetails | null;
+  authToken: string | null
 }

@@ -12,6 +12,7 @@ import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getAuth } from '../authentication/core/store/auth.selector';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../authentication/core/services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -28,12 +29,13 @@ export class HomeComponent implements OnInit {
       [Features.Auth]: AuthState;
     }>,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.GetUser());
-    this.store.dispatch(CategoriesActions.GetCategories());
+    // this.store.dispatch(AuthActions.GetUser());
+    // this.store.dispatch(CategoriesActions.GetCategories());
     this.categories$ = this.store.select(getCategories);
     this.isLoggedIn$ = this.store.select(getAuth).pipe(
       tap((res) => {

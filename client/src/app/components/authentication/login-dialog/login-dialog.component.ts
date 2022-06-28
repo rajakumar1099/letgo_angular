@@ -37,9 +37,7 @@ export class LoginDialogComponent implements OnInit {
       tap((res) => {
         if (res?.user) this.closeDialog();
         if (res?.error) this.form.enable();
-        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
-          res.error
-        );
+        this.firebaseAuthError = res?.error ?? ''
       })
     );
   }
@@ -59,7 +57,7 @@ export class LoginDialogComponent implements OnInit {
         payload: {
           email: this.form.controls[LOGINFORM.EMAIL].value,
           password: this.form.controls[LOGINFORM.PASSWORD].value,
-          remember: this.form.controls[LOGINFORM.REMEMBERME].value,
+          // remember: this.form.controls[LOGINFORM.REMEMBERME].value,
         },
       })
     );

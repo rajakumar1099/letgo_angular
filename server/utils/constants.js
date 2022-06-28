@@ -1,8 +1,6 @@
 module.exports = Object.freeze({
   SUCCESS: "Success",
   FAILURE: "Failure",
-  HR: "hr",
-  ADMIN: "admin",
   INTERVIEWER: "interviewer",
   MALE: "male",
   FEMALE: "female",
@@ -19,9 +17,10 @@ module.exports = Object.freeze({
   AUTHORIZED_SUCCESSFULLY: "Authorized successfully",
   INVALID_EMAIL_ID: "Invalid Email ID",
   USER_DELETED_SUCCESSFULLY: "User deleted successfully",
-  CANDIDATE_DELETED_SUCCESSFULLY: "Candidate deleted successfully",
+  CANDIDATE_DELETED_SUCCESSFULLY: "Candidate deleted Successfully",
   INVALID_TYPE: "Invalid Type",
   INVALID_GENDER: "Invalid Gender",
   INVALID_TOKEN: "Invalid Token",
   AUTHORIZATION_FAILED: "Authorization Failed",
+  CATEGORY_ADDED_SUCCESSFULLY: "Category Added Successfully"
 });

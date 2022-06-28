@@ -37,11 +37,9 @@ export class SignUpDialogComponent implements OnInit {
     this.createFormGroup();
     this.signUp$ = this.store.select(getAuth).pipe(
       tap((res) => {
-        if (res.user) this.closeDialog();
-        if (res.error) this.form.enable();
-        this.firebaseAuthError = this.authService.getFirebaseErrorMessages(
-          res.error
-        );
+        if (res?.user) this.closeDialog();
+        if (res?.error) this.form.enable();
+        this.firebaseAuthError = res?.error ?? ''
       })
     );
   }

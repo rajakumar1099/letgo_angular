@@ -9,11 +9,16 @@ import { AuthState } from './components/authentication/core/types/auth.types';
 import { LoginDialogComponent } from './components/authentication/login-dialog/login-dialog.component';
 import { SignUpDialogComponent } from './components/authentication/sign-up-dialog/sign-up-dialog.component';
 import { getCategories } from './components/categories/core/store/categories.selector';
-import { Categories, CategoriesState } from './components/categories/core/types/categories.types';
+import {
+  Categories,
+  CategoriesState,
+} from './components/categories/core/types/categories.types';
 import { Features } from './core/features';
 import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import * as AuthActions from './components/authentication/core/store/auth.actions';
 import * as CategoriesActions from './components/categories/core/store/categories.actions';
+import { AuthService } from './components/authentication/core/services/auth.service';
+import { Constants } from './utils/constants';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -33,12 +38,19 @@ export class AppComponent implements OnInit {
       [Features.Auth]: AuthState;
     }>,
     private router: Router,
+    private authService: AuthService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
   }
   ngOnInit(): void {
-    this.store.dispatch(AuthActions.GetUser());
+    const loginData: any = this.authService.getUserDetails(Constants.TAG_USER_DATA);
+    this.store.dispatch(
+      AuthActions.GetUser({
+        userDetails: loginData?.user ?? null,
+        authToken: loginData?.authToken ?? null
+      })
+    );
     this.store.dispatch(CategoriesActions.GetCategories());
     this.categories$ = this.store.select(getCategories);
     this.isLoggedIn$ = this.store.select(getAuth).pipe(
@@ -65,8 +77,10 @@ export class AppComponent implements OnInit {
   public openAddproductPage(): void {
     if (this.isLoggedIn) {
       // this.router.navigate(['add-product'], {relativeTo: this.activateRoute})
-      this.router.navigate(['add-product']/* , {relativeTo: this.activateRoute} */)
-    } else{
+      this.router.navigate(
+        ['add-product'] /* , {relativeTo: this.activateRoute} */
+      );
+    } else {
       this.openLoginDialog();
     }
   }

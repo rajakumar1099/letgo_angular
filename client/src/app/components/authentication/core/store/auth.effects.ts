@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { map, switchMap } from 'rxjs/operators';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { act, Actions, createEffect, ofType } from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Constants } from 'src/app/utils/constants';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthDetails } from '../types/auth.types';
 import { AuthService } from '../services/auth.service';
+import { of } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
@@ -20,8 +21,8 @@ export class AuthEffects {
   getUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.GetUser),
-      switchMap(() => {
-        return this.angularFireAuth.authState.pipe(
+      switchMap((action) => {
+        /* return this.angularFireAuth.authState.pipe(
           switchMap((user) => {
             this.authService.updateData(
               user,
@@ -40,7 +41,18 @@ export class AuthEffects {
                 })
               );
           })
-        );
+        ); */
+      //  return this.authService.watchStorage().pipe(map(res => {
+        return of(AuthActions.Authenticated({
+              userDetails: action.userDetails,
+              authToken: action.authToken
+            }))
+      //  }))
+        // localStorage.setItem('login', action.userDetails).then(res => {
+        //   return AuthActions.Authenticated({
+        //     userDetails: res,
+        //   })
+        // })
       })
     )
   );
@@ -48,8 +60,8 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.Login),
-      switchMap(async (action) => {
-        try {
+      switchMap((action) => {
+        /* try {
           await this.angularFireAuth.signInWithEmailAndPassword(
             action.payload.email,
             action.payload.password
@@ -57,7 +69,11 @@ export class AuthEffects {
           return AuthActions.GetUser();
         } catch (err: any) {
           return AuthActions.Error({ error: err.message });
-        }
+        } */
+        return this.authService.login(action.payload).pipe(map((res: any) => {
+          this.authService.saveUserDetails(Constants.TAG_USER_DATA, res.data);
+          return AuthActions.GetUser({userDetails: res.data.user, authToken: res.data.Authorization});
+        }),catchError(err => of(AuthActions.Error({ error: err }))));
       })
     )
   );
@@ -86,7 +102,7 @@ export class AuthEffects {
                 .doc(`${Constants.TAG_USERS}/${res?.user?.uid}`)
                 .set(userData);
             });
-          return AuthActions.GetUser();
+          return AuthActions.GetUser({userDetails: {}});
         } catch (err: any) {
           return AuthActions.Error({ error: err.message });
         }
@@ -102,7 +118,7 @@ export class AuthEffects {
           await this.angularFireAuth.signOut().then(() => {
             localStorage.removeItem(Constants.TAG_USER_DATA);
           });
-          return AuthActions.GetUser();
+          return AuthActions.GetUser({userDetails: null});
         } catch (err: any) {
           return AuthActions.Error({ error: err.message });
         }

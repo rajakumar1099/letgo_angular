@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { AuthActionTypes } from '../types/auth.types';
 
-export const GetUser = createAction(AuthActionTypes.Get);
+export const GetUser = createAction(AuthActionTypes.Get, props<{ userDetails?: any, authToken?: any }>());
 export const Authenticated = createAction(
   AuthActionTypes.Authenticated,
-  props<{ userDetails: any }>()
+  props<{ userDetails: any, authToken: any }>(),
 );
 export const Login = createAction(
   AuthActionTypes.Login,

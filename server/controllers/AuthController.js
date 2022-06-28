@@ -1,39 +1,39 @@
-const router = require("express").Router();
-const User = require("../model/auth_model");
+const UserModel = require("../model/AuthModel");
 const jwt = require("jsonwebtoken");
-const verify = require("./verifyToken");
-var constants = require("../utils/constants");
+var Constants = require("../utils/Constants");
+const crypto = require("crypto");
 
-router.post("/signup", async (req, res) => {
+const signup = async (req, res) => {
   if (Object.keys(req.body).length !== 3)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.INVALID_PAYLOAD,
+        message: Constants.INVALID_PAYLOAD,
       },
     });
 
-  const payload = new User({
+  const payload = new UserModel({
+    id: crypto.randomBytes(16).toString("hex"),
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   });
 
   // check email Id and username is already on DB
-  const user = await User.findOne({ email: payload.email });
+  const user = await UserModel.findOne({ email: payload.email });
   if (user?.email)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.EMAIL_ALREADY_EXIST,
+        message: Constants.EMAIL_ALREADY_EXIST,
       },
     });
 
     if (user?.username)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.USERNAME_ALREADY_EXIST,
+        message: Constants.USERNAME_ALREADY_EXIST,
       },
     });
 
@@ -41,50 +41,50 @@ router.post("/signup", async (req, res) => {
     // save the user details in DB
     await payload.save();
     res.json({
-      status: constants.SUCCESS,
+      status: Constants.SUCCESS,
       data: {
-        message: constants.USER_REGISTERED_SUCCESSFULLY,
+        message: Constants.USER_REGISTERED_SUCCESSFULLY,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
         message: err.message,
       },
     });
   }
-});
+};
 
-router.post("/login", async (req, res) => {
+const login = async (req, res) => {
   // Check the Payload is valid or Invalid
   if (Object.keys(req.body).length !== 2)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.INVALID_PAYLOAD,
+        message: Constants.INVALID_PAYLOAD,
       },
     });
 
   // check if email Id is not available on DB
-  const user = await User.findOne({
+  const user = await UserModel.findOne({
     email: req.body.email,
   });
 
   if (!user)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.EMAIL_DOES_NOT_EXIST_SIGN_UP,
+        message: Constants.EMAIL_DOES_NOT_EXIST_SIGN_UP,
       },
     });
 
   // check if the password is correct or wrong
   if (user.password !== req.body.password) {
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.INCORRECT_PASSWORD,
+        message: Constants.INCORRECT_PASSWORD,
       },
     });
   }
@@ -92,9 +92,9 @@ router.post("/login", async (req, res) => {
   try {
     //Create and assign a token
     const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
-    res.header(constants.AUTHORIZATION, token);
+    res.header(Constants.AUTHORIZATION, token);
     res.json({
-      status: constants.SUCCESS,
+      status: Constants.SUCCESS,
       data: {
         user,
         Authorization: token,
@@ -102,50 +102,55 @@ router.post("/login", async (req, res) => {
     });
   } catch (err) {
     res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
         message: err,
       },
     });
   }
-});
+};
 
-router.get("/profiles", verify, async (req, res) => {
-  const user = await User.find();
+const profiles = async (req, res) => {
+  const user = await UserModel.find({},{_id:0,__v:0});
 
   res.json({
-    status: constants.SUCCESS,
+    status: Constants.SUCCESS,
     data: {
       profiles: user,
     },
   });
-});
+};
 
-router.delete("/delete-profile/:email", verify, async (req, res) => {
-  const user = await User.findOneAndDelete({ email: req.params.email });
+const deleteProfile = async (req, res) => {
+  const user = await UserModel.findOneAndDelete({ id: req.params.id });
 
   if (!user)
     return res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
-        message: constants.INVALID_EMAIL_ID,
+        message: Constants.INVALID_EMAIL_ID,
       },
     });
   try {
     res.status(200).json({
-      status: constants.SUCCESS,
+      status: Constants.SUCCESS,
       data: {
-        message: constants.USER_DELETED_SUCCESSFULLY,
+        message: Constants.USER_DELETED_SUCCESSFULLY,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: constants.FAILURE,
+      status: Constants.FAILURE,
       data: {
         message: err,
       },
     });
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+    signup,
+    login,
+    profiles,
+    deleteProfile
+};

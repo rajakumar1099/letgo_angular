@@ -6,6 +6,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   user: null,
+  authToken: null
 };
 
 export const authReducer = createReducer<AuthState>(
@@ -17,6 +18,7 @@ export const authReducer = createReducer<AuthState>(
   on(AuthActions.Authenticated, (state, action) => ({
     ...state,
     user: action.userDetails,
+    authToken: action.authToken,
     loading: false,
   })),
   on(AuthActions.Login, (state) => ({

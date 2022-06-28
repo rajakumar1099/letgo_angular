@@ -5,15 +5,20 @@ import { Constants } from 'src/app/utils/constants';
 import { SIGNUPFORM } from '../types/auth.types';
 import 'firebase/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-products.types';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { API } from 'src/app/utils/Api';
+import { map, catchError, of, Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
   constructor(
     private translate: TranslateService,
-    private angularFirestore: AngularFirestore
+    private angularFirestore: AngularFirestore,
+    private http: HttpClient
   ) {}
 
   public convertTimestamp(): string {
@@ -74,7 +79,7 @@ export class AuthService {
     }
   }
 
-  public getFirebaseErrorMessages(errTAG: string | null): string {
+  /* public getFirebaseErrorMessages(errTAG: string | null): string {
     switch (true) {
       case errTAG?.includes(Constants.TAG_FIREBASE_USER_NOT_FOUND): {
         return this.translate.instant('errors.userNotFound');
@@ -95,7 +100,7 @@ export class AuthService {
       default:
         return this.translate.instant('errors.somethingWentWrong');
     }
-  }
+  } */
 
   public updateData(
     user: firebase.default.User | null,
@@ -106,5 +111,24 @@ export class AuthService {
     this.angularFirestore.doc(`${Constants.TAG_USERS}/${user?.uid}`).update({
       [key]: value,
     });
+  }
+
+  public login(payload: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers };
+    return this.http
+      .post(environment.baseURL + API.LOGIN, payload, options)
+      .pipe(
+        map((response) => response),
+        catchError((err) => err)
+      );
+  }
+
+  public getUserDetails(key: string): string | null {
+    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)!): null;
+  }
+
+  public saveUserDetails(key: string, userDetails: any) {
+    localStorage.setItem(key, JSON.stringify(userDetails));
   }
 }
