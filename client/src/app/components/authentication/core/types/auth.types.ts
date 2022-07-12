@@ -4,6 +4,7 @@ export const PASSWORD_MIN_COUNT = 6;
 export const PASSWORD_MAX_COUNT = 30;
 export enum SIGNUPFORM {
   NAME = 'name',
+  FULLNAME = 'fullname',
   USERNAME = 'username',
   EMAIL = 'emailAddress',
   PASSWORD = 'password',

@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { API } from 'src/app/utils/Api';
 import { map, catchError, of, Subject, Observable } from 'rxjs';
+import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-products.types';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,9 @@ export class AuthService {
             return this.translate.instant('validators.passwordMatchError');
           }
         }
+        case ADDPRODUCT.PRODUCT_IMAGES: {
+          return 'Only 5 images can be uploaded';
+        }
         /* case ADDPRODUCT.PRODUCT_TITLE: {
           if(form.controls[ADDPRODUCT.PRODUCT_TITLE]).hasError
         } */
@@ -118,17 +122,13 @@ export class AuthService {
     const options = { headers };
     return this.http
       .post(environment.baseURL + API.LOGIN, payload, options)
-      .pipe(
-        map((response) => response),
-        catchError((err) => err)
-      );
   }
 
-  public getUserDetails(key: string): string | null {
-    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)!): null;
+  public signup(payload: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers };
+    return this.http
+      .post(environment.baseURL + API.SIGNUP, payload, options)
   }
 
-  public saveUserDetails(key: string, userDetails: any) {
-    localStorage.setItem(key, JSON.stringify(userDetails));
-  }
 }

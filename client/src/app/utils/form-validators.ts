@@ -11,6 +11,7 @@ import {
 
 export const signUpFormValidator = {
   [SIGNUPFORM.NAME]: new FormControl('', Validators.required),
+  [SIGNUPFORM.FULLNAME]: new FormControl('', Validators.required),
   [SIGNUPFORM.USERNAME]: new FormControl(
     '',
     Validators.compose([
@@ -62,6 +63,14 @@ export const addProductFormValidator = {
     '',
     Validators.compose([Validators.required])
   ),
+  [ADDPRODUCT.SUB_CATEGORY]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+  [ADDPRODUCT.CHILD_CATEGORY]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
   [ADDPRODUCT.PRODUCT_TITLE]: new FormControl(
     '',
     Validators.compose([Validators.required])
@@ -83,4 +92,6 @@ export const addProductFormValidator = {
     Validators.compose([Validators.required])
   ),
   [ADDPRODUCT.IS_GIVING_AWAY]: new FormControl(false),
+  [ADDPRODUCT.PRODUCT_IMAGES]: new FormControl('', Validators.compose([Validators.required])),
+  [ADDPRODUCT.PRODUCT_VIDEO]: new FormControl(''),
 }

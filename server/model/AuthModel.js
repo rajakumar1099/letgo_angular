@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  id: {
+  uid: {
+    type: String,
+    required: true,
+  },
+  fullname: {
     type: String,
     required: true,
   },
@@ -17,9 +21,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
+  registerTimestamp: {
+    type: String,
+  },
+  lastLoginTimestamp: {
+    type: String,
   },
 });
 

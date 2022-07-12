@@ -17,32 +17,38 @@
         </div>
         <div style="color: red; margin-left: 2px">*</div>
       </div>
-      <div style="display: flex;">
-        <div class="add-image-button-container">
-          <mat-icon class="add-icon">add</mat-icon>
-          <!-- <input type="file" (change)="selectFile($event)"> -->
+      <div style="display: flex; overflow-x: auto">
+        <div class="add-image-button-container" *ngIf="urls.length < 5">
+          <input
+            #file
+            multiple
+            name="image"
+            type="file"
+            style="display: none"
+            accept="image/x-png,image/jpeg"
+            (change)="onFileSelect($event)"
+            [formControlName]="addProductForm.PRODUCT_IMAGES"
+          />
+          <img
+            src="\assets\drawables\plus.png"
+            (click)="file.click()"
+            class="add-icon"
+          />
         </div>
-        <div class="add-image-button-container">
-          <img class="product-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80" alt="avatar">
-          <mat-icon class="remove-icon">close</mat-icon>
-        </div>
-        <div class="add-image-button-container">
-          <img class="product-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80" alt="avatar">
-          <mat-icon class="remove-icon">close</mat-icon>
-        </div>
-        <div class="add-image-button-container">
-          <img class="product-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80" alt="avatar">
-          <mat-icon class="remove-icon">close</mat-icon>
-        </div>
-        <div class="add-image-button-container">
-          <img class="product-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80" alt="avatar">
-          <mat-icon class="remove-icon">close</mat-icon>
-        </div>
-        <div class="add-image-button-container">
-          <img class="product-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80" alt="avatar">
-          <mat-icon class="remove-icon">close</mat-icon>
+        <div
+          class="add-image-button-container"
+          *ngFor="let url of urls; let i = index"
+        >
+          <img class="product-img" [src]="url" alt="avatar" />
+          <mat-icon class="remove-icon" (click)="removeImage(i)"
+            >cancel</mat-icon
+          >
         </div>
       </div>
+      <mat-error *ngIf="urls.length > 5">{{
+        getErrorMessage(addProductForm.PRODUCT_IMAGES)
+      }}</mat-error>
+      <!-- <div *ngIf="urls.length > 5">Only 5 images can be uploaded</div> -->
     </div>
     <div class="add-photos-container">
       <div class="add-photos-text">
@@ -52,14 +58,13 @@
         <div>{{ "addProducts.selectCategory" | translate }}</div>
         <div style="color: red; margin-left: 2px">*</div>
       </div>
-      <mat-form-field
-        class="mat-form-field-container"
-        appearance="outline"
-        *ngIf="categories$ | async as categories"
-      >
+      <mat-form-field class="mat-form-field-container" appearance="outline">
         <mat-label>{{ "addProducts.selectCategory" | translate }}</mat-label>
         <mat-select [formControlName]="addProductForm.CATEGORY">
-          <mat-option *ngFor="let category of categories" [value]="category.id">
+          <mat-option
+            *ngFor="let category of categories; let i = index"
+            [value]="category.id"
+          >
             {{ category.name }}
           </mat-option>
         </mat-select>
@@ -67,15 +72,57 @@
           getErrorMessage(addProductForm.CATEGORY)
         }}</mat-error>
       </mat-form-field>
-      <div class="add-photos-text-container">
-        <div>{{ "common.name" | translate }}</div>
+      <div class="add-photos-text-container" *ngIf="subCategories.length">
+        <div>{{ "addProducts.selectSubCategory" | translate }}</div>
         <div style="color: red; margin-left: 2px">*</div>
       </div>
       <mat-form-field
         class="mat-form-field-container"
         appearance="outline"
-        *ngIf="categories$ | async as categories"
+        *ngIf="subCategories.length"
       >
+        <mat-label>{{ "addProducts.selectSubCategory" | translate }}</mat-label>
+        <mat-select [formControlName]="addProductForm.SUB_CATEGORY">
+          <mat-option
+            *ngFor="let subcategory of subCategories; let i = index"
+            [value]="subcategory.id"
+          >
+            {{ subcategory.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.SUB_CATEGORY)">{{
+          getErrorMessage(addProductForm.SUB_CATEGORY)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container" *ngIf="childCategories.length">
+        <div>{{ "addProducts.selectChildCategory" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field
+        class="mat-form-field-container"
+        appearance="outline"
+        *ngIf="childCategories.length"
+      >
+        <mat-label>{{
+          "addProducts.selectChildCategory" | translate
+        }}</mat-label>
+        <mat-select [formControlName]="addProductForm.CHILD_CATEGORY">
+          <mat-option
+            *ngFor="let childCategory of childCategories"
+            [value]="childCategory.id"
+          >
+            {{ childCategory.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.CHILD_CATEGORY)">{{
+          getErrorMessage(addProductForm.CHILD_CATEGORY)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container">
+        <div>{{ "common.name" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
         <mat-label>{{ "addProducts.productTitle" | translate }}</mat-label>
         <input
           matInput
@@ -92,11 +139,7 @@
         <div>{{ "common.description" | translate }}</div>
         <div style="color: red; margin-left: 2px">*</div>
       </div>
-      <mat-form-field
-        class="mat-form-field-container"
-        appearance="outline"
-        *ngIf="categories$ | async as categories"
-      >
+      <mat-form-field class="mat-form-field-container" appearance="outline">
         <mat-label>{{ "common.productDescription" | translate }}</mat-label>
         <textarea
           matInput
@@ -124,7 +167,6 @@
           <mat-form-field
             class="mat-form-field-price-container"
             appearance="outline"
-            *ngIf="categories$ | async as categories"
           >
             <mat-label>{{ "common.productPrice" | translate }}</mat-label>
             <input
@@ -137,20 +179,16 @@
               >{{ getErrorMessage(addProductForm.PRODUCT_PRICE) }}</mat-error
             >
           </mat-form-field>
-          <mat-form-field
-            class="currency-style"
-            appearance="outline"
-            *ngIf="categories$ | async as categories"
-          >
+          <mat-form-field class="currency-style" appearance="outline">
             <mat-label>{{
-              "addProducts.selectCategory" | translate
+              "addProducts.selectCurrency" | translate
             }}</mat-label>
             <mat-select [formControlName]="addProductForm.CURRENCY">
               <mat-option
-                *ngFor="let category of categories"
-                [value]="category.id"
+                *ngFor="let currency of currencies"
+                [value]="currency.id"
               >
-                {{ category.name }}
+                {{ currency.currency_name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="!checkFormIsValid(addProductForm.CURRENCY)">{{
@@ -168,11 +206,7 @@
         <div>{{ "common.listingLocation" | translate }}</div>
         <div style="color: red; margin-left: 2px">*</div>
       </div>
-      <mat-form-field
-        class="mat-form-field-container"
-        appearance="outline"
-        *ngIf="categories$ | async as categories"
-      >
+      <mat-form-field class="mat-form-field-container" appearance="outline">
         <mat-label>{{
           "addProducts.tellWhereYouSellThisItem" | translate
         }}</mat-label>
@@ -194,17 +228,17 @@
       <div class="add-photos-text-container">
         <div>{{ "addProducts.productVideo" | translate }}</div>
       </div>
-      <mat-form-field
-        class="mat-form-field-container"
-        appearance="outline"
-        *ngIf="categories$ | async as categories"
-      >
+      <mat-form-field class="mat-form-field-container" appearance="outline">
         <mat-label>{{
           "addProducts.youtubeDummyPlaceHolder" | translate
         }}</mat-label>
-        <input matInput type="text" />
-        <mat-error *ngIf="!checkFormIsValid(addProductForm.CATEGORY)">{{
-          getErrorMessage(addProductForm.CATEGORY)
+        <input
+          matInput
+          type="text"
+          [formControlName]="addProductForm.PRODUCT_VIDEO"
+        />
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_VIDEO)">{{
+          getErrorMessage(addProductForm.PRODUCT_VIDEO)
         }}</mat-error>
       </mat-form-field>
     </div>

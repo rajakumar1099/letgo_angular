@@ -29,13 +29,9 @@ export class HomeComponent implements OnInit {
       [Features.Auth]: AuthState;
     }>,
     private router: Router,
-    private activateRoute: ActivatedRoute,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    // this.store.dispatch(AuthActions.GetUser());
-    // this.store.dispatch(CategoriesActions.GetCategories());
     this.categories$ = this.store.select(getCategories);
     this.isLoggedIn$ = this.store.select(getAuth).pipe(
       tap((res) => {
@@ -60,8 +56,7 @@ export class HomeComponent implements OnInit {
 
   public openAddproductPage(): void {
     if (this.isLoggedIn) {
-      // this.router.navigate(['add-product'], {relativeTo: this.activateRoute})
-      this.router.navigate(['add-product']/* , {relativeTo: this.activateRoute} */)
+      this.router.navigate(['add-product'])
     } else{
       this.openLoginDialog();
     }

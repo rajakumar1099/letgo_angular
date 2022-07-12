@@ -17,15 +17,14 @@ import { Features } from './core/features';
 import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import * as AuthActions from './components/authentication/core/store/auth.actions';
 import * as CategoriesActions from './components/categories/core/store/categories.actions';
-import { AuthService } from './components/authentication/core/services/auth.service';
 import { Constants } from './utils/constants';
+import { CommonService } from './core/common/services/common.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  // user$: Observable<AuthState> | undefined;
   public categories$!: Observable<Categories[] | null>;
   public isLoggedIn$!: Observable<AuthState>;
   public isLoggedIn: boolean = false;
@@ -38,13 +37,13 @@ export class AppComponent implements OnInit {
       [Features.Auth]: AuthState;
     }>,
     private router: Router,
-    private authService: AuthService
+    private commonService: CommonService
   ) {
     translate.setDefaultLang('en');
     translate.use('en');
   }
   ngOnInit(): void {
-    const loginData: any = this.authService.getUserDetails(Constants.TAG_USER_DATA);
+    const loginData: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA);
     this.store.dispatch(
       AuthActions.GetUser({
         userDetails: loginData?.user ?? null,

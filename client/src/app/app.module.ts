@@ -26,6 +26,7 @@ import { CategoriesEffects } from './components/categories/core/store/categories
 import { CategoryHeaderMenuComponent } from './components/categories/category-header-menu/category-header-menu.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { HomeFooterComponent } from './components/home/home-footer/home-footer.component';
+import { HomeProductsComponent } from './components/home/home-products/home-products.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { HomeFooterComponent } from './components/home/home-footer/home-footer.c
     CategoryHeaderMenuComponent,
     AddProductComponent,
     HomeFooterComponent,
+    HomeProductsComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,5 +8,5 @@ export const AllCategories = createAction(
 );
 export const ErrorCategories = createAction(
   CategoriesActionTypes.ErrorCategories,
-  props<{ error: string }>()
+  props<{ error: string | null }>()
 );

@@ -3,8 +3,14 @@ var Constants = require("../utils/Constants");
 const crypto = require("crypto");
 
 const getCategories = async (req, res) => {
-  const categories = await CategoriesModel.find({}, { _id: 0, __v: 0 });
-  let category = categories;
+  var categories = await CategoriesModel.find({}, { _id: 0, __v: 0 });
+  // const category = categories;
+  // for(let i in categories){
+  //   categories[i].sub_categories.forEach( subCategory => {
+  //           delete subCategory._id
+  //       console.log(categories)
+  //       })
+  // }
 //   category.forEach(v => {
 //     v.sub_categories?.forEach(sub_category => {
 //     console.log('s: ', sub_category?._id);
@@ -21,17 +27,16 @@ const getCategories = async (req, res) => {
   // delete val._id
   // delete val.__v
   
-  for(let i in category){
-    category[i].sub_categories.forEach( j => {
-        delete j._id
-        console.log(category)
-    })
-    // delete category[o].type
-}
+//   for(let i in category){
+//     category[i].sub_categories.forEach( j => {
+//         delete j._id
+//     })
+//     // delete category[o].type
+// }
   res.json({
     status: Constants.SUCCESS,
     data: {
-      categories: category,
+      categories: categories,
     },
   });
 };

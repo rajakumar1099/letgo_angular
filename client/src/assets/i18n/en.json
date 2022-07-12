@@ -30,6 +30,7 @@
     "enterYourEmailAddress": "Enter your email address",
     "enterYourPassword": "Enter your password",
     "enterYourConfirmPassword": "Enter the same password",
+    "enterYourFullname": "Enter your fullname",
     "enterYourUsername": "Enter your username",
     "rememberMe": "Remember me",
     "forgetPassword": "Forgot Password?"
@@ -63,6 +64,9 @@
     "addProductsLabel": "Add photos of your product",
     "whatIsYourListing": "What is your listing based on?",
     "selectCategory": "Select Category",
+    "selectSubCategory": "Select Sub Category",
+    "selectChildCategory": "Select Child Category",
+    "selectCurrency": "Select Currency",
     "productTitle": "Product title",
     "noteChooseALocationLabel": "Note: Choose a location from the dropdown list. Avoid entering manually",
     "tellWhereYouSellThisItem": "Tell where you sell this item",

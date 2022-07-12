@@ -19,6 +19,16 @@
     <mat-form-field appearance="outline" class="mat-form-field-wrapper">
       <input
         matInput
+        [formControlName]="signUpForm.FULLNAME"
+        placeholder="{{ 'login.enterYourFullname' | translate }}"
+      />
+      <mat-error *ngIf="!checkFormIsValid(signUpForm.FULLNAME)">{{
+        getErrorMessage(signUpForm.FULLNAME)
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="mat-form-field-wrapper">
+      <input
+        matInput
         [formControlName]="signUpForm.USERNAME"
         placeholder="{{ 'login.enterYourUsername' | translate }}"
       />
@@ -105,7 +115,7 @@
       ></mat-spinner>
     </button>
     <mat-error *ngIf="signUp.error" class="center">{{
-      firebaseAuthError
+      authError
     }}</mat-error>
   </div>
 </form>

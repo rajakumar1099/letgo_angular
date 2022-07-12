@@ -21,7 +21,7 @@ export class LoginDialogComponent implements OnInit {
   public readonly loginForm = LOGINFORM;
   public loading = false;
   public hidePassword = true;
-  public firebaseAuthError!: string;
+  public authError!: string;
   public login$!: Observable<AuthState>;
 
   constructor(
@@ -33,11 +33,14 @@ export class LoginDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group(loginFormValidator);
+    this.store.dispatch(AuthActions.Error({ error: null }));
     this.login$ = this.store.select(getAuth).pipe(
       tap((res) => {
         if (res?.user) this.closeDialog();
-        if (res?.error) this.form.enable();
-        this.firebaseAuthError = res?.error ?? ''
+        if (res?.error) {
+          this.form.enable();
+          this.authError = res?.error;
+        }
       })
     );
   }
@@ -51,13 +54,11 @@ export class LoginDialogComponent implements OnInit {
   }
 
   public handleDialogLogin(): void {
-    this.form.disable();
     this.store.dispatch(
       AuthActions.Login({
         payload: {
           email: this.form.controls[LOGINFORM.EMAIL].value,
           password: this.form.controls[LOGINFORM.PASSWORD].value,
-          // remember: this.form.controls[LOGINFORM.REMEMBERME].value,
         },
       })
     );

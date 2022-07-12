@@ -22,7 +22,7 @@ export class SignUpDialogComponent implements OnInit {
   public hidePassword = true;
   public hideConfirmPassword = true;
   public showConfirmPassword = false;
-  public firebaseAuthError!: string;
+  public authError!: string;
   public signUp$!: Observable<AuthState>;
 
   constructor(
@@ -35,11 +35,14 @@ export class SignUpDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.createFormGroup();
+    this.store.dispatch(AuthActions.Error({ error: null }));
     this.signUp$ = this.store.select(getAuth).pipe(
       tap((res) => {
         if (res?.user) this.closeDialog();
-        if (res?.error) this.form.enable();
-        this.firebaseAuthError = res?.error ?? ''
+        if (res?.error) {
+          this.form.enable();
+          this.authError = res?.error;
+        }
       })
     );
   }
@@ -82,11 +85,7 @@ export class SignUpDialogComponent implements OnInit {
           email: this.form.controls[SIGNUPFORM.EMAIL].value,
           fullname: this.form.controls[SIGNUPFORM.NAME].value,
           username: this.form.controls[SIGNUPFORM.USERNAME].value,
-          password: this.aesEncryptDecryptService.encryptText(
-            this.form.controls[SIGNUPFORM.PASSWORD].value
-          ),
-          registerTimestamp: this.authService.convertTimestamp(),
-          lastLoginTimestamp: this.authService.convertTimestamp(),
+          password: this.form.controls[SIGNUPFORM.PASSWORD].value,
         },
       })
     );

@@ -69,8 +69,8 @@
         [diameter]="30"
       ></mat-spinner>
     </button>
-    <mat-error *ngIf="login.error" class="center">{{
-      firebaseAuthError
+    <mat-error *ngIf="authError" class="center">{{
+      authError
     }}</mat-error>
   </div>
 </form>

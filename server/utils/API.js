@@ -7,5 +7,10 @@ module.exports = Object.freeze({
     DELETE_PROFILE: "/delete-profile/:id",
     SIGNUP: "/signup",
     USER: "/user",
-    CATEGORIES: "/categories"
+    CATEGORIES: "/categories",
+    CURRENCIES: "/currencies",
+    ADDCURRENCY: "/add-currency",
+    PRODUCTS: "/products",
+    ADDPRODUCTS: "/create",
+    UPLOADPRODUCTIMAGES: "/upload-product-images/:uid/:productuid"
 })

@@ -17,5 +17,5 @@ export const SignUp = createAction(
 export const Logout = createAction(AuthActionTypes.Logout);
 export const Error = createAction(
   AuthActionTypes.Error,
-  props<{ error: string }>()
+  props<{ error: string | null }>()
 );

@@ -36,29 +36,35 @@
 .add-image-button-container {
   width: 100px;
   height: 100px;
-  box-shadow: 0px 0px 15px #ddd;
+  box-shadow: 0px 0px 5px #ddd;
   margin: 3px;
-  // cursor: pointer;
+  display: inline-block;
+  position: relative;
+  border-radius: 10px;
 }
 
 .product-img {
   width: 100px;
   height: 100px;
-  position: fixed;
+  position: absolute;
+  border-radius: 10px;
 }
 
 .remove-icon {
-  position: fixed;
-  // width: 95px;
-  text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
   margin-top: 5px;
+  margin-right: 5px;
+  color: whitesmoke;
   cursor: pointer;
-  margin: 5px 70px 0;
 }
 
 .add-icon {
-  margin-left: 40px;
-  margin-top: 40px;
+  width: 32px;
+  height: 32px;
+  margin-left: 34px;
+  margin-top: 34px;
   cursor: pointer;
 }
 
@@ -85,8 +91,8 @@
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }

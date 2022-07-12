@@ -22,5 +22,6 @@ module.exports = Object.freeze({
   INVALID_GENDER: "Invalid Gender",
   INVALID_TOKEN: "Invalid Token",
   AUTHORIZATION_FAILED: "Authorization Failed",
-  CATEGORY_ADDED_SUCCESSFULLY: "Category Added Successfully"
+  CATEGORY_ADDED_SUCCESSFULLY: "Category Added Successfully",
+  CURRENCY_ADDED_SUCCESSFULLY: "Currency Added Successfully"
 });
