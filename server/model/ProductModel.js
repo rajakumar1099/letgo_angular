@@ -29,6 +29,10 @@ const productSchema = new mongoose.Schema({
   product_currency: {
     type: String,
   },
+  is_available: {
+    type: Boolean,
+    required: true,
+  },
   is_giving_away: {
     type: Boolean,
     required: true,

@@ -27,6 +27,7 @@ import { CategoryHeaderMenuComponent } from './components/categories/category-he
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { HomeFooterComponent } from './components/home/home-footer/home-footer.component';
 import { HomeProductsComponent } from './components/home/home-products/home-products.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { HomeProductsComponent } from './components/home/home-products/home-prod
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    GooglePlaceModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

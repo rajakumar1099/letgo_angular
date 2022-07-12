@@ -3,23 +3,24 @@ const jwt = require("jsonwebtoken");
 var Constants = require("../utils/Constants");
 
 const addProduct = async (req, res) => {
-  if (Object.keys(req.body).length !==    5)
+  if (Object.keys(req.body).length !== 6)
     return res.status(400).json({
       status: Constants.FAILURE,
       data: {
         message: Constants.INVALID_PAYLOAD,
       },
-    }); 
+    });
 
   const payload = {
     uid: req.body.uid,
-    product_uid: crypto.randomBytes(16).toString("hex"),
+    product_uid: req.body.product_uid,
     product_name: req.body.product_name,
     product_description: req.body.product_description,
     product_price: req.body.product_price,
     product_currency: req.body.product_currency,
     is_giving_away: req.body.is_giving_away,
-    category: req.body.category
+    is_available: req.body.is_available,
+    category: req.body.category,
   };
 
   try {

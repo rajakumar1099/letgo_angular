@@ -214,6 +214,7 @@
           matInput
           type="text"
           [formControlName]="addProductForm.PRODUCT_LOCATION"
+          ngx-google-places-autocomplete  #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
         />
         <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_LOCATION)">{{
           getErrorMessage(addProductForm.PRODUCT_LOCATION)

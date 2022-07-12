@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, Observable, Subscription } from 'rxjs';
@@ -18,6 +18,8 @@ import {
 import { ADDPRODUCT } from './core/types/add-products.types';
 import { CommonService } from 'src/app/core/common/services/common.service';
 import { Currencies } from 'src/app/core/common/common.types';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 @Component({
   selector: 'app-add-product',
@@ -36,6 +38,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   public urls = new Array<string>();
   public currencies: Currencies[] = [];
   private subs = new Subscription();
+  @ViewChild("placesRef") placesRef: GooglePlaceDirective | undefined;
+
   constructor(
     private store: Store<{
       [Features.Categories]: CategoriesState;
@@ -44,7 +48,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private commonService: CommonService
-  ) {}
+  ) { }
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -153,19 +157,28 @@ export class AddProductComponent implements OnInit, OnDestroy {
       (category) =>
         category?.id === this.form.controls[this.addProductForm.CATEGORY].value
     );
-    const sub_category = this.subCategories?.find(
+    const sub_categories = this.subCategories?.find(
       (sub_category) =>
         sub_category?.id ===
         this.form.controls[this.addProductForm.SUB_CATEGORY].value
     );
-    const child_category = this.childCategories?.find(
+    const child_categories = this.childCategories?.find(
       (child_category) =>
         child_category?.id ===
         this.form.controls[this.addProductForm.CHILD_CATEGORY].value
     );
-    // return {
-     console.log({ categories: { categories, ...sub_category }});
-    // };
+    return {
+      id: categories?.id,
+      name: categories?.name,
+      sub_category: [{
+        id: sub_categories?.id,
+        name: sub_categories?.name,
+        child_category: [{
+          id: child_categories?.id,
+          name: child_categories?.name
+        }]
+      }]
+    }
   }
 
   public save(): void {
@@ -182,27 +195,14 @@ export class AddProductComponent implements OnInit, OnDestroy {
         this.form.controls[this.addProductForm.PRODUCT_LOCATION].value,
       product_video:
         this.form.controls[this.addProductForm.PRODUCT_VIDEO].value,
-      category: [
-        {
-          id: '',
-          name: '',
-          sub_categories: [
-            {
-              id: '',
-              name: '',
-              child_categories: [
-                {
-                  id: '',
-                  name: '',
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      category: this.getCategoryWithId()
     };
-    this.getCategoryWithId()
+
 
     console.log(payload);
+  }
+
+  public handleAddressChange(address: Address) {
+
   }
 }
