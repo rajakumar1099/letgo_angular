@@ -213,6 +213,7 @@
         <input
           matInput
           type="text"
+          autocomplete="off"
           [formControlName]="addProductForm.PRODUCT_LOCATION"
           ngx-google-places-autocomplete  #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
         />

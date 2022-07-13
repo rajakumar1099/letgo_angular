@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { map, Observable, Subscription } from 'rxjs';
+import { catchError, map, Observable, Subscription } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { addProductFormValidator } from 'src/app/utils/form-validators';
 import { AuthService } from '../authentication/core/services/auth.service';
@@ -20,6 +20,8 @@ import { CommonService } from 'src/app/core/common/services/common.service';
 import { Currencies } from 'src/app/core/common/common.types';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { AddProductService } from './core/service/add-product.service';
+import { Constants } from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-add-product',
@@ -38,7 +40,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   public urls = new Array<string>();
   public currencies: Currencies[] = [];
   private subs = new Subscription();
-  @ViewChild("placesRef") placesRef: GooglePlaceDirective | undefined;
+  private files: any | undefined;
+  @ViewChild('placesRef') placesRef: GooglePlaceDirective | undefined;
 
   constructor(
     private store: Store<{
@@ -47,8 +50,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private commonService: CommonService
-  ) { }
+    private commonService: CommonService,
+    private addProductService: AddProductService
+  ) {}
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -126,8 +130,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   public onFileSelect(event: any) {
     if (event.target.files.length <= 5) {
-      let files = { id: uuid.v4(), file: event.target.files };
-      for (let file of files.file) {
+      this.files = event.target.files;
+      for (let file of this.files) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
           this.urls.push(e.target.result);
@@ -170,18 +174,23 @@ export class AddProductComponent implements OnInit, OnDestroy {
     return {
       id: categories?.id,
       name: categories?.name,
-      sub_category: [{
-        id: sub_categories?.id,
-        name: sub_categories?.name,
-        child_category: [{
-          id: child_categories?.id,
-          name: child_categories?.name
-        }]
-      }]
-    }
+      sub_category: [
+        {
+          id: sub_categories?.id,
+          name: sub_categories?.name,
+          child_category: [
+            {
+              id: child_categories?.id,
+              name: child_categories?.name,
+            },
+          ],
+        },
+      ],
+    };
   }
 
   public save(): void {
+    const userData: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA);
     const payload = {
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
       product_description:
@@ -195,14 +204,19 @@ export class AddProductComponent implements OnInit, OnDestroy {
         this.form.controls[this.addProductForm.PRODUCT_LOCATION].value,
       product_video:
         this.form.controls[this.addProductForm.PRODUCT_VIDEO].value,
-      category: this.getCategoryWithId()
+      is_available: true,
+      category: this.getCategoryWithId(),
     };
-
-
-    console.log(payload);
+    this.addProductService
+      .uploadProductImages(
+        userData?.user?.uid,
+        uuid.v4(),
+        this.files
+      )
+      .subscribe((res) => {
+        this.addProductService.createProduct(payload).subscribe()
+      });
   }
 
-  public handleAddressChange(address: Address) {
-
-  }
+  public handleAddressChange(address: Address) {}
 }

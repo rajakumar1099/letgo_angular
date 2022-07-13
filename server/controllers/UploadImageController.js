@@ -15,7 +15,8 @@ const uploadImage = async (req, res) => {
     }
     const payload = {
       uid: req.params.uid,
-      product_uid: crypto.randomBytes(16).toString("hex"),
+      product_uid:
+        req.params.productuid /* crypto.randomBytes(16).toString("hex") */,
       images: req.files,
     };
     await new UploadImageModel(payload).save();
