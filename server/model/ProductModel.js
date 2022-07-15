@@ -9,17 +9,15 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      type: Buffer,
-      default: null,
-    },
-  ],
   product_name: {
     type: String,
     required: true,
   },
   product_description: {
+    type: String,
+    required: true,
+  },
+  product_location: {
     type: String,
     required: true,
   },
@@ -36,6 +34,10 @@ const productSchema = new mongoose.Schema({
   is_giving_away: {
     type: Boolean,
     required: true,
+  },
+  product_video: {
+    type: String,
+    default: '',
   },
   category: [
     {

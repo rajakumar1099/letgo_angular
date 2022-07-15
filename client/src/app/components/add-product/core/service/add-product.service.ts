@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/core/common/services/common.service';
 import { API } from 'src/app/utils/Api';
 import { Constants } from 'src/app/utils/constants';
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AddProductService {
-  constructor(private commonService: CommonService, private http: HttpClient) {}
+  constructor(private commonService: CommonService, private http: HttpClient, private router: Router) { }
 
   public createProduct(payload: any) {
     const token: any = this.commonService.getUserDetails(
@@ -25,7 +26,9 @@ export class AddProductService {
       environment.baseURL + API.CREATE_PRODUCT,
       payload,
       options
-    );
+    ).subscribe(res => {
+      this.router.navigateByUrl('/home')
+    });
   }
 
   public uploadProductImages(uid: string, product_uid: string, data: any) {

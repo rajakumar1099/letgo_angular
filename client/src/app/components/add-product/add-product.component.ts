@@ -52,7 +52,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private commonService: CommonService,
     private addProductService: AddProductService
-  ) {}
+  ) { }
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -174,24 +174,25 @@ export class AddProductComponent implements OnInit, OnDestroy {
     return {
       id: categories?.id,
       name: categories?.name,
-      sub_category: [
+      sub_category:
+      {
+        id: sub_categories?.id,
+        name: sub_categories?.name,
+        child_category:
         {
-          id: sub_categories?.id,
-          name: sub_categories?.name,
-          child_category: [
-            {
-              id: child_categories?.id,
-              name: child_categories?.name,
-            },
-          ],
+          id: child_categories?.id,
+          name: child_categories?.name,
         },
-      ],
+      },
     };
   }
 
   public save(): void {
     const userData: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA);
+    const product_uid = uuid.v4();
     const payload = {
+      uid: userData?.user?.uid,
+      product_uid: product_uid,
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
       product_description:
         this.form.controls[this.addProductForm.PRODUCT_DESCRIPTION].value,
@@ -207,16 +208,20 @@ export class AddProductComponent implements OnInit, OnDestroy {
       is_available: true,
       category: this.getCategoryWithId(),
     };
+    console.log(payload);
+
     this.addProductService
       .uploadProductImages(
         userData?.user?.uid,
-        uuid.v4(),
+        product_uid,
         this.files
       )
       .subscribe((res) => {
-        this.addProductService.createProduct(payload).subscribe()
+        this.addProductService.createProduct(payload)
       });
   }
 
-  public handleAddressChange(address: Address) {}
+  public handleAddressChange(address: Address) {
+    this.form.controls[this.addProductForm.PRODUCT_LOCATION].setValue(address.formatted_address);
+  }
 }

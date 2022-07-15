@@ -14,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatCardModule} from '@angular/material/card';
 
 const mat = [
   MatIconModule,
@@ -29,7 +30,8 @@ const mat = [
   MatListModule,
   MatExpansionModule,
   MatSelectModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatCardModule
 ];
 
 @NgModule({
