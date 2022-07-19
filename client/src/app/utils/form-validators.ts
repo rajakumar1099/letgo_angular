@@ -65,11 +65,11 @@ export const addProductFormValidator = {
   ),
   [ADDPRODUCT.SUB_CATEGORY]: new FormControl(
     '',
-    Validators.compose([Validators.required])
+    Validators.compose([])
   ),
   [ADDPRODUCT.CHILD_CATEGORY]: new FormControl(
     '',
-    Validators.compose([Validators.required])
+    Validators.compose([])
   ),
   [ADDPRODUCT.PRODUCT_TITLE]: new FormControl(
     '',

@@ -3,8 +3,7 @@ const ProductModel = require("../model/ProductModel");
 var Constants = require("../utils/Constants");
 
 const addProduct = async (req, res) => {
-  // console.log(req.body);
-  if (Object.keys(req.body).length !== 11)
+  if (Object.keys(req.body).length !== 14)
     return res.status(400).json({
       status: Constants.FAILURE,
       data: {
@@ -17,17 +16,21 @@ const addProduct = async (req, res) => {
     product_uid: JSON.parse(req.body.product_uid),
     product_name: JSON.parse(req.body.product_name),
     product_description: JSON.parse(req.body.product_description),
-    images: req.files,
+    images: req.body.images,
     product_price: JSON.parse(req.body.product_price),
     product_currency: JSON.parse(req.body.product_currency),
     product_location: JSON.parse(req.body.product_location),
     is_giving_away: JSON.parse(req.body.is_giving_away),
     is_available: JSON.parse(req.body.is_available),
     category: JSON.parse(req.body.category),
+    sub_category: req.body.sub_category
+      ? JSON.parse(req.body.sub_category)
+      : null,
+    child_category: req.body.child_category
+      ? JSON.parse(req.body.child_category)
+      : null,
     product_video: JSON.parse(req.body.product_video),
   };
-  console.log(payload);
-  // JSON.parse(payload);
   try {
     // save the product details in DB
     await new ProductModel(payload).save();

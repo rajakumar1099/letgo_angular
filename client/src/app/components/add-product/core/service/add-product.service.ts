@@ -62,32 +62,32 @@ export class AddProductService {
   //   ); */
   // }
 
-  public uploadProductImages(uid: string, product_uid: string, data: any) {
-    const token: any = this.commonService.getUserDetails(
-      Constants.TAG_USER_DATA
-    );
-    const headers = new HttpHeaders({
-      Accept: 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      // 'Content-Type': 'multipart/form-data',
-      Authorization:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwNjc4OTQ1YjI4OWU0ZjIwN2IyZmQiLCJpYXQiOjE2NTU3OTEyNDJ9.RfesawdCqPjCd4mxE1wsu_m6f43lvKVdNkwbcm6L6qo',
-    });
-    console.log(data);
+  // public uploadProductImages(uid: string, product_uid: string, data: any) {
+  //   const token: any = this.commonService.getUserDetails(
+  //     Constants.TAG_USER_DATA
+  //   );
+  //   const headers = new HttpHeaders({
+  //     Accept: 'application/json',
+  //     'Access-Control-Allow-Origin': '*',
+  //     // 'Content-Type': 'multipart/form-data',
+  //     Authorization:
+  //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwNjc4OTQ1YjI4OWU0ZjIwN2IyZmQiLCJpYXQiOjE2NTU3OTEyNDJ9.RfesawdCqPjCd4mxE1wsu_m6f43lvKVdNkwbcm6L6qo',
+  //   });
+  //   console.log(data);
 
-    const formData = new FormData();
-    Array.from(data).forEach(function (file) {
-      console.log(file);
-      formData.append('images', file as File);
-    });
-    formData.append('id', '1231');
-    const options = { headers };
-    console.log(formData);
+  //   const formData = new FormData();
+  //   Array.from(data).forEach(function (file) {
+  //     console.log(file);
+  //     formData.append('images', file as File);
+  //   });
+  //   formData.append('id', '1231');
+  //   const options = { headers };
+  //   console.log(formData);
 
-    return this.http.patch(
-      environment.baseURL + API.UPLOAD_PRODUCT_IMAGE + uid + '/' + product_uid,
-      formData,
-      options
-    );
-  }
+  //   return this.http.patch(
+  //     environment.baseURL + API.UPLOAD_PRODUCT_IMAGE + uid + '/' + product_uid,
+  //     formData,
+  //     options
+  //   );
+  // }
 }

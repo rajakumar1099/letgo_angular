@@ -41,30 +41,16 @@ const productSchema = new mongoose.Schema({
     default: "",
   },
   category: {
-    id: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    sub_categories: {
-      id: {
-        type: String,
-      },
-      name: {
-        type: String,
-      },
-      child_categories: {
-        id: {
-          type: String,
-        },
-        name: {
-          type: String,
-        },
-      },
-    },
+    type: String,
+    required: true,
+  },
+  sub_category: {
+    type: String,
+    default: null
+  },
+  child_category: {
+    type: String,
+    default: null
   },
 });
 

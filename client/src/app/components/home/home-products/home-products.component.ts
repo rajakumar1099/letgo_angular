@@ -13,7 +13,7 @@ import { Products, ProductState } from '../core/types/home.types';
 })
 export class HomeProductsComponent implements OnInit {
   public products$: Observable<Products[] | null> | undefined;
-  constructor(private store: Store<{ [Features.Products]: ProductState }>, public addProductService: AddProductService) {}
+  constructor(private store: Store<{ [Features.Products]: ProductState }>, public addProductService: AddProductService) { }
 
   ngOnInit(): void {
     this.products$ = this.store.select(getProducts);

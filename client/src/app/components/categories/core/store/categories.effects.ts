@@ -22,7 +22,7 @@ export class CategoriesEffects {
           });
         }),
         catchError((err) => {
-          return of(CategoriesActions.ErrorCategories({ error: err.error.data.message }));
+          return of(CategoriesActions.ErrorCategories({ error: err?.error?.data?.message }));
         })
       );
     })

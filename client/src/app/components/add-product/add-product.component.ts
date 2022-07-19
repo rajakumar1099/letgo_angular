@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { catchError, map, Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { addProductFormValidator } from 'src/app/utils/form-validators';
 import { AuthService } from '../authentication/core/services/auth.service';
 import { getAuth } from '../authentication/core/store/auth.selector';
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getCategories } from '../categories/core/store/categories.selector';
+import * as ProductsAction from '../home/core/store/products.actions';
 import * as uuid from 'uuid';
 import {
   Categories,
@@ -22,6 +23,8 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddProductService } from './core/service/add-product.service';
 import { Constants } from 'src/app/utils/constants';
+import { Router } from '@angular/router';
+import { ProductState } from '../home/core/types/home.types';
 
 @Component({
   selector: 'app-add-product',
@@ -47,12 +50,14 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private store: Store<{
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
+      [Features.Products]: ProductState;
     }>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private commonService: CommonService,
-    public addProductService: AddProductService
-  ) {}
+    public addProductService: AddProductService,
+    public router: Router
+  ) { }
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -190,23 +195,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
       Constants.TAG_USER_DATA
     );
     const product_uid = uuid.v4();
-    // let formData = new FormData();
-    console.log(this.files);
-    // console.log(this.addProductService.uploadProductImages(this.files));
-
-    // Array.from(this.files).forEach(function (file) {
-    //   console.log(file);
-
-    //   formData.append('images', file as File);
-    //   console.log(formData);
-
-    // });
-
     const formData = new FormData();
-    Array.from(this.files).forEach(function (file) {
-      formData.append('images', file as File);
+    Array.from(this.urls).forEach(function (file) {
+      formData.append('images', file);
     });
-
 
     const payload = {
       uid: userData?.user?.uid,
@@ -214,7 +206,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
       product_description:
         this.form.controls[this.addProductForm.PRODUCT_DESCRIPTION].value,
-      // images: /* formData */ this.files ,
       product_price:
         this.form.controls[this.addProductForm.PRODUCT_PRICE].value,
       product_currency: this.form.controls[this.addProductForm.CURRENCY].value,
@@ -225,30 +216,19 @@ export class AddProductComponent implements OnInit, OnDestroy {
       product_video:
         this.form.controls[this.addProductForm.PRODUCT_VIDEO].value,
       is_available: true,
-      category: this.getCategoryWithId(),
+      category: this.form.controls[this.addProductForm.CATEGORY].value,
+      sub_category: this.form.controls[this.addProductForm.SUB_CATEGORY].value,
+      child_category: this.form.controls[this.addProductForm.CHILD_CATEGORY].value,
     };
-
-    // Object.keys(payload).forEach(key => formData.append(key, payload[key]));
 
     for (let [key, val] of Object.entries(payload)) {
       formData.append(key, JSON.stringify(val));
     }
-    // console.log(payload);
-    // console.log(
-    //   this.addProductService.uploadProductImages(
-    //     userData?.user?.uid,
-    //     product_uid,
-    //     this.files
-    //   )
-    // );
 
-    this.addProductService.createProduct(formData).subscribe()
-
-    // this.addProductService
-    //   .uploadProductImages(userData?.user?.uid, product_uid, this.files)
-    //   .subscribe((res) => {
-    // // this.addProductService.createProduct(payload);
-    // });
+    this.addProductService.createProduct(formData).subscribe((res) => {
+      this.store.dispatch(ProductsAction.GetProducts())
+      this.router.navigateByUrl('/home');
+    });
   }
 
   public handleAddressChange(address: Address) {

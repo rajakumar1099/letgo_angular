@@ -18,11 +18,11 @@ export class ProductsEffects {
       return this.homeService.getHomeData().pipe(
         map((res: any) => {
           return ProductsActions.AllProducts({
-           products: res.data.products
+           products: res?.data?.products
           });
         }),
         catchError((err) => {
-          return of(ProductsActions.ErrorProducts({ error: err.error.data.message }));
+          return of(ProductsActions.ErrorProducts({ error: err?.error?.data?.message }));
         })
       );
     })
