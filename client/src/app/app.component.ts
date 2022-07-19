@@ -17,8 +17,10 @@ import { Features } from './core/features';
 import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import * as AuthActions from './components/authentication/core/store/auth.actions';
 import * as CategoriesActions from './components/categories/core/store/categories.actions';
+import * as ProductsActions from './components/home/core/store/products.actions';
 import { Constants } from './utils/constants';
 import { CommonService } from './core/common/services/common.service';
+import { ProductState } from './components/home/core/types/home.types';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,6 +37,7 @@ export class AppComponent implements OnInit {
     private store: Store<{
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
+      [Features.Products]: ProductState;
     }>,
     private router: Router,
     private commonService: CommonService
@@ -51,6 +54,7 @@ export class AppComponent implements OnInit {
       })
     );
     this.store.dispatch(CategoriesActions.GetCategories());
+    this.store.dispatch(ProductsActions.GetProducts());
     this.categories$ = this.store.select(getCategories);
     this.isLoggedIn$ = this.store.select(getAuth).pipe(
       tap((res) => {

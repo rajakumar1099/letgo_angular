@@ -37,10 +37,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
   public isGivingAway = false;
   public form!: FormGroup;
   public readonly addProductForm = ADDPRODUCT;
-  public urls = new Array<string>();
+  public urls = new Array<File>();
   public currencies: Currencies[] = [];
   private subs = new Subscription();
-  private files: any | undefined;
+  private files!: any[];
   @ViewChild('placesRef') placesRef: GooglePlaceDirective | undefined;
 
   constructor(
@@ -51,8 +51,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private commonService: CommonService,
-    private addProductService: AddProductService
-  ) { }
+    public addProductService: AddProductService
+  ) {}
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -174,12 +174,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
     return {
       id: categories?.id,
       name: categories?.name,
-      sub_category:
-      {
+      sub_category: {
         id: sub_categories?.id,
         name: sub_categories?.name,
-        child_category:
-        {
+        child_category: {
           id: child_categories?.id,
           name: child_categories?.name,
         },
@@ -188,14 +186,35 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const userData: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA);
+    const userData: any = this.commonService.getUserDetails(
+      Constants.TAG_USER_DATA
+    );
     const product_uid = uuid.v4();
+    // let formData = new FormData();
+    console.log(this.files);
+    // console.log(this.addProductService.uploadProductImages(this.files));
+
+    // Array.from(this.files).forEach(function (file) {
+    //   console.log(file);
+
+    //   formData.append('images', file as File);
+    //   console.log(formData);
+
+    // });
+
+    const formData = new FormData();
+    Array.from(this.files).forEach(function (file) {
+      formData.append('images', file as File);
+    });
+
+
     const payload = {
       uid: userData?.user?.uid,
       product_uid: product_uid,
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
       product_description:
         this.form.controls[this.addProductForm.PRODUCT_DESCRIPTION].value,
+      // images: /* formData */ this.files ,
       product_price:
         this.form.controls[this.addProductForm.PRODUCT_PRICE].value,
       product_currency: this.form.controls[this.addProductForm.CURRENCY].value,
@@ -208,20 +227,33 @@ export class AddProductComponent implements OnInit, OnDestroy {
       is_available: true,
       category: this.getCategoryWithId(),
     };
-    console.log(payload);
 
-    this.addProductService
-      .uploadProductImages(
-        userData?.user?.uid,
-        product_uid,
-        this.files
-      )
-      .subscribe((res) => {
-        this.addProductService.createProduct(payload)
-      });
+    // Object.keys(payload).forEach(key => formData.append(key, payload[key]));
+
+    for (let [key, val] of Object.entries(payload)) {
+      formData.append(key, JSON.stringify(val));
+    }
+    // console.log(payload);
+    // console.log(
+    //   this.addProductService.uploadProductImages(
+    //     userData?.user?.uid,
+    //     product_uid,
+    //     this.files
+    //   )
+    // );
+
+    this.addProductService.createProduct(formData).subscribe()
+
+    // this.addProductService
+    //   .uploadProductImages(userData?.user?.uid, product_uid, this.files)
+    //   .subscribe((res) => {
+    // // this.addProductService.createProduct(payload);
+    // });
   }
 
   public handleAddressChange(address: Address) {
-    this.form.controls[this.addProductForm.PRODUCT_LOCATION].setValue(address.formatted_address);
+    this.form.controls[this.addProductForm.PRODUCT_LOCATION].setValue(
+      address.formatted_address
+    );
   }
 }

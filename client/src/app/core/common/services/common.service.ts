@@ -30,7 +30,7 @@ export class CommonService {
   }
 
   public getCurrencies() {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.token.Authorization });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwNjc4OTQ1YjI4OWU0ZjIwN2IyZmQiLCJpYXQiOjE2NTU3OTEyNDJ9.RfesawdCqPjCd4mxE1wsu_m6f43lvKVdNkwbcm6L6qo' });
     const options = { headers };
     return this.http.get(environment.baseURL + API.CURRENCIES, options);
   }

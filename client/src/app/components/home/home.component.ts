@@ -4,8 +4,6 @@ import { Observable, tap } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { getCategories } from '../categories/core/store/categories.selector';
 import { Categories, CategoriesState } from '../categories/core/types/categories.types';
-import * as AuthActions from '../authentication/core/store/auth.actions';
-import * as CategoriesActions from '../categories/core/store/categories.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../authentication/login-dialog/login-dialog.component';
 import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-dialog.component';

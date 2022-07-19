@@ -1,27 +1,27 @@
-// import { createReducer, on } from '@ngrx/store';
-// import { CategoriesState } from '../types/categories.types';
-// import * as CategoriesActions from './products.actions';
+import { createReducer, on } from '@ngrx/store';
+import { ProductState } from '../types/home.types';
+import * as ProductActions from './products.actions';
 
-// const initialCategoriesState: CategoriesState = {
-//   loading: true,
-//   error: null,
-//   categories: null,
-// };
+const initialProductState: ProductState = {
+  loading: true,
+  error: null,
+  products: null,
+};
 
-// export const categoriesReducer = createReducer<CategoriesState>(
-//   initialCategoriesState,
-//   on(CategoriesActions.GetCategories, (state) => ({
-//     ...state,
-//     loading: true,
-//   })),
-//   on(CategoriesActions.AllCategories, (state, action) => ({
-//     ...state,
-//     categories: action.categories,
-//     loading: false,
-//   })),
-//   on(CategoriesActions.ErrorCategories, (state, action) => ({
-//     ...state,
-//     error: action.error,
-//     loading: false,
-//   }))
-// );
+export const productsReducer = createReducer<ProductState>(
+  initialProductState,
+  on(ProductActions.GetProducts, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(ProductActions.AllProducts, (state, action) => ({
+    ...state,
+    products: action.products,
+    loading: false,
+  })),
+  on(ProductActions.ErrorProducts, (state, action) => ({
+    ...state,
+    error: action.error,
+    loading: false,
+  }))
+);

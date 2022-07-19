@@ -17,6 +17,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  images: [{}],
   product_location: {
     type: String,
     required: true,
@@ -37,40 +38,34 @@ const productSchema = new mongoose.Schema({
   },
   product_video: {
     type: String,
-    default: '',
+    default: "",
   },
-  category: [
-    {
+  category: {
+    id: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    sub_categories: {
       id: {
         type: String,
-        required: true,
       },
       name: {
         type: String,
-        required: true,
       },
-      sub_categories: [
-        {
-          id: {
-            type: String,
-          },
-          name: {
-            type: String,
-          },
-          child_categories: [
-            {
-              id: {
-                type: String,
-              },
-              name: {
-                type: String,
-              },
-            },
-          ],
+      child_categories: {
+        id: {
+          type: String,
         },
-      ],
+        name: {
+          type: String,
+        },
+      },
     },
-  ],
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);

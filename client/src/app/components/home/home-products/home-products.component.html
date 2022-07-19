@@ -1,12 +1,15 @@
-<div class="content">
-  <div class="product-container" *ngFor="let item of [0,1,2,3,4,5,6,7,8,9,10]">
+<div class="content" *ngIf="products$ | async as products">
+  <div class="product-container" *ngFor="let product of products">
     <div class="product-item">
-      <img class="product-image" src="https://joysale.appkodes.in/media/item/64/5181645096965.jpeg">
+      <img
+        class="product-image"
+        [src]="product.images[0]"
+      />
     </div>
     <div style="padding: 5px">
-      <div class="price-label">45 $</div>
-      <div class="name-label">Title</div>
-      <div class="location-label">Location</div>
+      <div class="price-label">{{ product.product_price }}</div>
+      <div class="name-label">{{ product.product_name }}</div>
+      <div class="location-label">{{ product.product_location }}</div>
     </div>
   </div>
 </div>

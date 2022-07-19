@@ -4,7 +4,6 @@ var Constants = require("../utils/Constants");
 
 const uploadImage = async (req, res) => {
   try {
-    console.log(req.files);
     if (!req.files) {
       return res.status(400).send({
         status: Constants.FAILURE,
@@ -15,8 +14,7 @@ const uploadImage = async (req, res) => {
     }
     const payload = {
       uid: req.params.uid,
-      product_uid:
-        req.params.productuid /* crypto.randomBytes(16).toString("hex") */,
+      product_uid: req.params.productuid,
       images: req.files,
     };
     await new UploadImageModel(payload).save();
