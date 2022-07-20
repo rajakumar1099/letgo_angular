@@ -1,5 +1,5 @@
-const { json } = require("express");
 const ProductModel = require("../model/ProductModel");
+const CategoriesModel = require("../model/CategoriesModel");
 var Constants = require("../utils/Constants");
 
 const addProduct = async (req, res) => {
@@ -32,12 +32,13 @@ const addProduct = async (req, res) => {
     product_video: JSON.parse(req.body.product_video),
   };
   try {
-    // save the product details in DB
     await new ProductModel(payload).save();
-    const product = await ProductModel.findOne(
+    let product = await ProductModel.findOne(
       { product_uid: payload.product_uid },
       { _id: 0, __v: 0 }
     );
+
+    product = getCategory(product);
     res.json({
       status: Constants.SUCCESS,
       data: {
@@ -55,8 +56,20 @@ const addProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  var products = await ProductModel.find({}, { _id: 0, __v: 0 });
-
+  let products = await ProductModel.find({}, { _id: 0, __v: 0 });
+  // new Promise(function (resolve, reject) {
+  //   var val = [];
+  //   await Promise.all(products.forEach(async (product) => {
+  //     const totalCategory = await CategoriesModel.find(
+  //       { id: product.category },
+  //       { _id: 0, __v: 0 }
+  //     );
+  //     const res = await getCategory(totalCategory, product);
+  //     val.push(res);
+  //   }));
+  //   console.log("products: ", val);
+    
+  // });
   res.json({
     status: Constants.SUCCESS,
     data: {
@@ -64,6 +77,96 @@ const getProducts = async (req, res) => {
     },
   });
 };
+
+async function getCategory(totalCategory, product) {
+  let productData = product;
+  const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
+    return val.id === productData?.sub_category;
+  });
+  const child_category = sub_category
+    ? sub_category[0]?.child_categories.filter(function (val) {
+        return val.id === productData?.child_category;
+      })
+    : "";
+  delete productData?.category;
+  delete productData?.sub_category;
+  delete productData?.child_category;
+
+  const product_details = {
+    uid: productData.uid,
+    product_uid: productData.product_uid,
+    product_name: productData.product_name,
+    product_description: productData.product_description,
+    images: productData.images,
+    product_price: productData.product_price,
+    product_currency: productData.product_currency,
+    product_location: productData.product_location,
+    is_giving_away: productData.is_giving_away,
+    is_available: productData.is_available,
+    product_video: productData.product_video,
+    category: {
+      id: totalCategory[0]?.id,
+      name: totalCategory[0]?.name,
+      sub_category: sub_category
+        ? {
+            id: sub_category[0]?.id,
+            name: sub_category[0]?.name,
+            child_category: child_category
+              ? {
+                  id: child_category[0]?.id,
+                  name: child_category[0]?.name,
+                }
+              : "",
+          }
+        : "",
+    },
+  };
+  // console.log(product_details);
+  return product_details;
+}
+
+// function getCategory(totalCategory, product) {
+//   let productData = product;
+//   const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
+//     return val.id === productData?.sub_category;
+//   });
+//   const child_category = sub_category[0]?.child_categories.filter(function (
+//     val
+//   ) {
+//     return val.id === productData?.child_category;
+//   });
+//   delete productData.category;
+//   delete productData.sub_category;
+//   delete productData.child_category;
+
+//   const product_details = {
+//     uid: productData.uid,
+//     product_uid: productData.product_uid,
+//     product_name: productData.product_name,
+//     product_description: productData.product_description,
+//     images: productData.images,
+//     product_price: productData.product_price,
+//     product_currency: productData.product_currency,
+//     product_location: productData.product_location,
+//     is_giving_away: productData.is_giving_away,
+//     is_available: productData.is_available,
+//     product_video: productData.product_video,
+//     category: {
+//       id: category[0]?.id,
+//       name: category[0]?.name,
+//       sub_category: {
+//         id: sub_category[0]?.id,
+//         name: sub_category[0]?.name,
+//         child_category: {
+//           id: child_category[0]?.id,
+//           name: child_category[0]?.name,
+//         },
+//       },
+//     },
+//   };
+//   // console.log(product_details);
+//   return product_details;
+// }
 
 module.exports = {
   addProduct,
