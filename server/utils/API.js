@@ -11,6 +11,7 @@ module.exports = Object.freeze({
     CURRENCIES: "/currencies",
     ADDCURRENCY: "/add-currency",
     PRODUCTS: "/products",
+    PRODUCT: "/:product_uid",
     ADDPRODUCTS: "/create",
     UPLOADPRODUCTIMAGES: "/upload-product-images/:uid/:productuid"
 })

@@ -57,28 +57,47 @@ const addProduct = async (req, res) => {
 
 const getProducts = async (req, res) => {
   let products = await ProductModel.find({}, { _id: 0, __v: 0 });
-  // new Promise(function (resolve, reject) {
-  //   var val = [];
-  //   await Promise.all(products.forEach(async (product) => {
-  //     const totalCategory = await CategoriesModel.find(
-  //       { id: product.category },
-  //       { _id: 0, __v: 0 }
-  //     );
-  //     const res = await getCategory(totalCategory, product);
-  //     val.push(res);
-  //   }));
-  //   console.log("products: ", val);
-    
-  // });
+  const val = [];
+  for (let i = 0; i < products.length; i++) {
+    const totalCategory = await CategoriesModel.find(
+      { id: products[i].category },
+      { _id: 0, __v: 0 }
+    );
+    const finalData = getCategory(totalCategory, products[i]);
+    val.push(finalData);
+  }
   res.json({
     status: Constants.SUCCESS,
     data: {
-      products: products,
+      products: val,
     },
   });
 };
 
-async function getCategory(totalCategory, product) {
+const getProduct = async (req, res) => {
+  let product = await ProductModel.findOne({product_uid: req.params.product_uid}, { _id: 0, __v: 0 });
+  if(!product){
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.INVALID_PRODUCT,
+      },
+    });
+  }  
+  const totalCategory = await CategoriesModel.find(
+      { id: product?.category },
+      { _id: 0, __v: 0 }
+    );
+    const finalData = getCategory(totalCategory, product);
+  res.json({
+    status: Constants.SUCCESS,
+    data: {
+      products: finalData,
+    },
+  });
+};
+
+function getCategory(totalCategory, product) {
   let productData = product;
   const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
     return val.id === productData?.sub_category;
@@ -92,7 +111,7 @@ async function getCategory(totalCategory, product) {
   delete productData?.sub_category;
   delete productData?.child_category;
 
-  const product_details = {
+  return {
     uid: productData.uid,
     product_uid: productData.product_uid,
     product_name: productData.product_name,
@@ -121,54 +140,10 @@ async function getCategory(totalCategory, product) {
         : "",
     },
   };
-  // console.log(product_details);
-  return product_details;
 }
-
-// function getCategory(totalCategory, product) {
-//   let productData = product;
-//   const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
-//     return val.id === productData?.sub_category;
-//   });
-//   const child_category = sub_category[0]?.child_categories.filter(function (
-//     val
-//   ) {
-//     return val.id === productData?.child_category;
-//   });
-//   delete productData.category;
-//   delete productData.sub_category;
-//   delete productData.child_category;
-
-//   const product_details = {
-//     uid: productData.uid,
-//     product_uid: productData.product_uid,
-//     product_name: productData.product_name,
-//     product_description: productData.product_description,
-//     images: productData.images,
-//     product_price: productData.product_price,
-//     product_currency: productData.product_currency,
-//     product_location: productData.product_location,
-//     is_giving_away: productData.is_giving_away,
-//     is_available: productData.is_available,
-//     product_video: productData.product_video,
-//     category: {
-//       id: category[0]?.id,
-//       name: category[0]?.name,
-//       sub_category: {
-//         id: sub_category[0]?.id,
-//         name: sub_category[0]?.name,
-//         child_category: {
-//           id: child_category[0]?.id,
-//           name: child_category[0]?.name,
-//         },
-//       },
-//     },
-//   };
-//   // console.log(product_details);
-//   return product_details;
-// }
 
 module.exports = {
   addProduct,
   getProducts,
+  getProduct
 };

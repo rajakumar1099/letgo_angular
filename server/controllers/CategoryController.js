@@ -4,35 +4,6 @@ const crypto = require("crypto");
 
 const getCategories = async (req, res) => {
   var categories = await CategoriesModel.find({}, { _id: 0, __v: 0 });
-  // const category = categories;
-  // for(let i in categories){
-  //   categories[i].sub_categories.forEach( subCategory => {
-  //           delete subCategory._id
-  //       console.log(categories)
-  //       })
-  // }
-//   category.forEach(v => {
-//     v.sub_categories?.forEach(sub_category => {
-//     console.log('s: ', sub_category?._id);
-//         delete sub_category?._id;
-//         // delete sub_category?.__v;
-//         sub_category.child_categories?.forEach(child_category => {
-//             console.log(child_category?._id);
-//             delete child_category?._id;
-//             // delete child_category?.__v;
-//         })
-//     })
-//     // return v
-//   });
-  // delete val._id
-  // delete val.__v
-  
-//   for(let i in category){
-//     category[i].sub_categories.forEach( j => {
-//         delete j._id
-//     })
-//     // delete category[o].type
-// }
   res.json({
     status: Constants.SUCCESS,
     data: {

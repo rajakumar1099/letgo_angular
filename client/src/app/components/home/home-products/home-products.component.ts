@@ -12,7 +12,7 @@ import { Products, ProductState } from '../core/types/home.types';
   styleUrls: ['./home-products.component.scss'],
 })
 export class HomeProductsComponent implements OnInit {
-  public products$: Observable<Products[] | null> | undefined;
+  public products$: Observable<ProductState | null> | undefined;
   constructor(private store: Store<{ [Features.Products]: ProductState }>, public addProductService: AddProductService) { }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@ module.exports = Object.freeze({
   MALE: "male",
   FEMALE: "female",
   INVALID_PAYLOAD: "Invalid Payload",
+  INVALID_PRODUCT: "Invalid Product Uid",
   USERNAME_ALREADY_EXIST: "Username already exists",
   EMAIL_ALREADY_EXIST: "Email ID already exists",
   EMAIL_DOES_NOT_EXIST: "Email ID does not exists",

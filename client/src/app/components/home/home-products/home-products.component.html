@@ -1,5 +1,5 @@
 <div class="content" *ngIf="products$ | async as products">
-  <div class="product-container" *ngFor="let product of products">
+  <div class="product-container" *ngFor="let product of products.products">
     <div class="product-item">
       <img
         class="product-image"
@@ -12,5 +12,8 @@
       <div class="location-label">{{ product.product_location }}</div>
     </div>
   </div>
+  <div class="custom-spinner" *ngIf="products.loading">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
 </div>
-<app-home-footer></app-home-footer>
+<!-- <app-home-footer></app-home-footer> -->

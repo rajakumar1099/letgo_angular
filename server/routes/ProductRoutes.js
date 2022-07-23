@@ -15,5 +15,6 @@ router.post(
   AddProductController.addProduct
 );
 router.get(API.ROOT, verifyToken, AddProductController.getProducts);
+router.get(API.PRODUCT, verifyToken, AddProductController.getProduct);
 
 module.exports = router;
