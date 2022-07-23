@@ -1,0 +1,88 @@
+<mat-toolbar class="bg-color" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <img
+    class="menu_icon_style"
+    (click)="openMenuSidNav()"
+    src="\assets\drawables\menu_toolbar.png"
+    alt="image"
+  />
+  <img
+    class="toolbar_app_logo"
+    src="\assets\drawables\toolbar_app_logo.png"
+    alt="image"
+    [routerLink]="['/home']"
+  />
+  <span class="spacer"></span>
+  <div class="search-container show_hide_search_bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      matInput
+      class="input"
+      type="text"
+      placeholder="{{ 'common.search' | translate }}"
+    />
+  </div>
+  <div class="location-container show_hide_search_bar">
+    <mat-icon class="search-icon">location_on</mat-icon>
+    <input
+      matInput
+      class="input"
+      type="text"
+      placeholder="{{ 'common.globalStuff' | translate }}"
+      ngx-google-places-autocomplete  #placesRef="ngx-places"
+    />
+    <button mat-flat-button class="go-button">
+      {{ "common.go" | translate }}
+    </button>
+  </div>
+  <span class="spacer"></span>
+  <div class="isLoggedInIcons" *ngIf="isLoggedIn.user">
+    <mat-icon class="toolbar_icon-style">notifications_none</mat-icon>
+    <mat-icon class="toolbar_icon-style" [matMenuTriggerFor]="menu"
+      >account_circle</mat-icon
+    >
+  </div>
+  <div *ngIf="!isLoggedIn.user" class="show_login_signup_desktop">
+    <p
+      class="txt-color"
+      translate="common.login"
+      (click)="openLoginDialog()"
+    ></p>
+    <p
+      class="txt-color"
+      translate="common.signup"
+      (click)="openSignUpDialog()"
+    ></p>
+  </div>
+  <button mat-stroked-button (click)="openAddProductPage()" class="sell-button">
+    <mat-icon class="camera-icon">photo_camera</mat-icon>
+    <p class="txt-color">{{ "common.sell" | translate }}</p>
+  </button>
+</mat-toolbar>
+<div class="bottom_search_bar">
+  <mat-icon class="bottom_search_icon">search</mat-icon>
+  <div class="bottom_search_text" translate="common.search"></div>
+</div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="menu_item" translate="common.profile"></button>
+  <button
+    mat-menu-item
+    class="menu_item"
+    translate="common.myPromotions"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_item"
+    translate="common.myExchanges"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_item"
+    translate="common.myOrdersAndMySales"
+  ></button>
+  <button
+    mat-menu-item
+    class="menu_item"
+    (click)="logOut()"
+    translate="common.logOut"
+  ></button>
+</mat-menu>

@@ -1,0 +1,257 @@
+<form [formGroup]="form">
+  <div
+    class="root-container"
+    *ngIf="isLoggedIn$ | async as isLoggedIn"
+    [hidden]="!isLoggedIn.user"
+  >
+    <p>add-product works!</p>
+    <hr />
+    <div class="header-text">{{ "addProducts.advertiseFree" | translate }}</div>
+    <div class="header-description">
+      {{ "addProducts.saleTipLabel" | translate }}
+    </div>
+    <div class="add-photos-container">
+      <div class="add-photos-text-container">
+        <div class="add-photos-text">
+          {{ "addProducts.addProductsLabel" | translate }}
+        </div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <div style="display: flex; overflow-x: auto">
+        <div class="add-image-button-container" *ngIf="urls.length < 5">
+          <input
+            #file
+            multiple
+            name="image"
+            type="file"
+            style="display: none"
+            accept="image/x-png,image/jpeg"
+            (change)="onFileSelect($event)"
+            [formControlName]="addProductForm.PRODUCT_IMAGES"
+          />
+          <img
+            src="\assets\drawables\plus.png"
+            (click)="file.click()"
+            class="add-icon"
+          />
+        </div>
+        <div
+          class="add-image-button-container"
+          *ngFor="let url of urls; let i = index"
+        >
+          <img class="product-img" [src]="url" alt="avatar" />
+          <mat-icon class="remove-icon" (click)="removeImage(i)"
+            >cancel</mat-icon
+          >
+        </div>
+      </div>
+      <mat-error *ngIf="urls.length > 5">{{
+        getErrorMessage(addProductForm.PRODUCT_IMAGES)
+      }}</mat-error>
+      <!-- <div *ngIf="urls.length > 5">Only 5 images can be uploaded</div> -->
+    </div>
+    <div class="add-photos-container">
+      <div class="add-photos-text">
+        {{ "addProducts.whatIsYourListing" | translate }}
+      </div>
+      <div class="add-photos-text-container">
+        <div>{{ "addProducts.selectCategory" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
+        <mat-label>{{ "addProducts.selectCategory" | translate }}</mat-label>
+        <mat-select [formControlName]="addProductForm.CATEGORY">
+          <mat-option
+            *ngFor="let category of categories; let i = index"
+            [value]="category.id"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.CATEGORY)">{{
+          getErrorMessage(addProductForm.CATEGORY)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container" *ngIf="subCategories.length">
+        <div>{{ "addProducts.selectSubCategory" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field
+        class="mat-form-field-container"
+        appearance="outline"
+        *ngIf="subCategories.length"
+      >
+        <mat-label>{{ "addProducts.selectSubCategory" | translate }}</mat-label>
+        <mat-select [formControlName]="addProductForm.SUB_CATEGORY">
+          <mat-option
+            *ngFor="let subcategory of subCategories; let i = index"
+            [value]="subcategory.id"
+          >
+            {{ subcategory.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.SUB_CATEGORY)">{{
+          getErrorMessage(addProductForm.SUB_CATEGORY)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container" *ngIf="childCategories.length">
+        <div>{{ "addProducts.selectChildCategory" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field
+        class="mat-form-field-container"
+        appearance="outline"
+        *ngIf="childCategories.length"
+      >
+        <mat-label>{{
+          "addProducts.selectChildCategory" | translate
+        }}</mat-label>
+        <mat-select [formControlName]="addProductForm.CHILD_CATEGORY">
+          <mat-option
+            *ngFor="let childCategory of childCategories"
+            [value]="childCategory.id"
+          >
+            {{ childCategory.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.CHILD_CATEGORY)">{{
+          getErrorMessage(addProductForm.CHILD_CATEGORY)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container">
+        <div>{{ "common.name" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
+        <mat-label>{{ "addProducts.productTitle" | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          pattern="[a-zA-Z]+"
+          ng-pattern-restrict
+          [formControlName]="addProductForm.PRODUCT_TITLE"
+        />
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_TITLE)">{{
+          getErrorMessage(addProductForm.PRODUCT_TITLE)
+        }}</mat-error>
+      </mat-form-field>
+      <div class="add-photos-text-container">
+        <div>{{ "common.description" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
+        <mat-label>{{ "common.productDescription" | translate }}</mat-label>
+        <textarea
+          matInput
+          [formControlName]="addProductForm.PRODUCT_DESCRIPTION"
+        ></textarea>
+        <mat-error
+          *ngIf="!checkFormIsValid(addProductForm.PRODUCT_DESCRIPTION)"
+          >{{ getErrorMessage(addProductForm.PRODUCT_DESCRIPTION) }}</mat-error
+        >
+      </mat-form-field>
+      <div class="add-photos-text-container">
+        <div class="add-photos-text-container">
+          {{ "common.givingAway" | translate }}
+        </div>
+        <mat-slide-toggle
+          [formControlName]="addProductForm.IS_GIVING_AWAY"
+        ></mat-slide-toggle>
+      </div>
+      <div [hidden]="form.controls[addProductForm.IS_GIVING_AWAY].value">
+        <div class="add-photos-text-container mat-form-field-container">
+          <div>{{ "common.price" | translate }}</div>
+          <div style="color: red; margin-left: 2px">*</div>
+        </div>
+        <div class="add-photos-text-container mat-form-field-container">
+          <mat-form-field
+            class="mat-form-field-price-container"
+            appearance="outline"
+          >
+            <mat-label>{{ "common.productPrice" | translate }}</mat-label>
+            <input
+              matInput
+              type="number"
+              [formControlName]="addProductForm.PRODUCT_PRICE"
+            />
+            <mat-error
+              *ngIf="!checkFormIsValid(addProductForm.PRODUCT_PRICE)"
+              >{{ getErrorMessage(addProductForm.PRODUCT_PRICE) }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field class="currency-style" appearance="outline">
+            <mat-label>{{
+              "addProducts.selectCurrency" | translate
+            }}</mat-label>
+            <mat-select [formControlName]="addProductForm.CURRENCY">
+              <mat-option
+                *ngFor="let currency of currencies"
+                [value]="currency.id"
+              >
+                {{ currency.currency_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!checkFormIsValid(addProductForm.CURRENCY)">{{
+              getErrorMessage(addProductForm.CURRENCY)
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="add-photos-container">
+      <div class="add-photos-text">
+        {{ "common.productLocation" | translate }}
+      </div>
+      <div class="add-photos-text-container">
+        <div>{{ "common.listingLocation" | translate }}</div>
+        <div style="color: red; margin-left: 2px">*</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
+        <mat-label>{{
+          "addProducts.tellWhereYouSellThisItem" | translate
+        }}</mat-label>
+        <input
+          matInput
+          type="text"
+          autocomplete="off"
+          [formControlName]="addProductForm.PRODUCT_LOCATION"
+          ngx-google-places-autocomplete  #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+        />
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_LOCATION)">{{
+          getErrorMessage(addProductForm.PRODUCT_LOCATION)
+        }}</mat-error>
+      </mat-form-field>
+      <div>{{ "addProducts.noteChooseALocationLabel" | translate }}</div>
+    </div>
+    <div class="add-photos-container">
+      <div class="add-photos-text">
+        {{ "addProducts.youtubeVideoEmbedUrl" | translate }}
+      </div>
+      <div class="add-photos-text-container">
+        <div>{{ "addProducts.productVideo" | translate }}</div>
+      </div>
+      <mat-form-field class="mat-form-field-container" appearance="outline">
+        <mat-label>{{
+          "addProducts.youtubeDummyPlaceHolder" | translate
+        }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControlName]="addProductForm.PRODUCT_VIDEO"
+        />
+        <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_VIDEO)">{{
+          getErrorMessage(addProductForm.PRODUCT_VIDEO)
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <button
+      [disabled]="!form.valid"
+      class="save-button-style"
+      mat-button
+      translate="common.save"
+      mat-raised-button
+      (click)="save()"
+    ></button>
+  </div>
+</form>
+<app-home-footer></app-home-footer>

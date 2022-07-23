@@ -1,0 +1,40 @@
+<mat-sidenav-container
+  class="mat-sidenav-container"
+  *ngIf="categories$ | async as categories"
+>
+  <mat-sidenav class="mat-sidenav" #sidenav>
+    <div class="sid-nav-toolbar">
+      {{ "common.category" | translate }}
+      <mat-icon class="menu_icon_style" (click)="sidenav.close()"
+        >close</mat-icon
+      >
+    </div>
+    <div class="custom-spinner" *ngIf="!categories.length">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+    <mat-nav-list>
+      <app-category-header-menu></app-category-header-menu>
+      <div
+        class="mobile_login_signup"
+        *ngIf="(isLoggedIn$ | async) && !isLoggedIn"
+      >
+        <button mat-button (click)="openLoginDialog()" class="login_btn">
+          {{ "common.login" | translate }}
+        </button>
+        <button mat-button (click)="openSignUpDialog()" class="signup_btn">
+          {{ "common.signup" | translate }}
+        </button>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="mat-sidenav-content">
+    <app-hometoolbar (addProductPage)="openAddproductPage()" (openMenu)="sidenav.toggle()"></app-hometoolbar>
+    <app-category-header></app-category-header>
+    <router-outlet></router-outlet>
+    <!-- <app-home-products></app-home-products> -->
+    <!-- <div class="sell-btn" (click)="openAddproductPage()">
+      <mat-icon class="sell_icon_style">photo_camera</mat-icon>
+      <div class="sell_text">{{ "common.sell" | translate }}</div>
+    </div> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

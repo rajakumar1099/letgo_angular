@@ -1,0 +1,165 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.txt-color {
+  display: inline;
+  flex: auto;
+  color: white;
+  font-size: 16px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-container {
+  height: 40px;
+  width: 20%;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 6px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  display: flex;
+}
+
+.location-container {
+  height: 40px;
+  background-color: white;
+  border-radius: 6px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  display: flex;
+}
+
+.go-button {
+  background-color: #efeeef;
+}
+
+.input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  background-color: transparent;
+}
+
+.bg-color {
+  background-color: #e40046;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.search-icon {
+  align-self: center;
+  margin: 10px;
+  color: gray;
+}
+
+.camera-icon {
+  color: white;
+  margin: 5px;
+}
+
+.isLoggedInIcons {
+  align-self: center;
+  display: flex;
+  margin-right: 5px;
+}
+
+.menu_item {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .toolbar_app_logo {
+    width: auto;
+    height: 25px;
+    cursor: pointer;
+  }
+
+  .sell-button {
+    display: none;
+  }
+
+  .show_login_signup_desktop {
+    display: none;
+  }
+
+  .bottom_search_icon {
+    margin: 10px;
+    color: gray;
+    font-size: 23px;
+    align-self: center;
+  }
+
+  .bottom_search_bar {
+    display: flex;
+    width: 100%;
+    background-color: #efeeef;
+    align-self: center;
+    color: gray;
+  }
+
+  .bottom_search_text {
+    margin: 12px 12px 12px 0px;
+  }
+
+  .show_hide_search_bar {
+    display: none;
+  }
+
+  .menu_icon_style {
+    margin-right: 15px;
+    height: 25px;
+    width: 25px;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+  }
+
+  .toolbar_icon-style {
+    margin: 10px;
+    font-size: 30px;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .toolbar_app_logo {
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .sell-button {
+    color: white;
+    font-size: 15px;
+    border-color: white;
+    display: flex;
+  }
+
+  .show_hide_search_bar {
+    display: flex;
+  }
+
+  .bottom_search_bar {
+    display: none;
+  }
+
+  .menu_icon_style {
+    display: none;
+  }
+
+  .toolbar_icon-style {
+    margin-right: 20px;
+    font-size: 30px;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+  }
+}

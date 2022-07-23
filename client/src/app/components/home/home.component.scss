@@ -1,0 +1,100 @@
+  .mat-sidenav {
+    width: 300px;
+  }
+
+  .sid-nav-toolbar {
+    height: 56px;
+    background-color: #e40046;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    padding: 16px;
+    justify-content: space-between;
+  }
+
+  .mat-sidenav-content {
+    background-color: #f6f5f7;
+  }
+
+  .mat-sidenav-container {
+    height: 100%;
+  }
+
+  .sell_text {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .sell_icon_style {
+    font-size: 25px;
+  }
+
+  .mat-spinner {
+    ::ng-deep circle {
+      stroke: #e40046;
+    }
+  }
+
+  .custom-spinner {
+    display: flex;
+    justify-content: center;
+    height: 80%;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .mobile_login_signup {
+    width: 300px;
+    padding: 20px;
+    justify-content: space-around;
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 0 1px 10px #cacaca;
+  }
+
+  .login_btn {
+    width: 35%;
+    background-color: #e40046;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+  }
+
+  .signup_btn {
+    width: 35%;
+    background-color: #222;
+    color: white;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .sell-btn {
+      padding: 10px 20px 10px 20px;
+      background-color: #e40046 !important;
+      position: fixed;
+      bottom: 5%;
+      left: 50%;
+      transform: translate(-50%, 0);
+      color: #fff;
+      z-index: 10;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .sell-btn {
+      display: none;
+    }
+  }
