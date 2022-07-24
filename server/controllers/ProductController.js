@@ -3,7 +3,7 @@ const CategoriesModel = require("../model/CategoriesModel");
 var Constants = require("../utils/Constants");
 
 const addProduct = async (req, res) => {
-  if (Object.keys(req.body).length !== 14)
+  if (Object.keys(req.body).length !== 13)
     return res.status(400).json({
       status: Constants.FAILURE,
       data: {
@@ -20,7 +20,6 @@ const addProduct = async (req, res) => {
     product_price: JSON.parse(req.body.product_price),
     product_currency: JSON.parse(req.body.product_currency),
     product_location: JSON.parse(req.body.product_location),
-    is_giving_away: JSON.parse(req.body.is_giving_away),
     is_available: JSON.parse(req.body.is_available),
     category: JSON.parse(req.body.category),
     sub_category: req.body.sub_category
@@ -38,7 +37,11 @@ const addProduct = async (req, res) => {
       { _id: 0, __v: 0 }
     );
 
-    product = getCategory(product);
+    const totalCategory = await CategoriesModel.find(
+      { id: product.category },
+      { _id: 0, __v: 0 }
+    );
+    product = getCategory(totalCategory, product);
     res.json({
       status: Constants.SUCCESS,
       data: {
@@ -75,20 +78,23 @@ const getProducts = async (req, res) => {
 };
 
 const getProduct = async (req, res) => {
-  let product = await ProductModel.findOne({product_uid: req.params.product_uid}, { _id: 0, __v: 0 });
-  if(!product){
+  let product = await ProductModel.findOne(
+    { product_uid: req.params.product_uid },
+    { _id: 0, __v: 0 }
+  );
+  if (!product) {
     return res.status(400).json({
       status: Constants.FAILURE,
       data: {
         message: Constants.INVALID_PRODUCT,
       },
     });
-  }  
+  }
   const totalCategory = await CategoriesModel.find(
-      { id: product?.category },
-      { _id: 0, __v: 0 }
-    );
-    const finalData = getCategory(totalCategory, product);
+    { id: product?.category },
+    { _id: 0, __v: 0 }
+  );
+  const finalData = getCategory(totalCategory, product);
   res.json({
     status: Constants.SUCCESS,
     data: {
@@ -110,7 +116,7 @@ function getCategory(totalCategory, product) {
   delete productData?.category;
   delete productData?.sub_category;
   delete productData?.child_category;
-
+  
   return {
     uid: productData.uid,
     product_uid: productData.product_uid,
@@ -120,7 +126,6 @@ function getCategory(totalCategory, product) {
     product_price: productData.product_price,
     product_currency: productData.product_currency,
     product_location: productData.product_location,
-    is_giving_away: productData.is_giving_away,
     is_available: productData.is_available,
     product_video: productData.product_video,
     category: {
@@ -145,5 +150,5 @@ function getCategory(totalCategory, product) {
 module.exports = {
   addProduct,
   getProducts,
-  getProduct
+  getProduct,
 };

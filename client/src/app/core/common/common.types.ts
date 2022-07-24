@@ -3,3 +3,7 @@ export interface Currencies {
   currency_name: string;
   currency_symbol: string;
 }
+
+export enum Routes {
+  HOME = '/home'
+}

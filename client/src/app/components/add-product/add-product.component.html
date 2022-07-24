@@ -1,9 +1,5 @@
 <form [formGroup]="form">
-  <div
-    class="root-container"
-    *ngIf="isLoggedIn$ | async as isLoggedIn"
-    [hidden]="!isLoggedIn.user"
-  >
+  <div class="root-container" *ngIf="addProduct$ | async as addProduct">
     <p>add-product works!</p>
     <hr />
     <div class="header-text">{{ "addProducts.advertiseFree" | translate }}</div>
@@ -150,15 +146,7 @@
           >{{ getErrorMessage(addProductForm.PRODUCT_DESCRIPTION) }}</mat-error
         >
       </mat-form-field>
-      <div class="add-photos-text-container">
-        <div class="add-photos-text-container">
-          {{ "common.givingAway" | translate }}
-        </div>
-        <mat-slide-toggle
-          [formControlName]="addProductForm.IS_GIVING_AWAY"
-        ></mat-slide-toggle>
-      </div>
-      <div [hidden]="form.controls[addProductForm.IS_GIVING_AWAY].value">
+      <div>
         <div class="add-photos-text-container mat-form-field-container">
           <div>{{ "common.price" | translate }}</div>
           <div style="color: red; margin-left: 2px">*</div>
@@ -215,7 +203,9 @@
           type="text"
           autocomplete="off"
           [formControlName]="addProductForm.PRODUCT_LOCATION"
-          ngx-google-places-autocomplete  #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+          ngx-google-places-autocomplete
+          #placesRef="ngx-places"
+          (onAddressChange)="handleAddressChange($event)"
         />
         <mat-error *ngIf="!checkFormIsValid(addProductForm.PRODUCT_LOCATION)">{{
           getErrorMessage(addProductForm.PRODUCT_LOCATION)
@@ -244,7 +234,11 @@
         }}</mat-error>
       </mat-form-field>
     </div>
+    <mat-error *ngIf="addProduct.error">
+      {{ addProduct.error }}
+    </mat-error>
     <button
+      *ngIf="!addProduct.loading"
       [disabled]="!form.valid"
       class="save-button-style"
       mat-button
@@ -252,6 +246,9 @@
       mat-raised-button
       (click)="save()"
     ></button>
+    <div class="custom-spinner" *ngIf="addProduct.loading">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
   </div>
 </form>
 <app-home-footer></app-home-footer>

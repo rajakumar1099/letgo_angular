@@ -9,6 +9,7 @@ import { getAuth } from '../authentication/core/store/auth.selector';
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getCategories } from '../categories/core/store/categories.selector';
 import * as ProductsAction from '../home/core/store/products.actions';
+import * as AddProductAction from '../add-product/core/store/add-products.actions';
 import * as uuid from 'uuid';
 import {
   Categories,
@@ -16,7 +17,11 @@ import {
   ChildCategories,
   SubCategories,
 } from '../categories/core/types/categories.types';
-import { ADDPRODUCT } from './core/types/add-products.types';
+import {
+  AddProduct,
+  ADDPRODUCT,
+  AddProductState,
+} from './core/types/add-products.types';
 import { CommonService } from 'src/app/core/common/services/common.service';
 import { Currencies } from 'src/app/core/common/common.types';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
@@ -25,6 +30,7 @@ import { AddProductService } from './core/service/add-product.service';
 import { Constants } from 'src/app/utils/constants';
 import { Router } from '@angular/router';
 import { ProductState } from '../home/core/types/home.types';
+import { getAddProduct } from './core/store/add-products.selector';
 
 @Component({
   selector: 'app-add-product',
@@ -37,6 +43,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   public subCategories: SubCategories[] = [];
   public childCategories: ChildCategories[] = [];
   public isLoggedIn$!: Observable<AuthState>;
+  public addProduct$!: Observable<AddProductState>;
   public isGivingAway = false;
   public form!: FormGroup;
   public readonly addProductForm = ADDPRODUCT;
@@ -51,13 +58,14 @@ export class AddProductComponent implements OnInit, OnDestroy {
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
       [Features.Products]: ProductState;
+      [Features.AddProduct]: AddProductState;
     }>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private commonService: CommonService,
     public addProductService: AddProductService,
     public router: Router
-  ) { }
+  ) {}
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
@@ -81,46 +89,24 @@ export class AddProductComponent implements OnInit, OnDestroy {
     );
 
     this.isLoggedIn$ = this.store.select(getAuth);
+    this.addProduct$ = this.store.select(getAddProduct);
     this.form = this.formBuilder.group(addProductFormValidator);
-    this.form.controls[
-      this.addProductForm.IS_GIVING_AWAY
-    ].valueChanges.subscribe((val) => {
-      if (val) {
-        this.form.controls[this.addProductForm.PRODUCT_PRICE].clearValidators();
-        this.form.controls[
-          this.addProductForm.PRODUCT_PRICE
-        ].updateValueAndValidity();
-        this.form.controls[this.addProductForm.CURRENCY].clearValidators();
-        this.form.controls[
-          this.addProductForm.CURRENCY
-        ].updateValueAndValidity();
-      } else {
-        this.form.controls[this.addProductForm.PRODUCT_PRICE].setValidators([
-          Validators.required,
-        ]);
-        this.form.controls[
-          this.addProductForm.PRODUCT_PRICE
-        ].updateValueAndValidity();
-        this.form.controls[this.addProductForm.CURRENCY].setValidators([
-          Validators.required,
-        ]);
-        this.form.controls[
-          this.addProductForm.CURRENCY
-        ].updateValueAndValidity();
-      }
-    });
-    this.form.controls[this.addProductForm.CATEGORY].valueChanges.subscribe(
-      (val) => {
-        const index =
-          this.categories?.findIndex((category) => category.id === val) ?? 0;
+    this.subs.add(
+      this.form.controls[this.addProductForm.CATEGORY].valueChanges.subscribe(
+        (val) => {
+          const index =
+            this.categories?.findIndex((category) => category.id === val) ?? 0;
 
-        if (this.categories![index]?.sub_categories) {
-          this.subCategories = this.categories![index].sub_categories;
+          if (this.categories![index]?.sub_categories) {
+            this.subCategories = this.categories![index].sub_categories;
+          }
         }
-      }
+      )
     );
-    this.form.controls[this.addProductForm.SUB_CATEGORY].valueChanges.subscribe(
-      (val) => {
+    this.subs.add(
+      this.form.controls[
+        this.addProductForm.SUB_CATEGORY
+      ].valueChanges.subscribe((val) => {
         const index =
           this.subCategories?.findIndex(
             (sub_category) => sub_category.id === val
@@ -129,7 +115,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
         if (this.subCategories![index]?.child_categories) {
           this.childCategories = this.subCategories![index].child_categories;
         }
-      }
+      })
     );
   }
 
@@ -200,7 +186,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
       formData.append('images', file);
     });
 
-    const payload = {
+    const payload: AddProduct = {
       uid: userData?.user?.uid,
       product_uid: product_uid,
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
@@ -209,8 +195,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
       product_price:
         this.form.controls[this.addProductForm.PRODUCT_PRICE].value,
       product_currency: this.form.controls[this.addProductForm.CURRENCY].value,
-      is_giving_away:
-        this.form.controls[this.addProductForm.IS_GIVING_AWAY].value,
       product_location:
         this.form.controls[this.addProductForm.PRODUCT_LOCATION].value,
       product_video:
@@ -218,17 +202,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
       is_available: true,
       category: this.form.controls[this.addProductForm.CATEGORY].value,
       sub_category: this.form.controls[this.addProductForm.SUB_CATEGORY].value,
-      child_category: this.form.controls[this.addProductForm.CHILD_CATEGORY].value,
+      child_category:
+        this.form.controls[this.addProductForm.CHILD_CATEGORY].value,
     };
 
     for (let [key, val] of Object.entries(payload)) {
       formData.append(key, JSON.stringify(val));
     }
 
-    this.addProductService.createProduct(formData).subscribe((res) => {
-      this.store.dispatch(ProductsAction.GetProducts())
-      this.router.navigateByUrl('/home');
-    });
+    this.store.dispatch(
+      AddProductAction.AddProductRequest({ addProduct: payload })
+    );
   }
 
   public handleAddressChange(address: Address) {

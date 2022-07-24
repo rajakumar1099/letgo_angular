@@ -27,8 +27,9 @@ import { CategoryHeaderMenuComponent } from './components/categories/category-he
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { HomeFooterComponent } from './components/home/home-footer/home-footer.component';
 import { HomeProductsComponent } from './components/home/home-products/home-products.component';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { ProductsEffects } from './components/home/core/store/products.effects';
+import { AddProductsEffects } from './components/add-product/core/store/add-products.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,12 @@ import { ProductsEffects } from './components/home/core/store/products.effects';
         deps: [HttpClient],
       },
     }),
-    EffectsModule.forRoot([AuthEffects, CategoriesEffects, ProductsEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      CategoriesEffects,
+      ProductsEffects,
+      AddProductsEffects,
+    ]),
     BrowserAnimationsModule,
     MaterialModule,
     FirebaseModule,
