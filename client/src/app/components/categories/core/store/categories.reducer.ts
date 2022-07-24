@@ -3,7 +3,7 @@ import { CategoriesState } from '../types/categories.types';
 import * as CategoriesActions from './categories.actions';
 
 const initialCategoriesState: CategoriesState = {
-  loading: true,
+  loading: false,
   error: null,
   categories: null,
 };

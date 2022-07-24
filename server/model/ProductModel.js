@@ -24,15 +24,12 @@ const productSchema = new mongoose.Schema({
   },
   product_price: {
     type: String,
+    required: true,
   },
   product_currency: {
     type: String,
   },
   is_available: {
-    type: Boolean,
-    required: true,
-  },
-  is_giving_away: {
     type: Boolean,
     required: true,
   },
@@ -46,11 +43,11 @@ const productSchema = new mongoose.Schema({
   },
   sub_category: {
     type: String,
-    default: null
+    default: null,
   },
   child_category: {
     type: String,
-    default: null
+    default: null,
   },
 });
 

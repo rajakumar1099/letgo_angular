@@ -91,7 +91,6 @@ export const addProductFormValidator = {
     '',
     Validators.compose([Validators.required])
   ),
-  [ADDPRODUCT.IS_GIVING_AWAY]: new FormControl(false),
   [ADDPRODUCT.PRODUCT_IMAGES]: new FormControl('', Validators.compose([Validators.required])),
   [ADDPRODUCT.PRODUCT_VIDEO]: new FormControl(''),
 }

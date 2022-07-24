@@ -3,7 +3,7 @@ import { ProductState } from '../types/home.types';
 import * as ProductActions from './products.actions';
 
 const initialProductState: ProductState = {
-  loading: true,
+  loading: false,
   error: null,
   products: null,
 };
