@@ -30,6 +30,9 @@ import { HomeProductsComponent } from './components/home/home-products/home-prod
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { ProductsEffects } from './components/home/core/store/products.effects';
 import { AddProductsEffects } from './components/add-product/core/store/add-products.effects';
+import { HomeCarouselComponent } from './components/home/home-carousel/home-carousel.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +45,7 @@ import { AddProductsEffects } from './components/add-product/core/store/add-prod
     AddProductComponent,
     HomeFooterComponent,
     HomeProductsComponent,
+    HomeCarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,7 @@ import { AddProductsEffects } from './components/add-product/core/store/add-prod
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,
     }),
+    NgbModule,
   ],
   providers: [AuthService, AesEncryptDecryptService],
   bootstrap: [AppComponent],

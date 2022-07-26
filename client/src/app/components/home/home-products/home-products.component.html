@@ -1,5 +1,5 @@
 <div class="content" *ngIf="products$ | async as products">
-  <div class="product-container" *ngFor="let product of products.products">
+  <!-- <div class="product-container" *ngFor="let product of products.products">
     <div class="product-item">
       <img
         class="product-image"
@@ -10,6 +10,18 @@
       <div class="price-label">{{ product.product_price }}</div>
       <div class="name-label">{{ product.product_name }}</div>
       <div class="location-label">{{ product.product_location }}</div>
+    </div>
+  </div> -->
+  <div class="grid">
+    <div class="col" *ngFor="let product of products.products">
+      <div class="product-item">
+        <img class="product-image" [src]="product.images[0]" />
+      </div>
+      <div style="padding-left: 5px">
+        <div class="price-label">{{ product.product_price }}</div>
+        <div class="name-label">{{ product.product_name }}</div>
+        <div class="location-label">{{ product.product_location }}</div>
+      </div>
     </div>
   </div>
   <div class="custom-spinner" *ngIf="products.loading">
