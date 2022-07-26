@@ -211,7 +211,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(
-      AddProductAction.AddProductRequest({ addProduct: payload })
+      AddProductAction.AddProductRequest({ addProduct: formData })
     );
   }
 
