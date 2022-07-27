@@ -1,5 +1,5 @@
 const CurrencyModel = require("../model/CurrencyModel");
-var Constants = require("../utils/Constants");
+var Constants = require("../utils/constants");
 const crypto = require("crypto");
 
 const getCurrencies = async (req, res) => {

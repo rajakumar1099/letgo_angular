@@ -1,6 +1,6 @@
 const UserModel = require("../model/AuthModel");
 const jwt = require("jsonwebtoken");
-var Constants = require("../utils/Constants");
+var Constants = require("../utils/constants");
 const crypto = require("crypto");
 
 const signup = async (req, res) => {

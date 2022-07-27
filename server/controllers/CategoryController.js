@@ -1,5 +1,5 @@
 const CategoriesModel = require("../model/CategoriesModel");
-var Constants = require("../utils/Constants");
+var Constants = require("../utils/constants");
 const crypto = require("crypto");
 
 const getCategories = async (req, res) => {
