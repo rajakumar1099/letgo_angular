@@ -1,7 +1,7 @@
 <ngb-carousel
   class="carousel"
   [showNavigationArrows]="true"
-  [showNavigationIndicators]="true"
+  [showNavigationIndicators]="false"
   [interval]="6000"
   [keyboard]="true"
   [pauseOnHover]="true"
@@ -9,8 +9,8 @@
   [activeId]="'1'"
 >
   <ng-template ngbSlide [id]="slide.id" *ngFor="let slide of slides">
-    <div class="picsum-img-wrapper">
-      <img [src]="slide.image" [alt]="slide.id" />
+    <div>
+      <img class="carousel-img" [src]="slide.image" [alt]="slide.id" />
     </div>
   </ng-template>
 </ngb-carousel>
