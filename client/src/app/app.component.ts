@@ -46,11 +46,13 @@ export class AppComponent implements OnInit {
     translate.use('en');
   }
   ngOnInit(): void {
-    const loginData: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA);
+    const loginData: any = this.commonService.getUserDetails(
+      Constants.TAG_USER_DATA
+    );
     this.store.dispatch(
       AuthActions.GetUser({
         userDetails: loginData?.user ?? null,
-        authToken: loginData?.authToken ?? null
+        authToken: loginData?.authToken ?? null,
       })
     );
     this.store.dispatch(CategoriesActions.GetCategories());
@@ -79,10 +81,7 @@ export class AppComponent implements OnInit {
 
   public openAddproductPage(): void {
     if (this.isLoggedIn) {
-      // this.router.navigate(['add-product'], {relativeTo: this.activateRoute})
-      this.router.navigate(
-        ['add-product'] /* , {relativeTo: this.activateRoute} */
-      );
+      this.router.navigate(['add-product']);
     } else {
       this.openLoginDialog();
     }
