@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-var constants = require("./Constants");
+const constants = require("./constants");
 
 module.exports = function (req, res, next) {
   const token = req.header(constants.AUTHORIZATION);

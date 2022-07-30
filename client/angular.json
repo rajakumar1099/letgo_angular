@@ -115,5 +115,8 @@
       }
     }
   },
-  "defaultProject": "joysale"
+  "defaultProject": "joysale",
+  "cli": {
+    "analytics": "596cc64b-1086-4fb3-92e3-dd50ff97af6f"
+  }
 }

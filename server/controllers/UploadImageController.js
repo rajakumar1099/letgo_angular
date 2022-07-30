@@ -1,6 +1,6 @@
 const UploadImageModel = require("../model/UploadImageModel");
 const jwt = require("jsonwebtoken");
-var Constants = require("../utils/Constants");
+var Constants = require("../utils/constants");
 
 const uploadImage = async (req, res) => {
   try {

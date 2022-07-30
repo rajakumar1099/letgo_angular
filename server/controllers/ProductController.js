@@ -1,6 +1,6 @@
 const ProductModel = require("../model/ProductModel");
 const CategoriesModel = require("../model/CategoriesModel");
-var Constants = require("../utils/Constants");
+var Constants = require("../utils/constants");
 
 const addProduct = async (req, res) => {
   if (Object.keys(req.body).length !== 13)

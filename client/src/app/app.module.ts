@@ -32,6 +32,7 @@ import { ProductsEffects } from './components/home/core/store/products.effects';
 import { AddProductsEffects } from './components/add-product/core/store/add-products.effects';
 import { HomeCarouselComponent } from './components/home/home-carousel/home-carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductDetailsComponent } from './components/home/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeFooterComponent,
     HomeProductsComponent,
     HomeCarouselComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,

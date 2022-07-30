@@ -1,4 +1,5 @@
 export const environment = {
+  baseURL: 'https://joysale-angular.herokuapp.com/api',
   production: true,
   firebaseConfig: {
     apiKey: 'AIzaSyAbGNyUNwShKp4Njh9fzGdp5bI_Nigjx7Y',

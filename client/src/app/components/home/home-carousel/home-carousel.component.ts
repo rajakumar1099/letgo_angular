@@ -24,11 +24,6 @@ export class HomeCarouselComponent implements OnInit {
       {
         id: 3,
         image:
-          'https://joysale.appkodes.in/frontend/web/media/banners/6398-9522634676.png',
-      },
-      {
-        id: 4,
-        image:
           'https://joysale.appkodes.in/frontend/web/media/banners/4591-5177441769.png',
       },
     ];
