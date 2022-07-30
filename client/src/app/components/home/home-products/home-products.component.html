@@ -1,6 +1,10 @@
 <div class="content" *ngIf="products$ | async as products">
   <div class="grid">
-    <div class="col" [routerLink]="['/products', product.product_uid]" *ngFor="let product of products.products">
+    <div
+      class="col"
+      *ngFor="let product of products.products"
+      (click)="navigateToProductDetail(product)"
+    >
       <div class="product-item">
         <img class="product-image" [src]="product.images[0]" />
       </div>

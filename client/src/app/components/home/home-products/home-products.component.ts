@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Features } from 'src/app/core/features';
@@ -13,9 +14,17 @@ import { Products, ProductState } from '../core/types/home.types';
 })
 export class HomeProductsComponent implements OnInit {
   public products$: Observable<ProductState | null> | undefined;
-  constructor(private store: Store<{ [Features.Products]: ProductState }>, public addProductService: AddProductService) { }
+  constructor(
+    private store: Store<{ [Features.Products]: ProductState }>,
+    public addProductService: AddProductService,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.products$ = this.store.select(getProducts);
+  }
+
+  public navigateToProductDetail(product: Products) {
+    this.router.navigate(['', product.product_uid]);
   }
 }
