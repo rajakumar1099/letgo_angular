@@ -1,6 +1,7 @@
 const ProductModel = require("../model/ProductModel");
 const CategoriesModel = require("../model/CategoriesModel");
 var Constants = require("../utils/constants");
+const CurrencyModel = require("../model/CurrencyModel");
 
 const addProduct = async (req, res) => {
   if (Object.keys(req.body).length !== 13)
@@ -66,7 +67,11 @@ const getProducts = async (req, res) => {
       { id: products[i].category },
       { _id: 0, __v: 0 }
     );
-    const finalData = getCategory(totalCategory, products[i]);
+    const totalCurrency = await CurrencyModel.find(
+      { id: products[i].product_currency },
+      { _id: 0, __v: 0 }
+    );
+    const finalData = getCategory(totalCategory, products[i], totalCurrency);
     val.push(finalData);
   }
   res.json({
@@ -94,7 +99,11 @@ const getProduct = async (req, res) => {
     { id: product?.category },
     { _id: 0, __v: 0 }
   );
-  const finalData = getCategory(totalCategory, product);
+  const totalCurrency = await CurrencyModel.find(
+    { id: product.product_currency },
+    { _id: 0, __v: 0 }
+  );
+  const finalData = getCategory(totalCategory, product, totalCurrency);
   res.json({
     status: Constants.SUCCESS,
     data: {
@@ -103,7 +112,7 @@ const getProduct = async (req, res) => {
   });
 };
 
-function getCategory(totalCategory, product) {
+function getCategory(totalCategory, product, currency) {
   let productData = product;
   const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
     return val.id === productData?.sub_category;
@@ -113,10 +122,12 @@ function getCategory(totalCategory, product) {
         return val.id === productData?.child_category;
       })
     : "";
+  const productCurrency = currency.currency_symbol;
   delete productData?.category;
   delete productData?.sub_category;
   delete productData?.child_category;
-  
+  // delete productData?.product_currency;
+
   return {
     uid: productData.uid,
     product_uid: productData.product_uid,
@@ -125,6 +136,7 @@ function getCategory(totalCategory, product) {
     images: productData.images,
     product_price: productData.product_price,
     product_currency: productData.product_currency,
+    // product_currency: productCurrency,
     product_location: productData.product_location,
     is_available: productData.is_available,
     product_video: productData.product_video,
