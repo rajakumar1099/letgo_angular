@@ -1,6 +1,73 @@
 <div class="root-container">
-  <div class="photo-container">
+  <div class="product-image-container">
+    <div class="product-image-list">
+      <img
+        style="
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          padding-bottom: 10px;
+          border-radius: 10px;
+        "
+        src="https://imgd.aeplcdn.com/0x0/n/cw/ec/54399/swift-exterior-right-front-three-quarter-63.jpeg"
+        alt="sofa"
+      />
+      <img
+        style="
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 10px;
+        "
+        src="https://imgd.aeplcdn.com/0x0/n/cw/ec/54399/swift-exterior-right-side-view.jpeg"
+        alt="sofa"
+      />
+    </div>
+    <div class="product-image-big">
+      <img
+        class="product-image"
+        src="https://imgd.aeplcdn.com/0x0/n/cw/ec/54399/swift-exterior-right-front-three-quarter-63.jpeg"
+        alt="sofa"
+      />
+    </div>
   </div>
-  <div style="flex: 1; background-color: aquamarine;">
+  <div class="product-detail-container">
+    <div class="product-name-label">Maruti Suzuki</div>
+    <div class="product-price-label">500 $</div>
+    <div class="product-condition">
+      <div class="product-condition-label">Like new</div>
+      <div>2 years ago</div>
+      <div>|</div>
+      <div>2 views</div>
+    </div>
+    <hr style="border-top: 0.5px solid #bbb; margin:0px 0px 10px 0px;" />
+    <div class="product-shipping-label">
+      <mat-icon class="product-location-icon">local_shipping</mat-icon>
+      <div>Shipping cost</div>
+      <div>:</div>
+      <div>20 $</div>
+    </div>
+    <hr style="border-top: 0.5px solid #bbb; margin:0px 0px 10px 0px;" />
+
+    <div class="product-location">
+      <div class="product-location-label">
+        <mat-icon class="product-location-icon">location_on</mat-icon>
+        Auckland, New Zealand
+      </div>
+      <div class="product-location-map-container"></div>
+    </div>
+    <div class="product-chat-seller-btn">
+      <button class="chat-seller-button" mat-flat-button>
+        <mat-icon style="margin-right: 5px">chat</mat-icon>
+        {{ "common.chatWithSeller" | translate }}
+      </button>
+    </div>
+    <div class="product-buy-now-btn">
+      <button
+        class="buy-now-button"
+        translate="common.buynow"
+        mat-stroked-button
+      ></button>
+    </div>
   </div>
 </div>

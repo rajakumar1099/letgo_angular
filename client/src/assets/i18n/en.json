@@ -21,7 +21,9 @@
     "productPrice": "Product Price",
     "productLocation": "Product Location",
     "listingLocation": "Listing’s location",
-    "save": "Save"
+    "save": "Save",
+    "buynow": "Buy now",
+    "chatWithSeller": "Chat with seller"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",

@@ -42,7 +42,14 @@ const addProduct = async (req, res) => {
       { id: product.category },
       { _id: 0, __v: 0 }
     );
-    product = getCategory(totalCategory, product);
+    let productCurrency = await CurrencyModel.find(
+      { id: product.product_currency },
+      { _id: 0, __v: 0 }
+    );
+    productCurrency = productCurrency.find(
+      (element) => element.id == product.product_currency
+    );
+    product = getCategory(totalCategory, product, productCurrency.currency_symbol);
     res.json({
       status: Constants.SUCCESS,
       data: {
@@ -67,11 +74,14 @@ const getProducts = async (req, res) => {
       { id: products[i].category },
       { _id: 0, __v: 0 }
     );
-    const totalCurrency = await CurrencyModel.find(
+    let productCurrency = await CurrencyModel.find(
       { id: products[i].product_currency },
       { _id: 0, __v: 0 }
     );
-    const finalData = getCategory(totalCategory, products[i], totalCurrency);
+    productCurrency = productCurrency.find(
+      (element) => element.id == products[i].product_currency
+    );
+    const finalData = getCategory(totalCategory, products[i], productCurrency.currency_symbol);
     val.push(finalData);
   }
   res.json({
@@ -99,11 +109,14 @@ const getProduct = async (req, res) => {
     { id: product?.category },
     { _id: 0, __v: 0 }
   );
-  const totalCurrency = await CurrencyModel.find(
+  let productCurrency = await CurrencyModel.find(
     { id: product.product_currency },
     { _id: 0, __v: 0 }
   );
-  const finalData = getCategory(totalCategory, product, totalCurrency);
+  productCurrency = productCurrency.find(
+    (element) => element.id == product.product_currency
+  );
+  const finalData = getCategory(totalCategory, product, productCurrency.currency_symbol);
   res.json({
     status: Constants.SUCCESS,
     data: {
@@ -112,7 +125,7 @@ const getProduct = async (req, res) => {
   });
 };
 
-function getCategory(totalCategory, product, currency) {
+function getCategory(totalCategory, product, productCurrency) {
   let productData = product;
   const sub_category = totalCategory[0]?.sub_categories.filter(function (val) {
     return val.id === productData?.sub_category;
@@ -122,11 +135,9 @@ function getCategory(totalCategory, product, currency) {
         return val.id === productData?.child_category;
       })
     : "";
-  const productCurrency = currency.currency_symbol;
   delete productData?.category;
   delete productData?.sub_category;
   delete productData?.child_category;
-  // delete productData?.product_currency;
 
   return {
     uid: productData.uid,
@@ -135,8 +146,7 @@ function getCategory(totalCategory, product, currency) {
     product_description: productData.product_description,
     images: productData.images,
     product_price: productData.product_price,
-    product_currency: productData.product_currency,
-    // product_currency: productCurrency,
+    product_currency: productCurrency,
     product_location: productData.product_location,
     is_available: productData.is_available,
     product_video: productData.product_video,
