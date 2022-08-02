@@ -5,7 +5,12 @@ import { Observable } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { AddProductService } from '../../add-product/core/service/add-product.service';
 import { getProducts } from '../core/store/products.selector';
-import { Products, ProductState } from '../core/types/home.types';
+import {
+  Products,
+  ProductsState,
+  ProductState,
+} from '../core/types/home.types';
+import * as ProductsAction from '../core/store/products.actions';
 
 @Component({
   selector: 'app-home-products',
@@ -13,9 +18,12 @@ import { Products, ProductState } from '../core/types/home.types';
   styleUrls: ['./home-products.component.scss'],
 })
 export class HomeProductsComponent implements OnInit {
-  public products$: Observable<ProductState | null> | undefined;
+  public products$: Observable<ProductsState | null> | undefined;
   constructor(
-    private store: Store<{ [Features.Products]: ProductState }>,
+    private store: Store<{
+      [Features.Products]: ProductsState;
+      [Features.Product]: ProductState;
+    }>,
     public addProductService: AddProductService,
     public router: Router
   ) {}
@@ -25,6 +33,7 @@ export class HomeProductsComponent implements OnInit {
   }
 
   public navigateToProductDetail(product: Products) {
+    this.store.dispatch(ProductsAction.ProductClearStore());
     this.router.navigate(['', product.product_uid]);
   }
 }

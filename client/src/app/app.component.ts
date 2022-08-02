@@ -20,7 +20,7 @@ import * as CategoriesActions from './components/categories/core/store/categorie
 import * as ProductsActions from './components/home/core/store/products.actions';
 import { Constants } from './utils/constants';
 import { CommonService } from './core/common/services/common.service';
-import { ProductState } from './components/home/core/types/home.types';
+import { ProductsState } from './components/home/core/types/home.types';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     private store: Store<{
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
-      [Features.Products]: ProductState;
+      [Features.Products]: ProductsState;
     }>,
     private router: Router,
     private commonService: CommonService

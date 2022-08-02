@@ -29,7 +29,7 @@ import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddProductService } from './core/service/add-product.service';
 import { Constants } from 'src/app/utils/constants';
 import { Router } from '@angular/router';
-import { ProductState } from '../home/core/types/home.types';
+import { ProductsState } from '../home/core/types/home.types';
 import { getAddProduct } from './core/store/add-products.selector';
 
 @Component({
@@ -57,7 +57,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     private store: Store<{
       [Features.Categories]: CategoriesState;
       [Features.Auth]: AuthState;
-      [Features.Products]: ProductState;
+      [Features.Products]: ProductsState;
       [Features.AddProduct]: AddProductState;
     }>,
     private formBuilder: FormBuilder,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { switchMap, map, catchError, of } from 'rxjs';
-import { ProductState } from 'src/app/components/home/core/types/home.types';
+import { ProductsState } from 'src/app/components/home/core/types/home.types';
 import { Features } from 'src/app/core/features';
 import { AddProductService } from '../service/add-product.service';
 import * as AddProductActions from './add-products.actions';
@@ -16,7 +16,7 @@ export class AddProductsEffects {
     private actions$: Actions,
     private addProductService: AddProductService,
     private store: Store<{
-      [Features.Products]: ProductState;
+      [Features.Products]: ProductsState;
     }>,
     private router: Router
   ) {}
