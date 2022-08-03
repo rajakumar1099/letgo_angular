@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Features } from 'src/app/core/features';
 import { AddProductService } from '../../add-product/core/service/add-product.service';
 import { getProducts } from '../core/store/products.selector';
-import { Products, ProductState } from '../core/types/home.types';
+import {
+  Products,
+  ProductsState,
+  ProductState,
+} from '../core/types/home.types';
+import * as ProductsAction from '../core/store/products.actions';
 
 @Component({
   selector: 'app-home-products',
@@ -12,10 +18,22 @@ import { Products, ProductState } from '../core/types/home.types';
   styleUrls: ['./home-products.component.scss'],
 })
 export class HomeProductsComponent implements OnInit {
-  public products$: Observable<ProductState | null> | undefined;
-  constructor(private store: Store<{ [Features.Products]: ProductState }>, public addProductService: AddProductService) { }
+  public products$: Observable<ProductsState | null> | undefined;
+  constructor(
+    private store: Store<{
+      [Features.Products]: ProductsState;
+      [Features.Product]: ProductState;
+    }>,
+    public addProductService: AddProductService,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.products$ = this.store.select(getProducts);
+  }
+
+  public navigateToProductDetail(product: Products) {
+    this.store.dispatch(ProductsAction.ProductClearStore());
+    this.router.navigate(['', product.product_uid]);
   }
 }
