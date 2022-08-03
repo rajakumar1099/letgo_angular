@@ -108,6 +108,7 @@
 
 .product-image-big {
   padding: 0px 0px 0px 10px;
+  width: 100%;
   @media only screen and (max-width: 600px) {
     padding: 0px;
   }
@@ -153,9 +154,10 @@
 .product-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px;
   cursor: pointer;
+  max-height: 450px;
 }
 
 .product-name-label {
