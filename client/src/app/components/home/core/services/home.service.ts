@@ -20,8 +20,6 @@ export class HomeService {
   }
 
   public getProductData(product_uid: any) {
-    console.log(product_uid);
-    
     const token: any = this.commonService.getUserDetails(Constants.TAG_USER_DATA) ?? null
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwNjc4OTQ1YjI4OWU0ZjIwN2IyZmQiLCJpYXQiOjE2NTU3OTEyNDJ9.RfesawdCqPjCd4mxE1wsu_m6f43lvKVdNkwbcm6L6qo'});
     const options = { headers };

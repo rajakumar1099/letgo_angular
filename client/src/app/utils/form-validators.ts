@@ -94,3 +94,10 @@ export const addProductFormValidator = {
   [ADDPRODUCT.PRODUCT_IMAGES]: new FormControl('', Validators.compose([Validators.required])),
   [ADDPRODUCT.PRODUCT_VIDEO]: new FormControl(''),
 }
+
+export const commentFormValidator = {
+  [ADDPRODUCT.COMMENT]: new FormControl(
+    '',
+    Validators.compose([Validators.required])
+  ),
+}

@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <mat-form-field style="width: 100%" appearance="outline">
+    <mat-label>{{ "common.typeYourComment" | translate }}</mat-label>
+    <textarea
+      [formControlName]="addProductForm.COMMENT"
+      style="max-height: 100px"
+      matInput
+    ></textarea>
+    <mat-error *ngIf="!checkFormIsValid(addProductForm.COMMENT)">{{
+      getErrorMessage(addProductForm.COMMENT)
+    }}</mat-error>
+  </mat-form-field>
+</form>
+
+<div style="display: flex; justify-content: end">
+  <button mat-raised-button [disabled]="!form.valid" color="primary">
+    {{ "common.postComment" | translate }}
+  </button>
+</div>
+<div style="display: flex; margin-top: 10px">
+  <img
+    style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover"
+    src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+    alt="Avatar"
+  />
+  <div style="width: 100%; margin-left: 20px">
+    <div style="display: flex; justify-content: space-between">
+      <div style="font-weight: bold">Viky</div>
+      <mat-icon style="color: var(--primary-color); font-size: 20px"
+        >delete</mat-icon
+      >
+    </div>
+    <div>Nice Product</div>
+  </div>
+</div>

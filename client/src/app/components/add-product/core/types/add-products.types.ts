@@ -10,6 +10,7 @@ export enum ADDPRODUCT {
   IS_GIVING_AWAY = 'givingAway',
   PRODUCT_IMAGES = 'productImages',
   PRODUCT_VIDEO = 'productVideo',
+  COMMENT = 'comment'
 }
 
 export const AddProductActionTypes = {

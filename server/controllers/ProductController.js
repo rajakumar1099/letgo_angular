@@ -2,6 +2,7 @@ const ProductModel = require("../model/ProductModel");
 const CategoriesModel = require("../model/CategoriesModel");
 var Constants = require("../utils/constants");
 const CurrencyModel = require("../model/CurrencyModel");
+const crypto = require("crypto");
 
 const addProduct = async (req, res) => {
   if (Object.keys(req.body).length !== 13)
@@ -49,7 +50,11 @@ const addProduct = async (req, res) => {
     productCurrency = productCurrency.find(
       (element) => element.id == product.product_currency
     );
-    product = getCategory(totalCategory, product, productCurrency.currency_symbol);
+    product = getCategory(
+      totalCategory,
+      product,
+      productCurrency.currency_symbol
+    );
     res.json({
       status: Constants.SUCCESS,
       data: {
@@ -81,7 +86,11 @@ const getProducts = async (req, res) => {
     productCurrency = productCurrency.find(
       (element) => element.id == products[i].product_currency
     );
-    const finalData = getCategory(totalCategory, products[i], productCurrency.currency_symbol);
+    const finalData = getCategory(
+      totalCategory,
+      products[i],
+      productCurrency.currency_symbol
+    );
     val.push(finalData);
   }
   res.json({
@@ -116,13 +125,109 @@ const getProduct = async (req, res) => {
   productCurrency = productCurrency.find(
     (element) => element.id == product.product_currency
   );
-  const finalData = getCategory(totalCategory, product, productCurrency.currency_symbol);
+  const finalData = getCategory(
+    totalCategory,
+    product,
+    productCurrency.currency_symbol
+  );
   res.json({
     status: Constants.SUCCESS,
     data: {
       products: finalData,
     },
   });
+};
+
+const addComment = async (req, res) => {
+  if (Object.keys(req.body).length !== 3)
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.INVALID_PAYLOAD,
+      },
+    });
+  const payload = {
+    id: crypto.randomBytes(16).toString("hex"),
+    product_uid: req.body.product_uid,
+    uid: req.body.uid,
+    comment: req.body.comment,
+    timestamp: Date.now(),
+  };
+  ProductModel.findOneAndUpdate(
+    { product_uid: req.body.product_uid },
+    { $push: { comments: payload } },
+    { new: true },
+    function (err, docs) {
+      if (err) {
+        return res.status(400).json({
+          status: Constants.FAILURE,
+          data: {
+            message: err,
+          },
+        });
+      }
+      return res.json({
+        status: Constants.SUCCESS,
+        data: Constants.COMMENT_ADDED_SUCCESSFULLY
+      });
+    }
+  );
+};
+
+const getComment = async (req, res) => {
+  let product = await ProductModel.findOne(
+    { product_uid: req.params.product_uid },
+    { _id: 0, __v: 0 }
+  );
+  if (!product) {
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.INVALID_PRODUCT,
+      },
+    });
+  }
+  res.json({
+    status: Constants.SUCCESS,
+    data: product.comments
+  });
+};
+
+const deleteComment = async (req, res) => {
+  const product = await ProductModel.findOne(
+    { product_uid: req.params.product_uid },
+    { _id: 0, __v: 0 }
+  );
+  if (!product) {
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.INVALID_PRODUCT,
+      },
+    });
+  }
+  const commentIndex = product.comments.findIndex(
+    (element) => element.id == req.params.id
+  );
+  ProductModel.findOneAndUpdate(
+    { product_uid: product.product_uid },
+    { $pull: { comments: product.comments[commentIndex] } },
+    { new: true },
+    function (err, docs) {
+      if (err) {
+        return res.status(400).json({
+          status: Constants.FAILURE,
+          data: {
+            message: err,
+          },
+        });
+      }
+      return res.json({
+        status: Constants.SUCCESS,
+        data: Constants.COMMENT_DELETED_SUCCESSFULLY
+      });
+    }
+  );
 };
 
 function getCategory(totalCategory, product, productCurrency) {
@@ -173,4 +278,7 @@ module.exports = {
   addProduct,
   getProducts,
   getProduct,
+  addComment,
+  getComment,
+  deleteComment,
 };

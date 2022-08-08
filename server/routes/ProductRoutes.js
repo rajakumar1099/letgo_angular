@@ -16,5 +16,8 @@ router.post(
 );
 router.get(API.ROOT, verifyToken, AddProductController.getProducts);
 router.get(API.PRODUCT, verifyToken, AddProductController.getProduct);
+router.get(API.PRODUCT + API.COMMENTS, verifyToken, AddProductController.getComment);
+router.post(API.COMMENTS, verifyToken, AddProductController.addComment);
+router.delete(API.DELETECOMMENTS, verifyToken, AddProductController.deleteComment);
 
 module.exports = router;

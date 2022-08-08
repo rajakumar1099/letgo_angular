@@ -1,9 +1,10 @@
 <div
-  style="width: 100%; height: 80%"
+  style="width: 100%; height: 100%"
   *ngIf="productDetails$ | async as productDetail"
 >
-  <div class="root-container" *ngIf="!productDetail.loading">
-    <div class="product-image-container" *ngIf="!productDetail.loading">
+<div *ngIf="!productDetail.loading">
+  <div class="root-container" >
+    <div class="product-image-container">
       <div class="product-image-list">
         <img
           *ngFor="let productImage of productDetail?.product?.images"
@@ -28,12 +29,13 @@
         />
       </div>
     </div>
-    <div class="product-detail-container" *ngIf="!productDetail.loading">
+    <div class="product-detail-container">
       <div class="product-name-label">
         {{ productDetail.product?.product_name }}
       </div>
       <div class="product-price-label">
-        {{ productDetail.product?.product_price }} {{ productDetail.product?.product_currency }}
+        {{ productDetail.product?.product_price }}
+        {{ productDetail.product?.product_currency }}
       </div>
       <div class="product-condition">
         <div class="product-condition-label">Like new</div>
@@ -71,9 +73,68 @@
         ></button>
       </div>
     </div>
-    
   </div>
+  <div class="root-container" style="padding-top: 10px">
+    <mat-tab-group class="product-image-container">
+      <mat-tab label="{{ 'common.description' | translate }}">
+        <app-product-description [product_description]="productDetail?.product?.product_description"></app-product-description>
+      </mat-tab>
+      <mat-tab label="{{ 'common.details' | translate }}">
+        <app-product-overall-detail></app-product-overall-detail>
+      </mat-tab>
+      <mat-tab label="{{ 'common.comments' | translate }}">
+        <app-product-comment></app-product-comment>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="product-detail-container" style="height: fit-content;">
+      <div class="product-price-label">
+        {{ "common.aboutThisSeller" | translate }}
+      </div>
+      <hr style="border-top: 0.5px solid #bbb; margin: 0px 0px 10px 0px" />
+      <div style="display: flex; gap: 10px">
+        <div>
+          <img
+            class="profile-avatar"
+            src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+            alt="Avatar"
+          />
+        </div>
+        <div style="align-self: center">
+          <div class="product-name-label">Viky</div>
+          <ngb-rating
+            class="product-name-label"
+            style="color: #e40046"
+            [readonly]="true"
+            [max]="5"
+            [rate]="3"
+          ></ngb-rating>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; padding-top: 10px">
+        <div class="seller-followers-container">
+          <div>20</div>
+          <div>Items</div>
+        </div>
+        <div class="seller-followers-container">
+          <div>4</div>
+          <div>Followings</div>
+        </div>
+        <div class="seller-followers-container">
+          <div>0</div>
+          <div>Followers</div>
+        </div>
+      </div>
+      <div style="padding-top: 10px">
+        <button class="buy-now-button" mat-stroked-button color="primary">
+          {{ "common.follow" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
   <div class="custom-spinner" *ngIf="productDetail.loading">
     <mat-spinner [diameter]="30"></mat-spinner>
   </div>
+<app-home-footer></app-home-footer>
 </div>

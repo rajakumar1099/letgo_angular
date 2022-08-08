@@ -33,6 +33,9 @@ import { AddProductsEffects } from './components/add-product/core/store/add-prod
 import { HomeCarouselComponent } from './components/home/home-carousel/home-carousel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductDetailsComponent } from './components/home/product-details/product-details.component';
+import { ProductDescriptionComponent } from './components/home/product-details/product-description/product-description.component';
+import { ProductOverallDetailComponent } from './components/home/product-details/product-overall-detail/product-overall-detail.component';
+import { ProductCommentComponent } from './components/home/product-details/product-comment/product-comment.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { ProductDetailsComponent } from './components/home/product-details/produ
     HomeProductsComponent,
     HomeCarouselComponent,
     ProductDetailsComponent,
+    ProductDescriptionComponent,
+    ProductOverallDetailComponent,
+    ProductCommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +80,7 @@ import { ProductDetailsComponent } from './components/home/product-details/produ
     FirebaseModule,
     StoreModule.forRoot<AppState>(AppReducers),
     StoreDevtoolsModule.instrument({
-      logOnly: environment.production,
+      logOnly: !environment.production,
     }),
     NgbModule,
   ],
