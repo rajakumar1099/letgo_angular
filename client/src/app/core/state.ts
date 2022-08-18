@@ -3,9 +3,10 @@ import * as fromUser from '../components/authentication/core/store/auth.reducer'
 import * as fromCategories from '../components/categories/core/store/categories.reducer';
 import * as fromProducts from '../components/home/core/store/products.reducer';
 import * as fromAddProduct from '../components/add-product/core/store/add-products.reducer';
+import * as fromComments from '../components/home/core/store/products.reducer';
 import { AuthState } from '../components/authentication/core/types/auth.types';
 import { CategoriesState } from '../components/categories/core/types/categories.types';
-import { ProductsState, ProductState } from '../components/home/core/types/home.types';
+import { CommentState, ProductsState, ProductState } from '../components/home/core/types/home.types';
 import { AddProductState } from '../components/add-product/core/types/add-products.types';
 
 export interface AppState {
@@ -14,6 +15,7 @@ export interface AppState {
   [Features.Products]: ProductsState;
   [Features.Product]: ProductState;
   [Features.AddProduct]: AddProductState;
+  [Features.Comments]: CommentState;
 }
 
 export const AppReducers = {
@@ -22,4 +24,5 @@ export const AppReducers = {
   [Features.Products]: fromProducts.productsReducer,
   [Features.Product]: fromProducts.productReducer,
   [Features.AddProduct]: fromAddProduct.addProductsReducer,
+  [Features.Comments]: fromComments.commentReducer,
 };

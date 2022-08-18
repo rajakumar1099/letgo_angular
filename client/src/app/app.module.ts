@@ -36,6 +36,7 @@ import { ProductDetailsComponent } from './components/home/product-details/produ
 import { ProductDescriptionComponent } from './components/home/product-details/product-description/product-description.component';
 import { ProductOverallDetailComponent } from './components/home/product-details/product-overall-detail/product-overall-detail.component';
 import { ProductCommentComponent } from './components/home/product-details/product-comment/product-comment.component';
+import { ConfirmModelComponent } from './core/common/components/confirm-model/confirm-model.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ProductCommentComponent } from './components/home/product-details/produ
     ProductDescriptionComponent,
     ProductOverallDetailComponent,
     ProductCommentComponent,
+    ConfirmModelComponent,
   ],
   imports: [
     BrowserModule,

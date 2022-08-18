@@ -2,8 +2,9 @@ const ProductModel = require("../model/ProductModel");
 const CategoriesModel = require("../model/CategoriesModel");
 var Constants = require("../utils/constants");
 const CurrencyModel = require("../model/CurrencyModel");
+const UserModel = require("../model/AuthModel");
 const crypto = require("crypto");
-
+const timestamp = require("../utils/Timestamp");
 const addProduct = async (req, res) => {
   if (Object.keys(req.body).length !== 13)
     return res.status(400).json({
@@ -31,6 +32,7 @@ const addProduct = async (req, res) => {
       ? JSON.parse(req.body.child_category)
       : null,
     product_video: JSON.parse(req.body.product_video),
+    timestamp: Date.now()
   };
   try {
     await new ProductModel(payload).save();
@@ -130,12 +132,38 @@ const getProduct = async (req, res) => {
     product,
     productCurrency.currency_symbol
   );
+  const sellerData = await getSellerDetails(product?.uid);
+  const data = {
+    ...finalData,
+    ...sellerData
+  }
   res.json({
     status: Constants.SUCCESS,
     data: {
-      products: finalData,
+      products: data,
     },
   });
+};
+
+const deleteProduct = async (req, res) => {
+  ProductModel.findOneAndDelete(
+    { product_uid: req.params.product_uid },
+    { _id: 0, __v: 0 },
+    function (err, docs) {
+      if (err) {
+        return res.status(400).json({
+          status: Constants.FAILURE,
+          data: {
+            message: Constants.INVALID_PRODUCT,
+          },
+        });
+      }
+      return res.json({
+        status: Constants.SUCCESS,
+        data: Constants.PRODUCT_DELETED_SUCCESSFULLY,
+      });
+    }
+  );
 };
 
 const addComment = async (req, res) => {
@@ -168,18 +196,37 @@ const addComment = async (req, res) => {
       }
       return res.json({
         status: Constants.SUCCESS,
-        data: Constants.COMMENT_ADDED_SUCCESSFULLY
+        data: Constants.COMMENT_ADDED_SUCCESSFULLY,
       });
     }
   );
 };
 
 const getComment = async (req, res) => {
-  let product = await ProductModel.findOne(
+  let comments = [];
+  let commentData = await ProductModel.findOne(
     { product_uid: req.params.product_uid },
     { _id: 0, __v: 0 }
   );
-  if (!product) {
+
+  for (let i = 0; i < commentData?.comments?.length; i++) {
+    const user = await UserModel.findOne(
+      { uid: commentData?.comments[i]?.uid },
+      { _id: 0, __v: 0 }
+    );
+    const data = {
+      id: commentData?.comments[i]?.id,
+      fullname: user?.fullname ?? "Anonymous",
+      product_uid: commentData?.comments[i]?.product_uid,
+      uid: commentData?.comments[i].uid,
+      comment: commentData?.comments[i]?.comment,
+      timestamp: timestamp(Date.now(), commentData?.comments[i]?.timestamp),
+    };
+    if(user){
+      comments.push(data);
+    }
+  }
+  if (!comments) {
     return res.status(400).json({
       status: Constants.FAILURE,
       data: {
@@ -189,7 +236,7 @@ const getComment = async (req, res) => {
   }
   res.json({
     status: Constants.SUCCESS,
-    data: product.comments
+    data: comments,
   });
 };
 
@@ -224,7 +271,7 @@ const deleteComment = async (req, res) => {
       }
       return res.json({
         status: Constants.SUCCESS,
-        data: Constants.COMMENT_DELETED_SUCCESSFULLY
+        data: Constants.COMMENT_DELETED_SUCCESSFULLY,
       });
     }
   );
@@ -271,13 +318,33 @@ function getCategory(totalCategory, product, productCurrency) {
           }
         : "",
     },
+    timestamp: timestamp(Date.now(), productData.timestamp),
   };
+}
+
+async function getSellerDetails(uid) {
+  let user = await UserModel.findOne(
+    { uid: uid },
+    { _id: 0, __v: 0 }
+  );
+  let productsCount = await ProductModel.find(
+    { uid: uid },
+    { _id: 0, __v: 0 }
+  ).count();
+  const sellerData = {
+    sellerName: user?.fullname,
+    followers: user?.followers,
+    following: user?.following,
+    items: productsCount
+  }
+  return sellerData;
 }
 
 module.exports = {
   addProduct,
   getProducts,
   getProduct,
+  deleteProduct,
   addComment,
   getComment,
   deleteComment,

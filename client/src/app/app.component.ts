@@ -46,17 +46,16 @@ export class AppComponent implements OnInit {
     translate.use('en');
   }
   ngOnInit(): void {
-    const loginData: any = this.commonService.getUserDetails(
-      Constants.TAG_USER_DATA
-    );
-    this.store.dispatch(
-      AuthActions.GetUser({
-        userDetails: loginData?.user ?? null,
-        authToken: loginData?.authToken ?? null,
-      })
-    );
+    const uid: any = this.commonService.getLocalStorageData(Constants.TAG_UID);
+    if (uid) {
+      this.store.dispatch(
+        AuthActions.LoginWithUid({
+            uid: uid,
+        })
+      );
+    }
     this.store.dispatch(CategoriesActions.GetCategories());
-    this.store.dispatch(ProductsActions.GetProducts());
+    this.store.dispatch(ProductsActions.GetProducts({}));
     this.categories$ = this.store.select(getCategories);
     this.isLoggedIn$ = this.store.select(getAuth).pipe(
       tap((res) => {

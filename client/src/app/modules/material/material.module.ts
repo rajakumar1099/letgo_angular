@@ -34,6 +34,7 @@ const mat = [
   MatSlideToggleModule,
   MatCardModule,
   MatTabsModule,
+  
 ];
 
 @NgModule({

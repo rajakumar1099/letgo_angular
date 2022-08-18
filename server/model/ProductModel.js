@@ -52,7 +52,11 @@ const productSchema = new mongoose.Schema({
   comments: {
     type: [],
     default: {}
-  }
+  },
+  timestamp: {
+    type: String
+  },
+
 });
 
 module.exports = mongoose.model("Product", productSchema);

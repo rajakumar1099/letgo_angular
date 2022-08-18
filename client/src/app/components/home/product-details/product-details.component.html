@@ -30,16 +30,21 @@
       </div>
     </div>
     <div class="product-detail-container">
-      <div class="product-name-label">
-        {{ productDetail.product?.product_name }}
-      </div>
-      <div class="product-price-label">
-        {{ productDetail.product?.product_price }}
-        {{ productDetail.product?.product_currency }}
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div class="product-name-label">
+            {{ productDetail.product?.product_name }}
+          </div>
+          <div class="product-price-label">
+            {{ productDetail.product?.product_price }}
+            {{ productDetail.product?.product_currency }}
+          </div>
+        </div>
+        <mat-icon *ngIf="productDetail.product?.uid === uid" (click)="openDeleteDialog(productDetail.product)" style="color: var(--primary-color); cursor: pointer;" class="product-location-icon">delete</mat-icon>
       </div>
       <div class="product-condition">
         <div class="product-condition-label">Like new</div>
-        <div>2 years ago</div>
+        <div>{{ productDetail.product?.timestamp }}</div>
         <div>|</div>
         <div>2 views</div>
       </div>
@@ -83,7 +88,7 @@
         <app-product-overall-detail></app-product-overall-detail>
       </mat-tab>
       <mat-tab label="{{ 'common.comments' | translate }}">
-        <app-product-comment></app-product-comment>
+        <app-product-comment [productData] = "productDetail.product"></app-product-comment>
       </mat-tab>
     </mat-tab-group>
     <div class="product-detail-container" style="height: fit-content;">
@@ -100,7 +105,7 @@
           />
         </div>
         <div style="align-self: center">
-          <div class="product-name-label">Viky</div>
+          <div class="product-name-label">{{productDetail?.product?.sellerName}}</div>
           <ngb-rating
             class="product-name-label"
             style="color: #e40046"
@@ -112,15 +117,15 @@
       </div>
       <div style="display: flex; gap: 10px; padding-top: 10px">
         <div class="seller-followers-container">
-          <div>20</div>
+          <div>{{productDetail?.product?.items}}</div>
           <div>Items</div>
         </div>
         <div class="seller-followers-container">
-          <div>4</div>
+          <div>{{productDetail?.product?.following}}</div>
           <div>Followings</div>
         </div>
         <div class="seller-followers-container">
-          <div>0</div>
+          <div>{{productDetail?.product?.followers}}</div>
           <div>Followers</div>
         </div>
       </div>

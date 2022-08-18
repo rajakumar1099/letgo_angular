@@ -29,7 +29,9 @@
     "aboutThisSeller": "About the seller",
     "follow": "Follow",
     "postComment": "Post comment",
-    "typeYourComment": "Type your comment"
+    "typeYourComment": "Type your comment",
+    "loginToComment": "Login to comment",
+    "delete": "Delete"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",

@@ -5,8 +5,7 @@ import * as AuthActions from './auth.actions';
 const initialState: AuthState = {
   loading: false,
   error: null,
-  user: null,
-  authToken: null
+  user: null
 };
 
 export const authReducer = createReducer<AuthState>(
@@ -15,10 +14,9 @@ export const authReducer = createReducer<AuthState>(
     ...state,
     loading: true,
   })),
-  on(AuthActions.Authenticated, (state, action) => ({
+  on(AuthActions.LoginSuccess, (state, action) => ({
     ...state,
     user: action.userDetails,
-    authToken: action.authToken,
     loading: false,
   })),
   on(AuthActions.Login, (state) => ({

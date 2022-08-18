@@ -3,6 +3,7 @@ module.exports = Object.freeze({
     TAG_API: "/api",
     SIGNUP: "/signup",
     LOGIN: "/login",
+    LOGINWITHUID: "/login/:uid",
     PROFILES: "/profiles",
     DELETE_PROFILE: "/delete-profile/:id",
     SIGNUP: "/signup",

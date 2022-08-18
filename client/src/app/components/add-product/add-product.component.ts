@@ -177,8 +177,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    const userData: any = this.commonService.getUserDetails(
-      Constants.TAG_USER_DATA
+    const uid: any = this.commonService.getLocalStorageData(
+      Constants.TAG_UID
     );
     const product_uid = uuid.v4();
     const formData = new FormData();
@@ -187,7 +187,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     });
 
     const payload: AddProduct = {
-      uid: userData?.user?.uid,
+      uid: uid,
       product_uid: product_uid,
       product_name: this.form.controls[this.addProductForm.PRODUCT_TITLE].value,
       product_description:
@@ -213,6 +213,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       AddProductAction.AddProductRequest({ addProduct: formData })
     );
+    this.form.reset();
   }
 
   public handleAddressChange(address: Address) {
