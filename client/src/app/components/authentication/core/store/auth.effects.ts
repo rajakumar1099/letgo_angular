@@ -6,13 +6,16 @@ import { Constants } from 'src/app/utils/constants';
 import { AuthService } from '../services/auth.service';
 import { of } from 'rxjs';
 import { CommonService } from 'src/app/core/common/services/common.service';
+import { Routes } from 'src/app/core/common/common.types';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {}
 
   getUser$ = createEffect(() =>
@@ -98,6 +101,7 @@ export class AuthEffects {
         try {
           this.commonService.removeUserDetails(Constants.TAG_UID);
           this.commonService.removeUserDetails(Constants.TAG_AUTHORIZATION);
+          this.router.navigate([Routes.PRODUCTS]);
           return AuthActions.GetUser({ userDetails: null });
         } catch (err: any) {
           return AuthActions.Error({ error: err.message });
