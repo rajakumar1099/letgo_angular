@@ -13,6 +13,7 @@ module.exports = Object.freeze({
   CANDIDATE_ADDED_SUCCESSFULLY: "Candidate Added Successfully",
   CANDIDATE_UPDATED_SUCCESSFULLY: "Candidate Updated Successfully",
   EMAIL_DOES_NOT_EXIST_SIGN_UP: "Email Id does not exist, Sign-up to continue",
+  UID_DOES_NOT_EXIST_SIGN_UP: "Uid does not exist, Sign-up to continue",
   INCORRECT_PASSWORD: "Incorrect Password",
   AUTHORIZATION: "Authorization",
   AUTHORIZED_SUCCESSFULLY: "Authorized successfully",
@@ -24,5 +25,8 @@ module.exports = Object.freeze({
   INVALID_TOKEN: "Invalid Token",
   AUTHORIZATION_FAILED: "Authorization Failed",
   CATEGORY_ADDED_SUCCESSFULLY: "Category Added Successfully",
-  CURRENCY_ADDED_SUCCESSFULLY: "Currency Added Successfully"
+  CURRENCY_ADDED_SUCCESSFULLY: "Currency Added Successfully",
+  COMMENT_ADDED_SUCCESSFULLY: "Comment Added Successfully",
+  COMMENT_DELETED_SUCCESSFULLY: "Comment Deleted Successfully",
+  PRODUCT_DELETED_SUCCESSFULLY: "Product Deleted Successfully"
 });

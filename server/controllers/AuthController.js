@@ -19,7 +19,7 @@ const signup = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     registerTimestamp: Date.now(),
-    lastLoginTimestamp: Date.now()
+    lastLoginTimestamp: Date.now(),
   });
 
   // check email Id and username is already on DB
@@ -52,9 +52,8 @@ const signup = async (req, res) => {
     res.json({
       status: Constants.SUCCESS,
       data: {
-        user,
+        ...user.toObject(),
         Authorization: token,
-        message: Constants.USER_REGISTERED_SUCCESSFULLY,
       },
     });
   } catch (err) {
@@ -105,23 +104,28 @@ const login = async (req, res) => {
 
   try {
     const token = jwt.sign({ uid: user.uid }, process.env.SECRET_TOKEN);
-    UserModel.findOneAndUpdate({uid: user.uid}, {$set: {lastLoginTimestamp: Date.now()}}, { new: true }, function (err, docs){
-      if(err){
-        return res.status(400).json({
-          status: Constants.FAILURE,
+    UserModel.findOneAndUpdate(
+      { uid: user.uid },
+      { $set: { lastLoginTimestamp: Date.now() } },
+      { new: true },
+      function (err, docs) {
+        if (err) {
+          return res.status(400).json({
+            status: Constants.FAILURE,
+            data: {
+              message: err,
+            },
+          });
+        }
+        return res.json({
+          status: Constants.SUCCESS,
           data: {
-            message: err,
+            ...docs.toObject(),
+            Authorization: token,
           },
         });
       }
-      return res.json({
-        status: Constants.SUCCESS,
-        data: {
-          user: docs,
-          Authorization: token,
-        },
-      });
-    });
+    );
   } catch (err) {
     res.status(400).json({
       status: Constants.FAILURE,
@@ -130,6 +134,29 @@ const login = async (req, res) => {
       },
     });
   }
+};
+
+const loginWithUid = async (req, res) => {
+  const token = jwt.sign({ uid: req.params.uid }, process.env.SECRET_TOKEN);
+  const user = await UserModel.findOneAndUpdate(
+    { uid: req.params.uid },
+    { $set: { lastLoginTimestamp: Date.now() } },
+    { new: true }
+  );
+  if (!user)
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.UID_DOES_NOT_EXIST_SIGN_UP,
+      },
+    });
+  return res.json({
+    status: Constants.SUCCESS,
+    data: {
+      ...user.toObject(),
+      Authorization: token,
+    },
+  });
 };
 
 const profiles = async (req, res) => {
@@ -173,6 +200,7 @@ const deleteProfile = async (req, res) => {
 module.exports = {
   signup,
   login,
+  loginWithUid,
   profiles,
   deleteProfile,
 };

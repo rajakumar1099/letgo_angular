@@ -5,7 +5,15 @@ export const ProductsActionTypes = {
   GetProduct: '[Product] Get Product',
   ProductLoadSuccess: '[Product] Product Load Success',
   ProductLoadFailed: '[Product] Product Load Failed',
-  ProductClearStore: '[Product] Product Clear From Store'
+  ProductClearStore: '[Product] Product Clear From Store',
+  DeleteProductSuccess: '[Delete Product] Delete Product Success',
+  DeleteProductFailed: '[Delete Product] Delete Product Failed',
+  DeleteProduct: '[Delete Product] Delete Product From Store',
+  AddComment: '[Comment] Add Comment for product',
+  GetComment: '[Comment] Get Comment for product',
+  DeleteComment: '[Comment] Delete Comment for product',
+  LoadCommentSuccess: '[Comment] Load Comment Success',
+  LoadCommentFailed: '[Comment] Load Comment Failed',
 };
 
 export interface ProductsState {
@@ -18,6 +26,12 @@ export interface ProductState {
   loading: boolean;
   error: string | null;
   product: Products | null;
+}
+
+export interface CommentState {
+  loading: boolean;
+  error: string | null;
+  data: Comment[] | null;
 }
 
 export interface Products {
@@ -33,6 +47,11 @@ export interface Products {
   is_giving_away: boolean;
   product_video: string;
   category: Category;
+  sellerName?: string;
+  followers?: number;
+  following?: number;
+  items?: number;
+  timestamp: string;
 }
 
 export interface Category {
@@ -50,4 +69,13 @@ export interface SubCategories {
 export interface ChildCategories {
   id: string;
   name: string;
+}
+
+export interface Comment {
+  id: string;
+  fullname: string,
+  product_uid: string;
+  uid: string;
+  comment: string;
+  timestamp: number;
 }

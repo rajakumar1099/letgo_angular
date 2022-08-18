@@ -2,13 +2,17 @@ import { createAction, props } from '@ngrx/store';
 import { AuthActionTypes } from '../types/auth.types';
 
 export const GetUser = createAction(AuthActionTypes.Get, props<{ userDetails?: any, authToken?: any }>());
-export const Authenticated = createAction(
-  AuthActionTypes.Authenticated,
+export const LoginSuccess = createAction(
+  AuthActionTypes.LoginSuccess,
   props<{ userDetails: any, authToken: any }>(),
 );
 export const Login = createAction(
   AuthActionTypes.Login,
   props<{ payload: any }>()
+);
+export const LoginWithUid = createAction(
+  AuthActionTypes.LoginWithUid,
+  props<{ uid: string }>()
 );
 export const SignUp = createAction(
   AuthActionTypes.SignUp,

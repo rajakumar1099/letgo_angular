@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { ProductsState, ProductState } from '../types/home.types';
+import { CommentState, ProductsState, ProductState } from '../types/home.types';
 import * as ProductActions from './products.actions';
 
 const initialProductsState: ProductsState = {
@@ -12,6 +12,12 @@ const initialProductState: ProductState = {
   loading: false,
   error: null,
   product: null,
+};
+
+const initialCommentState: CommentState = {
+  loading: false,
+  error: null,
+  data: null,
 };
 
 
@@ -39,6 +45,10 @@ export const productReducer = createReducer<ProductState>(
     ...state,
     loading: true,
   })),
+  on(ProductActions.DeleteProduct, (state) => ({
+    ...state,
+    loading: true,
+  })),
   on(ProductActions.ProductLoadSuccess, (state, action) => ({
     ...state,
     product: action.products,
@@ -51,5 +61,31 @@ export const productReducer = createReducer<ProductState>(
   })),
   on(ProductActions.ProductClearStore, (state, action) => ({
     ...initialProductState,
+  }))
+);
+
+export const commentReducer = createReducer<CommentState>(
+  initialCommentState,
+  on(ProductActions.GetComments, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(ProductActions.DeleteComments, (state) => ({
+    ...initialCommentState,
+    loading: true,
+  })),
+  on(ProductActions.LoadCommentsSuccess, (state, action) => ({
+    ...state,
+    data: action.data,
+    loading: false,
+  })),
+  on(ProductActions.ProductLoadFailed, (state, action) => ({
+    ...state,
+    error: action.error,
+    loading: false,
+  })),
+  on(ProductActions.AddComments, (state, action) => ({
+    ...state,
+    loading: true,
   }))
 );

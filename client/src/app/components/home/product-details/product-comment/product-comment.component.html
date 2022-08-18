@@ -1,0 +1,54 @@
+<form [formGroup]="form">
+  <mat-form-field style="width: 100%" appearance="outline">
+    <mat-label>{{ setPlaceHolderText() }}</mat-label>
+    <textarea
+      [formControlName]="addProductForm.COMMENT"
+      style="max-height: 100px"
+      matInput
+    ></textarea>
+    <mat-error *ngIf="!checkFormIsValid(addProductForm.COMMENT)">{{
+      getErrorMessage(addProductForm.COMMENT)
+    }}</mat-error>
+  </mat-form-field>
+</form>
+
+<div *ngIf="comments$ | async as comments">
+  <div style="display: flex; justify-content: end">
+    <button
+      mat-raised-button
+      (click)="postComment()"
+      [disabled]="!form.valid || !uid"
+      color="primary"
+    >
+      {{ "common.postComment" | translate }}
+    </button>
+  </div>
+  <ng-container *ngFor="let comment of comments.data">
+    <div class="comment-item">
+      <img
+        class="comment-avatar"
+        src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="Avatar"
+      />
+      <div style="width: 100%; margin-left: 20px">
+        <div style="font-weight: bold">{{ comment.fullname }}</div>
+        <div>{{ comment.comment }}</div>
+        <div style="display: flex; justify-content: space-between">
+          <div style="font-size: 10px">{{ comment.timestamp }}</div>
+          <div
+            *ngIf="comment.uid === uid"
+            (click)="deleteComment(comment)"
+            class="delete-button"
+          >
+            {{ "common.delete" | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </ng-container>
+
+  <div class="custom-spinner" *ngIf="comments.loading">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</div>

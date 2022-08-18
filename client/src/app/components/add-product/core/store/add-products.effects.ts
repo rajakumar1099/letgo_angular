@@ -27,8 +27,8 @@ export class AddProductsEffects {
       switchMap((payload) => {
         return this.addProductService.createProduct(payload.addProduct).pipe(
           map((res: any) => {
-            this.store.dispatch(ProductsAction.GetProducts());
-            this.router.navigateByUrl(Routes.HOME);
+            this.store.dispatch(ProductsAction.GetProducts({}));
+            this.router.navigate([Routes.PRODUCTS]);
             return AddProductActions.AddProductSuccess({
               addProduct: res?.data?.product,
             });

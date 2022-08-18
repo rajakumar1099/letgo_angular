@@ -6,8 +6,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductDetailsComponent } from './components/home/product-details/product-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent/* , children: [ { path: 'add-product', component: AddProductComponent }, ] */ },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: 'products', component: HomeComponent/* , children: [ { path: 'add-product', component: AddProductComponent }, ] */ },
   { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuard] },
   { path: ':product_uid', component: ProductDetailsComponent },
 ];

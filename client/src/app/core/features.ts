@@ -3,5 +3,6 @@ export enum Features {
   Categories = 'categories',
   Products = 'products',
   Product = 'product',
+  Comments = 'comments',
   AddProduct = 'addProduct',
 }

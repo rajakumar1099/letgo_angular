@@ -5,5 +5,5 @@ export interface Currencies {
 }
 
 export enum Routes {
-  HOME = '/home'
+  PRODUCTS = 'products'
 }

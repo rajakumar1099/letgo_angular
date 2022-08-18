@@ -6,13 +6,16 @@ import { Constants } from 'src/app/utils/constants';
 import { AuthService } from '../services/auth.service';
 import { of } from 'rxjs';
 import { CommonService } from 'src/app/core/common/services/common.service';
+import { Routes } from 'src/app/core/common/common.types';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {}
 
   getUser$ = createEffect(() =>
@@ -20,9 +23,29 @@ export class AuthEffects {
       ofType(AuthActions.GetUser),
       switchMap((action) => {
         return of(
-          AuthActions.Authenticated({
+          AuthActions.LoginSuccess({
             userDetails: action.userDetails,
             authToken: action.authToken,
+          })
+        );
+      })
+    )
+  );
+
+  loginWithUid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.LoginWithUid),
+      switchMap((action) => {
+        return this.authService.loginWithUid(action.uid).pipe(
+          map((res: any) => {
+            this.commonService.setLocalStorageData(Constants.TAG_AUTHORIZATION, res.data.Authorization);
+            return AuthActions.GetUser({
+              userDetails: res.data,
+              authToken: res.data.Authorization,
+            });
+          }),
+          catchError((err) => {
+            return of(AuthActions.Error({ error: err.error.data.message }));
           })
         );
       })
@@ -35,9 +58,10 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.login(action.payload).pipe(
           map((res: any) => {
-            this.commonService.saveUserDetails(Constants.TAG_USER_DATA, res.data);
+            this.commonService.setLocalStorageData(Constants.TAG_UID, res.data.uid);
+            this.commonService.setLocalStorageData(Constants.TAG_AUTHORIZATION, res.data.Authorization);
             return AuthActions.GetUser({
-              userDetails: res.data.user,
+              userDetails: res.data,
               authToken: res.data.Authorization,
             });
           }),
@@ -55,9 +79,10 @@ export class AuthEffects {
       switchMap((action) => {
         return this.authService.signup(action.payload).pipe(
           map((res: any) => {
-            this.commonService.saveUserDetails(Constants.TAG_USER_DATA, res.data);
+            this.commonService.setLocalStorageData(Constants.TAG_UID, res.data.uid);
+            this.commonService.setLocalStorageData(Constants.TAG_AUTHORIZATION, res.data.Authorization);
             return AuthActions.GetUser({
-              userDetails: res.data.user,
+              userDetails: res.data,
               authToken: res.data.Authorization,
             });
           }),
@@ -74,7 +99,9 @@ export class AuthEffects {
       ofType(AuthActions.Logout),
       switchMap(async () => {
         try {
-          this.commonService.removeUserDetails(Constants.TAG_USER_DATA);
+          this.commonService.removeUserDetails(Constants.TAG_UID);
+          this.commonService.removeUserDetails(Constants.TAG_AUTHORIZATION);
+          this.router.navigate([Routes.PRODUCTS]);
           return AuthActions.GetUser({ userDetails: null });
         } catch (err: any) {
           return AuthActions.Error({ error: err.message });

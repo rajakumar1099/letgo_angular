@@ -7,5 +7,6 @@ export enum API {
   UPLOAD_PRODUCT_IMAGE = '/upload-product-images/',
   PRODUCTS = '/products',
   CREATE_PRODUCT = '/products/create',
+  COMMENT = '/comments',
 
 }

@@ -19,9 +19,10 @@ export enum LOGINFORM {
 
 export const AuthActionTypes = {
   Get: '[Auth] Get User',
-  Authenticated: '[Auth] Authenticated',
-  NotAuthenticated: '[Auth] Not Authenticated',
+  LoginSuccess: '[Auth] Login Success',
+  LoginFailed: '[Auth] Login Failed',
   Login: '[Auth] Login',
+  LoginWithUid: '[Auth] Login With Uid',
   SignUp: '[Auth] Signup',
   Logout: '[Auth] Logout',
   Error: '[Auth] Error',
@@ -42,5 +43,4 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
   user: AuthDetails | null;
-  authToken: string | null
 }

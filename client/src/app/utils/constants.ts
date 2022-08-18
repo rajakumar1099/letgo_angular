@@ -3,6 +3,8 @@ export class Constants {
   public static TAG_USERS = 'users';
   public static TAG_USERS_UID = 'usersUid';
   public static TAG_USER_DATA = 'user_data';
+  public static TAG_UID = 'Uid';
+  public static TAG_AUTHORIZATION = 'Authorization';
   public static TAG_CATEGORIES = 'categories';
   public static TAG_LAST_LOGIN_TIME_STAMP = 'lastLoginTimestamp';
   public static TAG_FIREBASE_SIGNUP_EMAIL_ALREADY_EXIST =

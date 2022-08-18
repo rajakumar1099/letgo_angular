@@ -8,7 +8,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { API } from 'src/app/utils/Api';
-import { map, catchError, of, Subject, Observable } from 'rxjs';
 import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-products.types';
 
 @Injectable({
@@ -83,29 +82,6 @@ export class AuthService {
     }
   }
 
-  /* public getFirebaseErrorMessages(errTAG: string | null): string {
-    switch (true) {
-      case errTAG?.includes(Constants.TAG_FIREBASE_USER_NOT_FOUND): {
-        return this.translate.instant('errors.userNotFound');
-      }
-      case errTAG?.includes(
-        Constants.TAG_FIREBASE_SIGNUP_EMAIL_ALREADY_EXIST
-      ): {
-        return this.translate.instant('errors.emailAlreadyInUse');
-      }
-      case errTAG?.includes(
-        Constants.TAG_FIREBASE_LOGIN_USER_PASSWORD_INVALID
-      ): {
-        return this.translate.instant('errors.passwordInvalid');
-      }
-      case errTAG?.includes(Constants.TAG_FIREBASE_TOO_MANY_REQUEST): {
-        return this.translate.instant('errors.tooManyRequest');
-      }
-      default:
-        return this.translate.instant('errors.somethingWentWrong');
-    }
-  } */
-
   public updateData(
     user: firebase.default.User | null,
     key: string,
@@ -122,6 +98,13 @@ export class AuthService {
     const options = { headers };
     return this.http
       .post(environment.baseURL + API.LOGIN, payload, options)
+  }
+
+  public loginWithUid(uid: String) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers };
+    return this.http
+      .get(environment.baseURL + API.LOGIN + '/' + uid, options)
   }
 
   public signup(payload: any) {

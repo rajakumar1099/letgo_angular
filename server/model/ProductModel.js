@@ -49,6 +49,14 @@ const productSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  comments: {
+    type: [],
+    default: {}
+  },
+  timestamp: {
+    type: String
+  },
+
 });
 
 module.exports = mongoose.model("Product", productSchema);

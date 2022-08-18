@@ -3,6 +3,7 @@ module.exports = Object.freeze({
     TAG_API: "/api",
     SIGNUP: "/signup",
     LOGIN: "/login",
+    LOGINWITHUID: "/login/:uid",
     PROFILES: "/profiles",
     DELETE_PROFILE: "/delete-profile/:id",
     SIGNUP: "/signup",
@@ -13,5 +14,7 @@ module.exports = Object.freeze({
     PRODUCTS: "/products",
     PRODUCT: "/:product_uid",
     ADDPRODUCTS: "/create",
-    UPLOADPRODUCTIMAGES: "/upload-product-images/:uid/:productuid"
+    UPLOADPRODUCTIMAGES: "/upload-product-images/:uid/:productuid",
+    COMMENTS: "/comments",
+    DELETECOMMENTS: "/:product_uid/comments/:id"
 })
