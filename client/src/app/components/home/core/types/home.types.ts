@@ -1,3 +1,5 @@
+import { FormControl, Validators } from '@angular/forms';
+
 export const ProductsActionTypes = {
   GetProducts: '[Products] Get Products',
   AllProducts: '[Products] All Products',
@@ -73,9 +75,38 @@ export interface ChildCategories {
 
 export interface Comment {
   id: string;
-  fullname: string,
+  fullname: string;
   product_uid: string;
   uid: string;
   comment: string;
   timestamp: number;
+}
+
+export enum EditProfileForm {
+  NAME = 'name',
+  FULLNAME = 'fullname',
+  USERNAME = 'username',
+  EMAIL = 'email',
+  PHONE = 'phone',
+  LOCATION = 'location',
+}
+
+export const editProfileFormValidator = {
+  [EditProfileForm.NAME]: ['', Validators.compose([Validators.required])],
+  [EditProfileForm.FULLNAME]: ['', Validators.compose([Validators.required])],
+  [EditProfileForm.USERNAME]: new FormControl(
+    '',
+    Validators.compose([Validators.required, Validators.maxLength(30), noWhitespaceValidator])
+  ),
+  [EditProfileForm.EMAIL]: new FormControl(
+    '',
+    Validators.compose([Validators.required, Validators.email])
+  ),
+  [EditProfileForm.LOCATION]: new FormControl('', Validators.compose([])),
+  [EditProfileForm.PHONE]: new FormControl('', Validators.compose([Validators.required, Validators.maxLength(13), Validators.pattern('[- +()0-9]+')])),
+};
+
+export function noWhitespaceValidator(control: FormControl) {
+  const isSpace = (control.value || '').match(/\s/g);
+  return isSpace ? {'whitespace': true} : null;
 }

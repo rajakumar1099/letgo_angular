@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { Products, ProductState } from '../core/types/home.types';
 import * as ProductsAction from '../core/store/products.actions';
 import { getProduct, getProducts } from '../core/store/products.selector';
@@ -23,7 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: Store<{
-      [Features.Product]: ProductState;
+      [States.Product]: ProductState;
     }>,
     private commonService: CommonService,
     public dialog: MatDialog,

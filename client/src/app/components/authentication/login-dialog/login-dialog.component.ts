@@ -6,7 +6,7 @@ import { loginFormValidator } from 'src/app/utils/form-validators';
 import { LOGINFORM, AuthState } from '../core/types/auth.types';
 import * as AuthActions from '../core/store/auth.actions';
 import { AuthService } from '../core/services/auth.service';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { getAuth } from '../core/store/auth.selector';
@@ -28,7 +28,7 @@ export class LoginDialogComponent implements OnInit {
     private dialog: MatDialogRef<LoginDialogComponent>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private store: Store<{ [Features.Auth]: AuthState }>
+    private store: Store<{ [States.Auth]: AuthState }>
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class LoginDialogComponent implements OnInit {
   }
 
   public getErrorMessage(control: string): string {
-    return this.authService.getTranslationErrorMessage(this.form, control);
+    return this.authService.getFormErrorMessage(this.form, control);
   }
 
   public handleDialogLogin(): void {

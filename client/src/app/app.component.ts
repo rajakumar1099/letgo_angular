@@ -13,7 +13,7 @@ import {
   Categories,
   CategoriesState,
 } from './components/categories/core/types/categories.types';
-import { Features } from './core/features';
+import { States } from './core/features';
 import { AesEncryptDecryptService } from './utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import * as AuthActions from './components/authentication/core/store/auth.actions';
 import * as CategoriesActions from './components/categories/core/store/categories.actions';
@@ -21,6 +21,7 @@ import * as ProductsActions from './components/home/core/store/products.actions'
 import { Constants } from './utils/constants';
 import { CommonService } from './core/common/services/common.service';
 import { ProductsState } from './components/home/core/types/home.types';
+import { Routers } from './core/common/common.types';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,9 +36,9 @@ export class AppComponent implements OnInit {
     public aesEncryptDecryptService: AesEncryptDecryptService,
     private dialog: MatDialog,
     private store: Store<{
-      [Features.Categories]: CategoriesState;
-      [Features.Auth]: AuthState;
-      [Features.Products]: ProductsState;
+      [States.Categories]: CategoriesState;
+      [States.Auth]: AuthState;
+      [States.Products]: ProductsState;
     }>,
     private router: Router,
     private commonService: CommonService
@@ -80,7 +81,7 @@ export class AppComponent implements OnInit {
 
   public openAddproductPage(): void {
     if (this.isLoggedIn) {
-      this.router.navigate(['add-product']);
+      this.router.navigate([Routers.ADD_PRODUCT]);
     } else {
       this.openLoginDialog();
     }

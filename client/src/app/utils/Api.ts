@@ -8,5 +8,6 @@ export enum API {
   PRODUCTS = '/products',
   CREATE_PRODUCT = '/products/create',
   COMMENT = '/comments',
+  PROFILES = '/user/profiles',
 
 }

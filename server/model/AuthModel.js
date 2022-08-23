@@ -34,6 +34,18 @@ const userSchema = new mongoose.Schema({
   following: {
     type: Number,
     default: 0
+  },
+  location: {
+    type: String,
+    default: ""
+  },
+  phoneNumber: {
+    type: String,
+    default: ""
+  },
+  rating: {
+    type: String,
+    default: 0
   }
 });
 

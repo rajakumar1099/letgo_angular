@@ -5,7 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-products.types';
 import { AuthService } from 'src/app/components/authentication/core/services/auth.service';
 import { CommonService } from 'src/app/core/common/services/common.service';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { Constants } from 'src/app/utils/constants';
 import { commentFormValidator } from 'src/app/utils/form-validators';
 import { getComments } from '../../core/store/products.selector';
@@ -30,7 +30,7 @@ export class ProductCommentComponent implements OnInit {
     private formBuilder: FormBuilder,
     public authService: AuthService,
     private store: Store<{
-      [Features.Comments]: CommentState;
+      [States.Comments]: CommentState;
     }>,
     private commonService: CommonService,
     private translate: TranslateService,
@@ -89,6 +89,6 @@ export class ProductCommentComponent implements OnInit {
   }
 
   public getErrorMessage(control: string): string {
-    return this.authService.getTranslationErrorMessage(this.form, control);
+    return this.authService.getFormErrorMessage(this.form, control);
   }
 }

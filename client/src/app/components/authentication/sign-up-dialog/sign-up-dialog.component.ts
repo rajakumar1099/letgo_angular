@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { AesEncryptDecryptService } from 'src/app/utils/aes-encrypt-decrypt-service/aes-encrypt-decrypt.service';
 import { signUpFormValidator } from 'src/app/utils/form-validators';
 import { AuthService } from '../core/services/auth.service';
@@ -29,7 +29,7 @@ export class SignUpDialogComponent implements OnInit {
     private dialog: MatDialogRef<SignUpDialogComponent>,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private store: Store<{ [Features.Auth]: AuthState }>,
+    private store: Store<{ [States.Auth]: AuthState }>,
     private aesEncryptDecryptService: AesEncryptDecryptService
   ) {}
 
@@ -69,7 +69,7 @@ export class SignUpDialogComponent implements OnInit {
   }
 
   public getErrorMessage(control: string): string {
-    return this.authService.getTranslationErrorMessage(this.form, control);
+    return this.authService.getFormErrorMessage(this.form, control);
   }
 
   public closeDialog(): void {

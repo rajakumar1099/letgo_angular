@@ -14,7 +14,6 @@ import { ADDPRODUCT } from 'src/app/components/add-product/core/types/add-produc
   providedIn: 'root',
 })
 export class AuthService {
-
   constructor(
     private translate: TranslateService,
     private angularFirestore: AngularFirestore,
@@ -32,9 +31,13 @@ export class AuthService {
     return !!form.controls[control].valid;
   }
 
-  public getTranslationErrorMessage(form: FormGroup, control: string): string {
+  public getFormErrorMessage(form: FormGroup, control: string): string {
     if (form.controls[control].hasError('required')) {
       return this.translate.instant('validators.thisFieldIsRequired');
+    } else if (form.controls[control].hasError('email')) {
+      return this.translate.instant('validators.invalidEmailError');
+    } else if (form.controls[control].hasError('pattern')) {
+      return this.translate.instant('validators.invalidEmailError');
     } else {
       switch (control) {
         case SIGNUPFORM.USERNAME: {
@@ -96,22 +99,18 @@ export class AuthService {
   public login(payload: any) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers };
-    return this.http
-      .post(environment.baseURL + API.LOGIN, payload, options)
+    return this.http.post(environment.baseURL + API.LOGIN, payload, options);
   }
 
   public loginWithUid(uid: String) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers };
-    return this.http
-      .get(environment.baseURL + API.LOGIN + '/' + uid, options)
+    return this.http.get(environment.baseURL + API.LOGIN + '/' + uid, options);
   }
 
   public signup(payload: any) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers };
-    return this.http
-      .post(environment.baseURL + API.SIGNUP, payload, options)
+    return this.http.post(environment.baseURL + API.SIGNUP, payload, options);
   }
-
 }

@@ -4,11 +4,12 @@ import { Store } from '@ngrx/store';
 import { LoginDialogComponent } from '../authentication/login-dialog/login-dialog.component';
 import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-dialog.component';
 import * as AuthActions from '../../components/authentication/core/store/auth.actions';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { Observable } from 'rxjs';
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getAuth } from '../authentication/core/store/auth.selector';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Routers } from 'src/app/core/common/common.types';
 
 @Component({
   selector: 'app-hometoolbar',
@@ -20,10 +21,11 @@ export class HometoolbarComponent implements OnInit {
   @Output() addProductPage: EventEmitter<any> = new EventEmitter();
   @Output() openMenu: EventEmitter<any> = new EventEmitter();
   @ViewChild('placesRef') placesRef: GooglePlaceDirective | undefined;
+  public routers = Routers;
 
   constructor(
     private dialog: MatDialog,
-    private store: Store<{ [Features.Auth]: AuthState }>,
+    private store: Store<{ [States.Auth]: AuthState }>,
   ) {}
 
   ngOnInit(): void {

@@ -1,0 +1,11 @@
+<app-home-carousel></app-home-carousel>
+<app-home-products></app-home-products>
+<div
+  class="sell-btn"
+  *ngIf="isLoggedIn$ | async"
+  (click)="openAddproductPage()"
+>
+  <mat-icon class="sell_icon_style">photo_camera</mat-icon>
+  <div class="sell_text">{{ "common.sell" | translate }}</div>
+</div>
+<app-home-footer></app-home-footer>

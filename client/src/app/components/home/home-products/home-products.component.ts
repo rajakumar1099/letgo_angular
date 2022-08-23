@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { AddProductService } from '../../add-product/core/service/add-product.service';
 import { getProducts } from '../core/store/products.selector';
 import {
@@ -21,8 +21,8 @@ export class HomeProductsComponent implements OnInit {
   public products$: Observable<ProductsState | null> | undefined;
   constructor(
     private store: Store<{
-      [Features.Products]: ProductsState;
-      [Features.Product]: ProductState;
+      [States.Products]: ProductsState;
+      [States.Product]: ProductState;
     }>,
     public addProductService: AddProductService,
     public router: Router
@@ -34,6 +34,6 @@ export class HomeProductsComponent implements OnInit {
 
   public navigateToProductDetail(product: Products) {
     this.store.dispatch(ProductsAction.ProductClearStore());
-    this.router.navigate(['', product.product_uid]);
+    this.router.navigate(['products/' + product.product_uid]);
   }
 }

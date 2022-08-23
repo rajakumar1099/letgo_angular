@@ -14,6 +14,8 @@
     "category": "Category",
     "allCategories": "All Categories",
     "name": "Name",
+    "fullname": "Fullname",
+    "username": "Username",
     "description": "Description",
     "details": "Details",
     "comments": "Comments",
@@ -21,6 +23,7 @@
     "givingAway": "Giving Away",
     "price": "Price",
     "productPrice": "Product Price",
+    "location": "location",
     "productLocation": "Product Location",
     "listingLocation": "Listing’s location",
     "save": "Save",
@@ -31,7 +34,10 @@
     "postComment": "Post comment",
     "typeYourComment": "Type your comment",
     "loginToComment": "Login to comment",
-    "delete": "Delete"
+    "delete": "Delete",
+    "email": "Email",
+    "yourLocation": "Your location",
+    "phoneNumber": "Phone number"
   },
   "login": {
     "loginDialogHeaderLabel": "Login to Joysale",
@@ -42,6 +48,7 @@
     "enterYourConfirmPassword": "Enter the same password",
     "enterYourFullname": "Enter your fullname",
     "enterYourUsername": "Enter your username",
+    "enterYourPhoneNumber": "Enter your phone number",
     "rememberMe": "Remember me",
     "forgetPassword": "Forgot Password?"
   },
@@ -49,8 +56,9 @@
     "thisFieldIsRequired": "This field is required",
     "confirmPasswordError": "Password not matched",
     "invalidEmailError": "Invalid email format",
+    "invalidUsernameError": "Invalid username, please remove white space",
     "minLengthError": "Entered characters should be more than 4 character",
-    "maxLengthError": "Entered characters should not be more than 20 character",
+    "maxLengthError": "Entered characters should not be more than 30 character",
     "minPasswordError": "Entered password should be more than 6 character",
     "maxPasswordError": "Entered password should not be more than 30 character",
     "passwordMatchError": "Password does not match"
@@ -83,5 +91,20 @@
     "youtubeVideoEmbedUrl": "Youtube Video Embed URL",
     "productVideo": "Product Video",
     "youtubeDummyPlaceHolder": "https://www.youtube.com/watch?v=embed%2FSMcFn"
+  },
+  "toastr": {
+    "success": "Success",
+    "failed": "Failed",
+    "profileUpdateSuccess": "Profile successfully updated",
+    "profileUpdateFailed": "Profile failed to update",
+    "productPostedSucess": "Product posted successfully",
+    "productPostedFailed": "Product failed to post",
+    "productDeletedSuccess": "Product deleted successfully",
+    "productDeleteFailed": "Product failed to delete",
+    "commentDeletedSuccess": "Comment deleted successfully",
+    "commentDeleteFailed": "Comment failed to delete",
+    "commentAddedSuccess": "Comment added successfully",
+    "commentAddedFailed": "Comment failed to post"
+
   }
 }
