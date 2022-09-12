@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductDetailsComponent } from './components/home/product-details/product-details.component';
 import { ProductsComponent } from './components/home/products/products.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ReviewOrderComponent } from './components/review-order/review-order.component';
 import { EditProfileComponent } from './components/user/edit-profile/edit-profile.component';
 import { MyListingComponent } from './components/user/my-listing/my-listing.component';
 import { UserComponent } from './components/user/user.component';
@@ -45,6 +46,14 @@ const routes: Routes = [
       },
       { path: ':product_uid', component: ProductDetailsComponent },
     ],
+  },
+  {
+    path: Routers.REVIEW_ORDER,
+    // component: ReviewOrderComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: ':product_uid', component: ReviewOrderComponent },
+    ]
   },
   { path: '**', redirectTo: '/404' },
   {

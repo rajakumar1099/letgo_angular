@@ -31,6 +31,7 @@ export class UserComponent implements OnInit {
     const userUid = this.commonService.getLocalStorageData(Constants.TAG_UID);
     if (userUid) {
       this.store?.dispatch(UserProfileActions.GetProfile({ uid: userUid }));
+      this.store?.dispatch(UserProfileActions.GetMyListing({ payload: {uid: userUid} }));
     }
     this.user$ = this.store.select(getProfile)
   }

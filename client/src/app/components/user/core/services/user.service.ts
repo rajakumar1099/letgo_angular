@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-    
+
     constructor(private translate: TranslateService, private http: HttpClient, private commonService: CommonService) {}
   public getFormErrorMessage(form: FormGroup, control: string): string {
     if (form.controls[control].hasError('required')) {
@@ -49,5 +49,17 @@ export class UserService {
     });
     const options = { headers };
     return this.http.post(environment.baseURL + API.PROFILES, payload, options);
+  }
+
+  public myListing(payload: any) {
+    const token: any =
+    this.commonService.getLocalStorageData(Constants.TAG_AUTHORIZATION) ?? null;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmIwNjc4OTQ1YjI4OWU0ZjIwN2IyZmQiLCJpYXQiOjE2NTU3OTEyNDJ9.RfesawdCqPjCd4mxE1wsu_m6f43lvKVdNkwbcm6L6qo',
+    });
+    const options = { headers };
+    return this.http.post(environment.baseURL + API.PRODUCTS, payload, options);
   }
 }

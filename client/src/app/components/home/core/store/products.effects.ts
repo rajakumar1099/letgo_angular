@@ -28,7 +28,7 @@ export class ProductsEffects {
               this.router.navigate([Routers.PRODUCTS]);
             }
             return ProductsActions.AllProducts({
-              products: res?.data?.products,
+              products: res?.data,
             });
           }),
           catchError((err) => {

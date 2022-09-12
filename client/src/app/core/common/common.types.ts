@@ -10,4 +10,5 @@ export enum Routers {
   USER = 'user',
   MY_LISTING = 'my-listing',
   EDIT_PROFILE = 'edit-profile',
+  REVIEW_ORDER = 'review-order',
 }

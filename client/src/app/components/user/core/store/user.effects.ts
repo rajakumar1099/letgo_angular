@@ -57,4 +57,24 @@ export class UserEffects {
       })
     )
   );
+
+  myListing$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.GetMyListing),
+      switchMap((action) => {
+        return this.userService.myListing(action.payload).pipe(
+          map((res: any) => {
+            return UserActions.MyListingSuccess({
+              products: res.data,
+            });
+          }),
+          catchError((err) => {
+            return of(
+              UserActions.MyListingFailed({ error: err.error.data.message })
+            );
+          })
+        );
+      })
+    )
+  );
 }

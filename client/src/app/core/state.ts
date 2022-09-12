@@ -18,6 +18,7 @@ export interface AppState {
   [States.AddProduct]: AddProductState;
   [States.Comments]: CommentState;
   [States.Profile]: AuthState;
+  [States.Listing]: ProductsState;
 }
 
 export const AppReducers = {
@@ -28,4 +29,5 @@ export const AppReducers = {
   [States.AddProduct]: fromAddProduct.addProductsReducer,
   [States.Comments]: fromComments.commentReducer,
   [States.Profile]: fromUserProfile.profileReducer,
+  [States.Listing]: fromUserProfile.myListingReducer,
 };

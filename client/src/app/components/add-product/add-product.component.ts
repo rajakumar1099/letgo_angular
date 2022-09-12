@@ -217,6 +217,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   public handleAddressChange(address: Address) {
+    console.log(address);
+
     this.form.controls[this.addProductForm.PRODUCT_LOCATION].setValue(
       address.formatted_address
     );

@@ -1,0 +1,127 @@
+<div class="container" *ngIf="productDetails$ | async as productDetails">
+  <div>review-order works!</div>
+  <mat-divider></mat-divider>
+  <div style="margin: 20px 0 20px 0">
+    <p class="top-header-label">Review Order</p>
+    <p style="font-size: 18px">Your order summary and other info</p>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel
+      style="padding: 5px; margin-bottom: 10px; box-shadow: none"
+      [expanded]="step === 0"
+      (opened)="setStep(0)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold; font-size: 16px">
+          1. Select Address
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div style="justify-content: end; display: flex">
+        <button mat-flat-button color="primary">+ Add Address</button>
+      </div>
+      <div style="display: flex">
+        <div style="box-shadow: 0 0 0 3px #e40046 inset" class="col-md-3">
+          <div>test</div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel
+      style="padding: 5px; margin-bottom: 10px; box-shadow: none"
+      [expanded]="step === 1"
+      (opened)="setStep(1)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold; font-size: 16px">
+          2. Order Summary
+        </mat-panel-title>
+        <mat-panel-description
+          style="flex-grow: 0; font-weight: bold; font-size: 16px"
+        >
+          Order Total : 620$
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div style="display: flex">
+        <!-- <div class="col-md-8"> -->
+        <div style="display: flex; gap: 10px">
+          <div style="display: flex; gap: 20px; flex-direction: row">
+            <div>
+              <img
+                src="https://cdn.autoportal.com/img/new-cars-gallery/landrover/range-rover-evoque/exterior/landrover-range-rover-evoque-78a598e7.jpg"
+                alt="car"
+              />
+            </div>
+            <div>
+              <div style="display: flex; gap: 20px; flex-direction: column">
+                <div style="font-size: 19px; font-weight: bold">Car</div>
+                <div style="display: flex">
+                  <div>Seller:</div>
+                  <div style="color: var(--primary-color); margin-left: 3px">
+                    Rajakumar
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 20px; flex-direction: column">
+                <div style="display: flex">
+                  <div style="font-size: 19px">Item fee:</div>
+                  <div style="font-size: 19px; font-weight: bold">69$</div>
+                </div>
+                <mat-divider></mat-divider>
+                <div style="display: flex">
+                  <div style="font-size: 19px">Shipping fee:</div>
+                  <div style="font-size: 19px; font-weight: bold">20$</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+      <div style="justify-content: end; display: flex; gap: 10px">
+        <button
+          mat-flat-button
+          style="
+            background-color: var(--primary-color);
+            width: 100px;
+            color: white;
+          "
+          (click)="nextStep()"
+        >
+          Continue
+        </button>
+        <button
+          mat-flat-button
+          style="
+            background-color: var(--secondary-button-color);
+            color: white;
+            width: 100px;
+          "
+          (click)="prevStep()"
+        >
+          Cancel
+        </button>
+      </div>
+    </mat-expansion-panel> </mat-accordion
+  ><mat-accordion>
+    <mat-expansion-panel
+      style="padding: 5px; margin-bottom: 10px; box-shadow: none"
+      [expanded]="step === 2"
+      (opened)="setStep(2)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-weight: bold; font-size: 16px">
+          3. Payment method
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div style="justify-content: end; display: flex">
+        <!-- <button mat-flat-button color="primary">+ Add Address</button> -->
+      </div>
+      <div style="display: flex">
+        <!-- <div style="box-shadow: 0 0 0 3px #e40046 inset" class="col-md-3">
+          <div>test</div>
+        </div> -->
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

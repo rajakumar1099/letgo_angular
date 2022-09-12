@@ -44,6 +44,9 @@ import { EditProfileComponent } from './components/user/edit-profile/edit-profil
 import { MyListingComponent } from './components/user/my-listing/my-listing.component';
 import { UserEffects } from './components/user/core/store/user.effects';
 import { ToastrModule } from 'ngx-toastr';
+import { ProductListingComponent } from './components/home/product-listing/product-listing.component';
+import { ReviewOrderComponent } from './components/review-order/review-order.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,9 @@ import { ToastrModule } from 'ngx-toastr';
     PageNotFoundComponent,
     ProductsComponent,
     EditProfileComponent,
-    MyListingComponent
+    MyListingComponent,
+    ProductListingComponent,
+    ReviewOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +106,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       closeButton: true
     }),
+    GoogleMapsModule
   ],
   providers: [AuthService, AesEncryptDecryptService],
   bootstrap: [AppComponent],

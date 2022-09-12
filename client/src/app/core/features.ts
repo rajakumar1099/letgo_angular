@@ -6,4 +6,5 @@ export enum States {
   Comments = 'comments',
   AddProduct = 'addProduct',
   Profile = 'profile',
+  Listing = 'listing'
 }
