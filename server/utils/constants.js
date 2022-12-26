@@ -28,5 +28,7 @@ module.exports = Object.freeze({
   CURRENCY_ADDED_SUCCESSFULLY: "Currency Added Successfully",
   COMMENT_ADDED_SUCCESSFULLY: "Comment Added Successfully",
   COMMENT_DELETED_SUCCESSFULLY: "Comment Deleted Successfully",
-  PRODUCT_DELETED_SUCCESSFULLY: "Product Deleted Successfully"
+  PRODUCT_DELETED_SUCCESSFULLY: "Product Deleted Successfully",
+  ADDRESS_ADDED_SUCCESSFULLY: "Address Added Successfully",
+
 });
