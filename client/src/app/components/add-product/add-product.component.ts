@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, Observable, Subscription } from 'rxjs';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { addProductFormValidator } from 'src/app/utils/form-validators';
 import { AuthService } from '../authentication/core/services/auth.service';
 import { getAuth } from '../authentication/core/store/auth.selector';
@@ -55,10 +55,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<{
-      [Features.Categories]: CategoriesState;
-      [Features.Auth]: AuthState;
-      [Features.Products]: ProductsState;
-      [Features.AddProduct]: AddProductState;
+      [States.Categories]: CategoriesState;
+      [States.Auth]: AuthState;
+      [States.Products]: ProductsState;
+      [States.AddProduct]: AddProductState;
     }>,
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -144,7 +144,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   public getErrorMessage(control: string): string {
-    return this.authService.getTranslationErrorMessage(this.form, control);
+    return this.authService.getFormErrorMessage(this.form, control);
   }
 
   public getCategoryWithId() {
@@ -217,6 +217,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   public handleAddressChange(address: Address) {
+    console.log(address);
+
     this.form.controls[this.addProductForm.PRODUCT_LOCATION].setValue(
       address.formatted_address
     );

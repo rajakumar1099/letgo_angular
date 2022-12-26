@@ -1,0 +1,156 @@
+<h1>Edit profile</h1>
+<mat-divider></mat-divider>
+<div style="height: 100%; margin-top: 10px" *ngIf="user$ | async as user">
+  <form [formGroup]="form" *ngIf="!user.loading">
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.name" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.NAME)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'login.enterYourName' | translate }}"
+        type="text"
+        [formControlName]="EditProfileForm.NAME"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.NAME)">{{
+        getErrorMessage(EditProfileForm.NAME)
+      }}</mat-error>
+    </mat-form-field>
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.fullname" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.FULLNAME)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'login.enterYourFullname' | translate }}"
+        type="text"
+        [formControlName]="EditProfileForm.FULLNAME"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.FULLNAME)">{{
+        getErrorMessage(EditProfileForm.FULLNAME)
+      }}</mat-error>
+    </mat-form-field>
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.username" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.USERNAME)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'login.enterYourUsername' | translate }}"
+        type="text"
+        [formControlName]="EditProfileForm.USERNAME"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.USERNAME)">{{
+        getErrorMessage(EditProfileForm.USERNAME)
+      }}</mat-error>
+    </mat-form-field>
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.email" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.EMAIL)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'login.enterYourEmailAddress' | translate }}"
+        type="email"
+        [formControlName]="EditProfileForm.EMAIL"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.EMAIL)">{{
+        getErrorMessage(EditProfileForm.EMAIL)
+      }}</mat-error>
+    </mat-form-field>
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.phoneNumber" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.PHONE)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'login.enterYourPhoneNumber' | translate }}"
+        type="number"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+        onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;"
+        [formControlName]="EditProfileForm.PHONE"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.PHONE)">{{
+        getErrorMessage(EditProfileForm.PHONE)
+      }}</mat-error>
+    </mat-form-field>
+    <div>
+      <div style="display: flex">
+        <div>{{ "common.location" | translate }}</div>
+        <div
+          *ngIf="checkIfRequired(EditProfileForm.LOCATION)"
+          style="color: red; margin-left: 2px"
+        >
+          *
+        </div>
+      </div>
+    </div>
+    <mat-form-field class="mat-form-field-container" appearance="outline">
+      <input
+        matInput
+        placeholder="{{ 'common.yourLocation' | translate }}"
+        type="text"
+        [formControlName]="EditProfileForm.LOCATION"
+        ngx-google-places-autocomplete
+        #placesRef="ngx-places"
+        (onAddressChange)="handleAddressChange($event)"
+      />
+      <mat-error *ngIf="!checkFormIsValid(EditProfileForm.LOCATION)">{{
+        getErrorMessage(EditProfileForm.LOCATION)
+      }}</mat-error>
+    </mat-form-field>
+    <div style="display: flex; justify-content: end">
+      <button
+        style="width: 100px"
+        [disabled]="!form.valid"
+        translate="common.save"
+        mat-flat-button
+        color="primary"
+        (click)="save()"
+      ></button>
+    </div>
+  </form>
+  <div class="custom-spinner" *ngIf="user.loading">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</div>

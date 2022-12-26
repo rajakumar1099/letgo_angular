@@ -170,6 +170,26 @@ const profiles = async (req, res) => {
   });
 };
 
+const updateProfile = async (req, res) => {
+  const user = await UserModel.findOneAndUpdate(
+    { uid: req.body.uid },
+    { $set: { ...req.body } },
+    { new: true },
+  );
+  if (!user)
+    return res.status(400).json({
+      status: Constants.FAILURE,
+      data: {
+        message: Constants.EMAIL_DOES_NOT_EXIST_SIGN_UP,
+      },
+    });
+
+  res.json({
+    status: Constants.SUCCESS,
+    data: user,
+  });
+};
+
 const deleteProfile = async (req, res) => {
   const user = await UserModel.findOneAndDelete({ id: req.params.id });
 
@@ -202,5 +222,6 @@ module.exports = {
   login,
   loginWithUid,
   profiles,
+  updateProfile,
   deleteProfile,
 };

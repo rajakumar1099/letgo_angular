@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { Features } from 'src/app/core/features';
+import { States } from 'src/app/core/features';
 import { getCategories } from '../categories/core/store/categories.selector';
 import {
   Categories,
@@ -13,52 +13,53 @@ import { SignUpDialogComponent } from '../authentication/sign-up-dialog/sign-up-
 import { AuthState } from '../authentication/core/types/auth.types';
 import { getAuth } from '../authentication/core/store/auth.selector';
 import { Router } from '@angular/router';
+import { Routers } from 'src/app/core/common/common.types';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public categories$!: Observable<Categories[] | null>;
-  public isLoggedIn$!: Observable<AuthState>;
-  public isLoggedIn: boolean = false;
+  // public categories$!: Observable<Categories[] | null>;
+  // public isLoggedIn$!: Observable<AuthState>;
+  // public isLoggedIn: boolean = false;
   constructor(
-    private dialog: MatDialog,
-    private store: Store<{
-      [Features.Categories]: CategoriesState;
-      [Features.Auth]: AuthState;
-    }>,
-    private router: Router
+    // private dialog: MatDialog,
+    // private store: Store<{
+    //   [Features.Categories]: CategoriesState;
+    //   [Features.Auth]: AuthState;
+    // }>,
+    // private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.categories$ = this.store.select(getCategories);
-    this.isLoggedIn$ = this.store.select(getAuth).pipe(
-      tap((res) => {
-        this.isLoggedIn = !!res.user;
-      })
-    );
+    // this.categories$ = this.store.select(getCategories);
+    // this.isLoggedIn$ = this.store.select(getAuth).pipe(
+    //   tap((res) => {
+    //     this.isLoggedIn = !!res.user;
+    //   })
+    // );
   }
 
-  public openLoginDialog(): void {
-    this.dialog.open(LoginDialogComponent, {
-      width: '500px',
-      disableClose: true,
-    });
-  }
+  // public openLoginDialog(): void {
+  //   this.dialog.open(LoginDialogComponent, {
+  //     width: '500px',
+  //     disableClose: true,
+  //   });
+  // }
 
-  public openSignUpDialog(): void {
-    this.dialog.open(SignUpDialogComponent, {
-      width: '500px',
-      disableClose: true,
-    });
-  }
+  // public openSignUpDialog(): void {
+  //   this.dialog.open(SignUpDialogComponent, {
+  //     width: '500px',
+  //     disableClose: true,
+  //   });
+  // }
 
-  public openAddproductPage(): void {
-    if (this.isLoggedIn) {
-      this.router.navigate(['add-product']);
-    } else {
-      this.openLoginDialog();
-    }
-  }
+  // public openAddproductPage(): void {
+  //   if (this.isLoggedIn) {
+  //     this.router.navigate([Routers.ADD_PRODUCT]);
+  //   } else {
+  //     this.openLoginDialog();
+  //   }
+  // }
 }

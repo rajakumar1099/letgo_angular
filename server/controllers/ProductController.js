@@ -74,7 +74,12 @@ const addProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  let products = await ProductModel.find({}, { _id: 0, __v: 0 });
+  let products;
+  if(req.method === "POST"){
+    products = await ProductModel.find({uid: req.body.uid}, { _id: 0, __v: 0 });
+  }else {
+    products = await ProductModel.find({}, { _id: 0, __v: 0 });
+  }
   const val = [];
   for (let i = 0; i < products.length; i++) {
     const totalCategory = await CategoriesModel.find(
@@ -97,9 +102,7 @@ const getProducts = async (req, res) => {
   }
   res.json({
     status: Constants.SUCCESS,
-    data: {
-      products: val,
-    },
+    data: val,
   });
 };
 

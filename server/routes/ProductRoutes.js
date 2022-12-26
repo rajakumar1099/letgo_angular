@@ -15,6 +15,7 @@ router.post(
   AddProductController.addProduct
 );
 router.get(API.ROOT, verifyToken, AddProductController.getProducts);
+router.post(API.ROOT, verifyToken, AddProductController.getProducts);
 router.get(API.PRODUCT, verifyToken, AddProductController.getProduct);
 router.get(API.PRODUCT + API.COMMENTS, verifyToken, AddProductController.getComment);
 router.delete(API.PRODUCT, verifyToken, AddProductController.deleteProduct);

@@ -37,6 +37,16 @@ import { ProductDescriptionComponent } from './components/home/product-details/p
 import { ProductOverallDetailComponent } from './components/home/product-details/product-overall-detail/product-overall-detail.component';
 import { ProductCommentComponent } from './components/home/product-details/product-comment/product-comment.component';
 import { ConfirmModelComponent } from './core/common/components/confirm-model/confirm-model.component';
+import { UserComponent } from './components/user/user.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProductsComponent } from './components/home/products/products.component';
+import { EditProfileComponent } from './components/user/edit-profile/edit-profile.component';
+import { MyListingComponent } from './components/user/my-listing/my-listing.component';
+import { UserEffects } from './components/user/core/store/user.effects';
+import { ToastrModule } from 'ngx-toastr';
+import { ProductListingComponent } from './components/home/product-listing/product-listing.component';
+import { ReviewOrderComponent } from './components/review-order/review-order.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -56,6 +66,13 @@ import { ConfirmModelComponent } from './core/common/components/confirm-model/co
     ProductOverallDetailComponent,
     ProductCommentComponent,
     ConfirmModelComponent,
+    UserComponent,
+    PageNotFoundComponent,
+    ProductsComponent,
+    EditProfileComponent,
+    MyListingComponent,
+    ProductListingComponent,
+    ReviewOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +93,7 @@ import { ConfirmModelComponent } from './core/common/components/confirm-model/co
       CategoriesEffects,
       ProductsEffects,
       AddProductsEffects,
+      UserEffects
     ]),
     BrowserAnimationsModule,
     MaterialModule,
@@ -85,6 +103,10 @@ import { ConfirmModelComponent } from './core/common/components/confirm-model/co
       logOnly: !environment.production,
     }),
     NgbModule,
+    ToastrModule.forRoot({
+      closeButton: true
+    }),
+    GoogleMapsModule
   ],
   providers: [AuthService, AesEncryptDecryptService],
   bootstrap: [AppComponent],

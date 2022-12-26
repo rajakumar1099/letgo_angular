@@ -1,22 +1,79 @@
 <div class="footer-root">
-    <div class="footer-container_left">
-      <div class="footer-text">{{ "footer.happyShoppingWithLabel" | translate }}</div>
-      <img class="footer-logo" src="\assets\drawables\facebook.png" alt="facebook" />
-      <img class="footer-logo" src="\assets\drawables\twitter.png" alt="twitter" />
-      <img class="footer-logo" src="\assets\drawables\google.png" alt="google" />
+  <div class="footer-lay">
+    <div>
+      <div class="footer-text">
+        {{ "footer.happyShoppingWithLabel" | translate }}
+      </div>
+      <img
+        class="footer-logo"
+        src="\assets\drawables\facebook.png"
+        alt="facebook"
+      />
+      <img
+        class="footer-logo"
+        src="\assets\drawables\twitter.png"
+        alt="twitter"
+      />
+      <img
+        class="footer-logo"
+        src="\assets\drawables\google.png"
+        alt="google"
+      />
     </div>
-    <div class="footer-container_center">
-      <div class="footer-text">{{ "footer.downloadAppsUsingThisLink" | translate }}</div>
+    <div>
+      <div class="footer-text">
+        {{ "footer.downloadAppsUsingThisLink" | translate }}
+      </div>
       <img class="footer-logo" src="\assets\drawables\ios.png" alt="apple" />
-      <img class="footer-logo" src="\assets\drawables\android.png" alt="android" />
+      <img
+        class="footer-logo"
+        src="\assets\drawables\android.png"
+        alt="android"
+      />
     </div>
-    <div class="footer-container_right">
-      <div class="footer-text">{{ "footer.promoteYourBrandLabel" | translate }}</div>
+    <div>
+      <div class="footer-text">
+        {{ "footer.promoteYourBrandLabel" | translate }}
+      </div>
       <button
-      class="banner-advertise-button-style"
-      mat-button
-      translate="footer.bannerAdvertise"
-      mat-raised-button
-    ></button>
+        class="banner-advertise-button-style"
+        mat-button
+        translate="footer.bannerAdvertise"
+        mat-raised-button
+      ></button>
     </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="footer-lay">
+    <div style="display: flex; flex-direction: column">
+      <div style="display: flex; gap: 5px">
+        <p>Terms and Policy</p>
+        <p>|</p>
+        <p>TOS</p>
+        <p>|</p>
+        <p>Safety Tips</p>
+        <p>|</p>
+        <p>Reach</p>
+        <p>|</p>
+        <p>User Help</p>
+      </div>
+      <div>© Copyright 2020 Appkodes.com Limited. All rights reserved</div>
+    </div>
+    <div>
+      <mat-form-field   appearance="outline" style="width: 100px;">
+        <mat-select value='en'>
+          <mat-option value="en" selected>
+            English
+          </mat-option>
+          <mat-option value="fr">
+            French
+          </mat-option>
+          <mat-option value="ar">
+            Arabic
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </div>

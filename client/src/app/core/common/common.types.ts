@@ -4,6 +4,11 @@ export interface Currencies {
   currency_symbol: string;
 }
 
-export enum Routes {
-  PRODUCTS = 'products'
+export enum Routers {
+  PRODUCTS = 'products',
+  ADD_PRODUCT = 'add-product',
+  USER = 'user',
+  MY_LISTING = 'my-listing',
+  EDIT_PROFILE = 'edit-profile',
+  REVIEW_ORDER = 'review-order',
 }

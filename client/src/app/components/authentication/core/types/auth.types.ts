@@ -37,6 +37,9 @@ export interface AuthDetails {
   displayPictureUrl?: string | null;
   registerTimestamp?: string | null;
   lastLoginTimestamp?: string | null;
+  location: string | null;
+  phoneNumber: string | null;
+  rating: Number | null;
 }
 
 export interface AuthState {
